@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec BLUEBIRD_W_FORGOTTEN_RETURN=0 babel-node index.js",
+    "build": "babel server -d build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-dotenv": "^0.1.1",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.13.2",
+    "bookshelf": "^0.13.3",
+    "bookshelf-cascade-delete": "^2.0.1",
+    "colors": "^1.1.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "express-jwt": "^3.0.1",
+    "jsonwebtoken": "^5.0.4",
+    "knex": "^0.13.0",
+    "lodash.toarray": "^4.4.0",
+    "method-override": "^2.3.4",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.4"
+  }
+}
