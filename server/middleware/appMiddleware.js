@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import override from 'method-override';
+import helmet from 'helmet';
+import compression from 'compression';
 
 import path from 'path';
 
@@ -14,5 +16,7 @@ export default function(app) {
   app.use(bodyParser.json());
   app.use(cors());
   app.use(override());
-  app.use(express.static(path.join(__dirname, '../../web')));
+  app.use(helmet());
+  app.use(compression);
+  app.use(express.static(path.join(__dirname, '../../client/build')));
 }
