@@ -1,0 +1,54 @@
+DB STRUCTURE:
+  ☐ user
+    ☐ id (int) - PK
+    ☐ userName (varchar)
+    ☐ password (varchar)
+    ☐ firstName (varchar)
+    ☐ lastName (varchar)
+    ☐ contactEmail (varchar)
+    ☐ role (varchar) - FK (roles)
+
+  ☐ roles
+    ☐ id (char)
+    ☐ name (varchar)
+
+  // Useri mozu mat viacero jedal vo svojom profile
+  ☐ userFoods
+    ☐ userId (int) - PK FK
+    ☐ foodId (int) - PK FK 
+
+  ☐ food
+    ☐ id (int) - PK
+    ☐ nazov (varchar)
+    ☐ histamine level (int)
+    ☐ rating (float)
+    ☐ description (varchar)
+    ☐ food category id (int) - FK (food category)
+
+  // vysokohistaminove, nizkohistaminove, liberator atd.   
+  ☐ food category
+    ☐ id (int) - PK
+    ☐ name
+    ☐ description (varchar)
+
+  ☐ recipe
+    ☐ id (int)
+    ☐ creator (int) - FK (user)
+    ☐ image (???)
+    ☐ procedure (varchar)
+    ☐ rating
+
+  ☐ recipeFoods
+    ☐ recipe - PK FK
+    ☐ food - PK 
+    ☐ quantity
+    ☐ unitOfMeasure
+
+  
+// --- Featuers --- //
+☐ User ma zoznam svojich potravin ktore hodnotil
+☐ Kazda potravina ma rating
+☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost
+  ☐ recept ma rating
+  ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
+☐ role aspon User, admin

@@ -18,18 +18,13 @@ export const getOne = async id => {
   return user.toJSON();
 };
 
-export const put = function(req, res, next) {
-  let user = req.user.toJSON();
-  const update = req.body;
+export const update = async (args, user) => {
+  const updatedUser = await new User({ ...user, ...args }).save();
+  return updatedUser.toJson();
+};
 
-  Object.assign(user, update);
-
-  new User(user)
-    .save()
-    .then(user => {
-      return res.json(user.toJson());
-    })
-    .catch(err => next(err));
+export const changePassword = async ({ oldPassword, newPassword, user }) => {
+  // TODO CHANGE PASSWORD
 };
 
 export const post = async userArgs => {
