@@ -1,17 +1,27 @@
 import express from 'express';
+import graphqlHTTP from 'express-graphql';
 
-import api from './api/api';
 import logger from './utils/logger';
-import auth from './auth/routes';
 import appMiddleware from './middleware/appMiddleware';
+import schema from './api/rootSchema';
+import * as auth from './auth/auth';
+import config from './config/config';
 
 const app = express();
 // setup the app middlware
 appMiddleware(app);
 
-// setup the api
-app.use('/api', api);
-app.use('/auth', auth);
+app.use(
+  '/graphql',
+  auth.checkUser,
+  graphqlHTTP(req => ({
+    schema,
+    graphiql: process.env.NODE_ENV === config.dev,
+    context: {
+      user: req.user
+    }
+  }))
+);
 
 // set up global error handling
 app.use(function(err, req, res, next) {

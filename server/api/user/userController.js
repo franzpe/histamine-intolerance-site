@@ -1,37 +1,21 @@
 import User from './userModel';
 import { signToken } from '../../auth/auth';
 
-export const params = function(req, res, next, id) {
-  User.where({
+export const getAll = async () => {
+  const users = await User.fetchAll();
+  return users.toJSON();
+};
+
+export const getOne = async id => {
+  const user = await User.where({
     id: id
-  })
-    .fetch()
-    .then(user => {
-      if (user) {
-        req.user = user;
-        next();
-      } else {
-        next(new Error(`User with id: ${id} not found`));
-      }
-    })
-    .catch(err => {
-      next(err);
-    });
-};
+  }).fetch();
 
-export const get = function(req, res, next) {
-  User.fetchAll()
-    .then(x => {
-      res.json(x);
-    })
-    .catch(err => {
-      next(err);
-    });
-};
+  if (!user) {
+    throw new Error('No user with the given username');
+  }
 
-exports.getOne = function(req, res, next) {
-  const user = req.user;
-  res.json(user);
+  return user.toJSON();
 };
 
 export const put = function(req, res, next) {
@@ -50,21 +34,13 @@ export const put = function(req, res, next) {
 };
 
 // Creates user in DB and sends token back
-export const post = function(req, res, next) {
-  const newUser = req.body;
-
-  new User(newUser)
-    .save()
-    .then(user => {
-      const token = signToken(user.id);
-
-      res.json({
-        token: token
-      });
-    })
-    .catch(err => {
-      next(err);
-    });
+export const post = async userArgs => {
+  const user = new User(userArgs).save();
+  let token;
+  if (user) {
+    token = signToken(user.id);
+  }
+  return token;
 };
 
 export const del = function(req, res, next) {

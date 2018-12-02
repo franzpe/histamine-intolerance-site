@@ -3,8 +3,10 @@ import expressJwt from 'express-jwt';
 
 import config from '../config/config';
 import User from '../api/user/userModel';
+
 const checkToken = expressJwt({
-  secret: config.secrets.jwt
+  secret: config.secrets.jwt,
+  credentialsRequired: false
 });
 
 export const decodeToken = function() {
@@ -16,9 +18,8 @@ export const decodeToken = function() {
     if (req.query && req.query.hasOwnProperty('access_token')) {
       req.headers.authorization = 'Bearer ' + req.query.access_token;
     }
-
     // this will call next if token is valid
-    // and send error if its not. It will attached
+    // and send error if its not. It will attach id to req.user
     // the decoded token to req.user
     checkToken(req, res, next);
   };
@@ -26,57 +27,36 @@ export const decodeToken = function() {
 
 export const getFreshUser = function() {
   return function(req, res, next) {
-    User.where({
-      id: req.user.id
-    })
-      .fetch()
-      .then(user => {
-        if (!user) {
-          // If the user wasn't found in our db but the JWT was valid
-          // Either user was deleted or jwt is from other source
-          req.status(401).send('Unauthorized');
-        } else {
-          // Attach user to req.user to access it our controllers
-          req.user = user;
-          next();
-        }
+    if (req.user) {
+      User.where({
+        id: req.user.id
       })
-      .catch(err => next(err));
+        .fetch()
+        .then(user => {
+          if (user) {
+            req.user = user.toJson();
+            next();
+          }
+        });
+    } else {
+      next();
+    }
   };
 };
 
-export const verifyUser = function() {
-  return function(req, res, next) {
-    const userName = req.body.userName;
-    const password = req.body.password;
+export const verifyUser = async ({ userName, password }) => {
+  // Look up the user in DB to password check
+  const user = await User.forge({ userName }).fetch();
 
-    // if no username or password then send
-    if (!userName || !password) {
-      res.status(400).send('You need a username and password');
-      return;
+  if (!user) {
+    throw new Error('No user with the given username');
+  } else {
+    if (!user.authenticate(password)) {
+      throw new Error('Wrong password');
+    } else {
+      return signToken(user.id);
     }
-
-    // Look up the user in DB to password check
-    User.forge({ userName })
-      .fetch()
-      .then(user => {
-        if (!user) {
-          res.status(401).send('No user with the given username');
-        } else {
-          // Checking the passwords
-          if (!user.authenticate(password)) {
-            res.status(401).send('Wrong password');
-          } else {
-            // if everything is good,
-            // then attach to req.user
-            // and call next so the controller
-            // can sign a token from the req.user._id
-            req.user = user;
-            next();
-          }
-        }
-      });
-  };
+  }
 };
 
 // util method to sign tokens on signup
@@ -90,4 +70,13 @@ export const signToken = function(id) {
       expiresIn: config.expireTime
     }
   );
+};
+
+export const checkUser = [decodeToken(), getFreshUser()];
+
+export const authenticated = resolver => (parent, args, context, info) => {
+  if (context.user) {
+    return resolver(parent, args, context, info);
+  }
+  throw new Error('You are not authenticated!');
 };

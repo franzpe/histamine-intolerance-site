@@ -17,6 +17,6 @@ export default function(app) {
   app.use(cors());
   app.use(override());
   app.use(helmet());
-  app.use(compression);
+  app.use(compression());
   app.use(express.static(path.join(__dirname, '../../client/build')));
 }
