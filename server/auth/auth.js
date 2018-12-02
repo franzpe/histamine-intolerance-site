@@ -33,10 +33,16 @@ export const getFreshUser = function() {
       })
         .fetch()
         .then(user => {
-          if (user) {
+          if (!user) {
+            // Checktocken is assigning to req.user.id from token if found
+            req.user = null;
+          } else {
             req.user = user.toJson();
-            next();
           }
+          next();
+        })
+        .catch(err => {
+          next();
         });
     } else {
       next();

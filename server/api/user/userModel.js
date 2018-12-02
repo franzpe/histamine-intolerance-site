@@ -18,15 +18,12 @@ class User extends db.Model {
 
   beforeSave = () => {
     if (this.hasChanged('password')) {
-      console.log(this.get('password'));
       this.set('password', this.encryptPassword(this.get('password')));
     }
   };
 
   // Check if passwords match
   authenticate = plainTextPassword => {
-    console.log(plainTextPassword);
-    console.log(this.get('password'));
     return bcrypt.compareSync(plainTextPassword, this.get('password'));
   };
 

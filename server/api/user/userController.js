@@ -24,7 +24,6 @@ export const put = function(req, res, next) {
 
   Object.assign(user, update);
 
-  // SAVE CAUSING BLUEBIRD WARNING
   new User(user)
     .save()
     .then(user => {
@@ -33,7 +32,6 @@ export const put = function(req, res, next) {
     .catch(err => next(err));
 };
 
-// Creates user in DB and sends token back
 export const post = async userArgs => {
   const user = new User(userArgs).save();
   let token;
