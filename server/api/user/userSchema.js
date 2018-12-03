@@ -74,7 +74,6 @@ export const MutationFields = {
       newPassword: { type: new GraphQLNonNull(GraphQLString) }
     },
     resolve: authenticated((parent, args, { user }) => {
-      // TODO change password
       return userController.changePassword(args, user);
     })
   },
@@ -90,12 +89,12 @@ export const MutationFields = {
     })
   },
   deleteUser: {
-    type: UserType,
+    type: GraphQLInt,
     args: {
       id: { type: new GraphQLNonNull(GraphQLInt) }
     },
-    resolve: authenticated((parent, { id }, { user }) => {
-      // TODO
+    resolve: authenticated((parent, { id }) => {
+      return userController.deleteOne(id);
     })
   }
 };
