@@ -23,20 +23,14 @@ DB STRUCTURE:
     ☐ histamine level (int)
     ☐ rating (float)
     ☐ description (varchar)
-    ☐ food category id (int) - FK (food category)
-
-  // vysokohistaminove, nizkohistaminove, liberator atd.   
-  ☐ food category
-    ☐ id (int) - PK
-    ☐ name
-    ☐ description (varchar)
 
   ☐ recipe
     ☐ id (int)
+    ☐ name (varchar)
     ☐ creator (int) - FK (user)
     ☐ image (???)
     ☐ procedure (varchar)
-    ☐ rating
+    ☐ rating (float(4,2))
 
   ☐ recipeFoods
     ☐ recipe - PK FK
@@ -52,3 +46,12 @@ DB STRUCTURE:
   ☐ recept ma rating
   ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
 ☐ role aspon User, admin
+
+notes:
+  ENGINE=InnoDB pouzivat v Mysql
+  example:
+    CREATE TABLE NameSubject (
+      Autonumber INT NOT NULL AUTO_INCREMENT,
+      NameorSubject nvarchar(255),
+      PRIMARY KEY (Autonumber)
+    ) ENGINE=InnoDB;

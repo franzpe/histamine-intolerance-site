@@ -1,10 +1,16 @@
 import bcrypt from 'bcrypt';
 
 import db from '../../utils/dbConnection';
+import Role from '../role/roleModel';
 
 // Model attributes:
+// id - int
 // userName - String
 // password - String
+// firstName - String
+// lastName - String
+// contactEmail - String
+// role - int FK Role
 class User extends db.Model {
   constructor(args) {
     super(args);
@@ -15,6 +21,10 @@ class User extends db.Model {
   get tableName() {
     return 'User';
   }
+
+  Role = () => {
+    return this.hasOne(Role, 'id', 'role');
+  };
 
   beforeSave = () => {
     if (this.hasChanged('password')) {

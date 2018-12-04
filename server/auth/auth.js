@@ -53,6 +53,7 @@ export const getFreshUser = function() {
 export const verifyUser = async ({ userName, password }) => {
   // Look up the user in DB to password check
   const user = await User.forge({ userName }).fetch();
+
   if (!user) {
     throw new Error('No user with the given username');
   } else {

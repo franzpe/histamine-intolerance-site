@@ -51,7 +51,3 @@ export const deleteOne = async id => {
 
   return id;
 };
-
-export const me = function(req, res) {
-  res.json(req.user.toJson());
-};
