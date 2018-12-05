@@ -16,3 +16,8 @@ export const getAll = async () => {
   const foods = await Food.fetchAll();
   return foods.toJSON();
 };
+
+export const add = async foodProps => {
+  const food = await new Food(foodProps).save();
+  return food.toJSON();
+};

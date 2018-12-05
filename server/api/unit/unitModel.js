@@ -3,17 +3,14 @@ import db from '../../utils/dbConnection';
 // Model attributes:
 // id - Int
 // name - String
-// histamineLevel - int FK HistamineLevel
-// rating - Number
-// description - String
-class Food extends db.Model {
+class Unit extends db.Model {
   constructor(args) {
     super(args);
   }
 
   get tableName() {
-    return 'Food';
+    return 'Unit';
   }
 }
 
-export default Food;
+export default Unit;

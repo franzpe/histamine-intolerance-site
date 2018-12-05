@@ -1,41 +1,71 @@
 import * as graphql from 'graphql';
 
+import { authenticated } from '../../auth/auth';
 import { HistamineLevelType } from '../histamineLevel/histamineLevelSchema';
+import { UnitType } from '../unit/unitSchema';
 import * as histamineLevelController from '../histamineLevel/histamineLevelController';
 import * as foodController from './foodController';
 
-import { authenticated } from '../../auth/auth';
+const {
+  GraphQLObjectType,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLList,
+  GraphQLFloat,
+  GraphQLNonNull
+} = graphql;
 
-const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList, GraphQLFloat } = graphql;
+const FoodTypeFields = {
+  id: { type: GraphQLInt },
+  name: { type: GraphQLString },
+  histamineLevel: {
+    type: HistamineLevelType,
+    resolve(parent) {
+      return parent.histamineLevel && histamineLevelController.getOne(parent.histamineLevel);
+    }
+  },
+  rating: { type: GraphQLFloat },
+  description: { type: GraphQLString }
+};
 
 export const FoodType = new GraphQLObjectType({
   name: 'Food',
-  fields: () => ({
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
-    histamineLevel: {
-      type: HistamineLevelType,
-      resolve(parent) {
-        return parent.histamineLevel && histamineLevelController.getOne(parent.histamineLevel);
-      }
-    },
-    rating: { type: GraphQLFloat },
-    description: { type: GraphQLString }
-  })
+  fields: () => ({ ...FoodTypeFields })
+});
+
+export const FoodExtendedType = new GraphQLObjectType({
+  name: 'FoodExtended',
+  fields: () => ({ ...FoodTypeFields, quantity: { type: GraphQLFloat }, unit: { type: UnitType } })
 });
 
 export const QueryFields = {
   food: {
     type: FoodType,
     args: { id: { type: GraphQLInt } },
-    resolve: authenticated((parent, { id }) => {
+    resolve(parent, { id }) {
       return foodController.getOne(id);
-    })
+    }
   },
   foods: {
     type: new GraphQLList(FoodType),
-    resolve: authenticated(() => {
+    resolve() {
       return foodController.getAll();
+    }
+  }
+};
+
+export const MutationFields = {
+  addFood: {
+    type: FoodType,
+    args: {
+      name: { type: new GraphQLNonNull(GraphQLString) },
+      name: { type: GraphQLString },
+      histamineLevel: { type: GraphQLInt },
+      rating: { type: GraphQLFloat },
+      description: { type: GraphQLString }
+    },
+    resolve: authenticated((parent, args) => {
+      return foodController.add(args);
     })
   }
 };
