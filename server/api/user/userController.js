@@ -1,9 +1,19 @@
 import User from './userModel';
+import UserFoods from './userFoodsModel';
 import { signToken } from '../../auth/auth';
 import bcrypt from 'bcrypt';
 
 export const getAll = async () => {
   const users = await User.fetchAll();
+  return users.toJSON();
+};
+
+/**
+ *
+ * @param {Object {[key]:any} - prop
+ */
+export const getAllByProp = async prop => {
+  const users = await User.where(prop).fetchAll();
   return users.toJSON();
 };
 
@@ -50,4 +60,14 @@ export const deleteOne = async id => {
   }
 
   return id;
+};
+
+export const getUserFoods = async id => {
+  const userFoods = await UserFoods.fetchAll({ withRelated: ['Food'] });
+
+  const foods = userFoods.toJSON().map(userFood => ({
+    ...userFood.Food
+  }));
+
+  return foods;
 };

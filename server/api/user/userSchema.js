@@ -1,7 +1,10 @@
 import * as graphql from 'graphql';
 
+import { RoleType } from '../role/roleSchema';
 import { authenticated, verifyUser } from '../../auth/auth';
 import * as userController from './userController';
+import * as roleController from '../role/roleController';
+import { FoodType } from '../food/foodSchema';
 
 const {
   GraphQLObjectType,
@@ -20,7 +23,19 @@ export const UserType = new GraphQLObjectType({
     password: { type: GraphQLString },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
-    contactEmail: { type: GraphQLString }
+    contactEmail: { type: GraphQLString },
+    role: {
+      type: RoleType,
+      resolve(parent, args) {
+        return roleController.getOne(parent.role);
+      }
+    },
+    foods: {
+      type: new GraphQLList(FoodType),
+      resolve(parent) {
+        return userController.getUserFoods(parent.id);
+      }
+    }
   })
 });
 
