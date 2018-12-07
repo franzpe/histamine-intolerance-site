@@ -31,3 +31,26 @@ export const getRecipeFoods = async id => {
 
   return foods;
 };
+
+export const add = async recipeArgs => {
+  const recipe = (await new Recipe({
+    name: recipeArgs.name,
+    creatorId: recipeArgs.creatorId,
+    process: recipeArgs.process
+  }).save()).toJSON();
+
+  const promises = [];
+  recipeArgs.ingredients.forEach(food => {
+    promises.push(
+      new RecipeFoods({
+        recipeId: recipe.id,
+        foodId: food.id,
+        quantity: food.quantity,
+        unit: food.unit
+      }).save()
+    );
+  });
+  await Promise.all(promises);
+
+  return recipe;
+};

@@ -35,7 +35,11 @@ export const FoodType = new GraphQLObjectType({
 
 export const FoodExtendedType = new GraphQLObjectType({
   name: 'FoodExtended',
-  fields: () => ({ ...FoodTypeFields, quantity: { type: GraphQLFloat }, unit: { type: UnitType } })
+  fields: () => ({
+    ...FoodTypeFields,
+    quantity: { type: new GraphQLNonNull(GraphQLFloat) },
+    unit: { type: new GraphQLNonNull(UnitType) }
+  })
 });
 
 export const QueryFields = {
@@ -59,9 +63,7 @@ export const MutationFields = {
     type: FoodType,
     args: {
       name: { type: new GraphQLNonNull(GraphQLString) },
-      name: { type: GraphQLString },
       histamineLevel: { type: GraphQLInt },
-      rating: { type: GraphQLFloat },
       description: { type: GraphQLString }
     },
     resolve: authenticated((parent, args) => {

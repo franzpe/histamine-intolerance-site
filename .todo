@@ -62,34 +62,3 @@ notes:
       NameorSubject nvarchar(255),
       PRIMARY KEY (Autonumber)
     ) ENGINE=InnoDB;
-
-    export const RecipeType = new GraphQLObjectType({
-      name: 'Recipe',
-      fields: () => ({
-        id: { type: GraphQLInt },
-        name: { type: GraphQLString },
-        creator: {
-          type: UserType,
-          resolve(parent) {
-            return userController.getOne(parent.creatorId);
-          }
-        },
-        process: { type: GraphQLString },
-        rating: { type: GraphQLFloat },
-        foods: {
-          type: new GraphQLList(
-            new GraphQLObjectType({
-              name: 'ExtendedFods',
-              fields: () => ({
-                ...FoodType.getFields(),
-                quantity: { type: GraphQLFloat },
-                unit: { type: UnitType }
-              })
-            })
-          ),
-          resolve(parent) {
-            return recipeController.getRecipeFoods(parent.id);
-          }
-        }
-      })
-    });

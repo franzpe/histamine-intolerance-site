@@ -4,6 +4,7 @@ import * as userController from '../user/userController';
 import * as recipeController from './recipeController';
 import { UserType } from '../user/userSchema';
 import { FoodExtendedType } from '../food/foodSchema';
+import { authenticated } from '../../auth/auth';
 
 const {
   GraphQLObjectType,
@@ -11,7 +12,8 @@ const {
   GraphQLString,
   GraphQLList,
   GraphQLFloat,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLInputObjectType
 } = graphql;
 
 export const RecipeType = new GraphQLObjectType({
@@ -51,5 +53,31 @@ export const QueryFields = {
     resolve() {
       return recipeController.getAll();
     }
+  }
+};
+
+export const MutationFields = {
+  addRecipe: {
+    type: RecipeType,
+    args: {
+      name: { type: GraphQLString },
+      creatorId: { type: GraphQLInt },
+      process: { type: GraphQLString },
+      ingredients: {
+        type: new GraphQLList(
+          new GraphQLInputObjectType({
+            name: 'Ingredients',
+            fields: {
+              id: { type: GraphQLInt },
+              quantity: { type: GraphQLFloat },
+              unit: { type: GraphQLString }
+            }
+          })
+        )
+      }
+    },
+    resolve: authenticated((parent, args, context, info) => {
+      return recipeController.add(args);
+    })
   }
 };

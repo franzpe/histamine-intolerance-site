@@ -25,7 +25,8 @@ const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     ...fromUser.MutationFields,
-    ...fromFood.MutationFields
+    ...fromFood.MutationFields,
+    ...fromRecipe.MutationFields
   }
 });
 
