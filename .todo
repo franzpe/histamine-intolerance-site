@@ -41,12 +41,14 @@ DB STRUCTURE:
     ☐ recipe - PK FK
     ☐ food - PK 
     ☐ quantity
-    ☐ unit
-  
-  ☐ unit
+    ☐ unit  
 
-  
-// --- Featuers --- //
+TASKS:
+  ✔ scaffold db structrue create models @done(18-12-08 11:13)
+  ✔ scaffold graphql schemas @done(18-12-08 11:13)
+  ☐ Change all db tables to InnoDB engine see example down
+
+// --- Features --- //
 ☐ User ma zoznam svojich potravin ktore hodnotil
 ☐ Kazda potravina ma rating
 ☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost

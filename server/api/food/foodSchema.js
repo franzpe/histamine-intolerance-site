@@ -69,5 +69,36 @@ export const MutationFields = {
     resolve: authenticated((parent, args) => {
       return foodController.add(args);
     })
+  },
+  deleteFood: {
+    type: GraphQLInt,
+    args: {
+      id: { type: GraphQLInt }
+    },
+    resolve: authenticated((parent, { id }) => {
+      return foodController.deleteOne(id);
+    })
+  },
+  updateFood: {
+    type: FoodType,
+    args: {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      histamineLevel: { type: GraphQLInt },
+      description: { type: GraphQLString }
+    },
+    resolve: authenticated((parent, args) => {
+      return foodController.update(args);
+    })
+  },
+  rateFood: {
+    type: FoodType,
+    args: {
+      id: { type: new GraphQLNonNull(GraphQLInt) },
+      value: { type: new GraphQLNonNull(GraphQLInt) }
+    },
+    resolve: authenticated((parent, { id, value }) => {
+      return foodController.rate(id, value);
+    })
   }
 };

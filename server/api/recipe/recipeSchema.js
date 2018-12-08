@@ -16,6 +16,15 @@ const {
   GraphQLInputObjectType
 } = graphql;
 
+const IngredientInputType = new GraphQLInputObjectType({
+  name: 'Ingredients',
+  fields: {
+    id: { type: GraphQLInt },
+    quantity: { type: GraphQLFloat },
+    unit: { type: GraphQLString }
+  }
+});
+
 export const RecipeType = new GraphQLObjectType({
   name: 'Recipe',
   fields: () => ({
@@ -64,20 +73,44 @@ export const MutationFields = {
       creatorId: { type: GraphQLInt },
       process: { type: GraphQLString },
       ingredients: {
-        type: new GraphQLList(
-          new GraphQLInputObjectType({
-            name: 'Ingredients',
-            fields: {
-              id: { type: GraphQLInt },
-              quantity: { type: GraphQLFloat },
-              unit: { type: GraphQLString }
-            }
-          })
-        )
+        type: new GraphQLList(IngredientInputType)
       }
     },
     resolve: authenticated((parent, args, context, info) => {
       return recipeController.add(args);
+    })
+  },
+  deleteRecipe: {
+    type: GraphQLInt,
+    args: {
+      id: { type: GraphQLInt }
+    },
+    resolve: authenticated((parent, { id }) => {
+      return recipeController.deleteOne(id);
+    })
+  },
+  updateRecipe: {
+    type: RecipeType,
+    args: {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      process: { type: GraphQLString },
+      ingredients: {
+        type: new GraphQLList(IngredientInputType)
+      }
+    },
+    resolve: authenticated((parent, args) => {
+      return recipeController.update(args);
+    })
+  },
+  rateRecipe: {
+    type: RecipeType,
+    args: {
+      id: { type: GraphQLInt },
+      value: { type: GraphQLInt }
+    },
+    resolve: authenticated((parent, { id, value }) => {
+      return recipeController.rate(id, value);
     })
   }
 };

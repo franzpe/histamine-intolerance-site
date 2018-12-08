@@ -53,11 +53,7 @@ export const post = async userArgs => {
 };
 
 export const deleteOne = async id => {
-  const user = await new User({ id }).destroy();
-
-  if (!user) {
-    throw new Error('User not found');
-  }
+  await new User({ id }).destroy();
 
   return id;
 };

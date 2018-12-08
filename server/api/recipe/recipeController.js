@@ -54,3 +54,37 @@ export const add = async recipeArgs => {
 
   return recipe;
 };
+
+export const update = async recipeArgs => {
+  const recipe = (await new Recipe({
+    id: recipeArgs.id,
+    name: recipeArgs.name,
+    process: recipeArgs.process
+  }).save()).toJSON();
+
+  const promises = [];
+  recipeArgs.ingredients.forEach(food => {
+    new RecipeFoods({
+      quantity: food.quantity,
+      unit: food.unit
+    })
+      .where({ recipeId: recipe.id, foodId: food.id })
+      .save(null, { method: 'update' });
+  });
+  await Promise.all(promises);
+
+  return recipe;
+};
+
+export const rate = async (id, value) => {
+  const recipe = (await new Recipe({ id }).fetch()).toJSON();
+  recipe.rating = recipe.rating + value;
+  const updatedRecipe = await new Recipe(recipe).save();
+  return updatedRecipe.toJSON();
+};
+
+export const deleteOne = async id => {
+  await new Recipe({ id }).destroy();
+
+  return id;
+};

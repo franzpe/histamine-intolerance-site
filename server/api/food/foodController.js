@@ -1,8 +1,8 @@
 import Food from './foodModel';
 
-export const getOne = async value => {
+export const getOne = async id => {
   const food = await Food.where({
-    value
+    id
   }).fetch();
 
   if (!food) {
@@ -20,4 +20,24 @@ export const getAll = async () => {
 export const add = async foodProps => {
   const food = await new Food(foodProps).save();
   return food.toJSON();
+};
+
+export const update = async foodProps => {
+  const food = await new Food(foodProps).save();
+  return food.toJSON();
+};
+
+export const deleteOne = async id => {
+  await new Food({ id }).destroy();
+  return id;
+};
+
+export const rate = async (id, value) => {
+  if (value !== 1 && value !== -1) {
+    throw new Error('Rating value out of bounds');
+  }
+  const food = (await new Food({ id }).fetch()).toJSON();
+  food.rating = food.rating + value;
+  const updatedFood = await new Food(food).save();
+  return updatedFood.toJSON();
 };
