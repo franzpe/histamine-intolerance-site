@@ -1,4 +1,5 @@
 import Food from './foodModel';
+import validator from '../../utils/validator';
 
 export const getOne = async id => {
   const food = await Food.where({
@@ -33,7 +34,7 @@ export const deleteOne = async id => {
 };
 
 export const rate = async (id, value) => {
-  if (value !== 1 && value !== -1) {
+  if (!validator.isRating(value)) {
     throw new Error('Rating value out of bounds');
   }
   const food = (await new Food({ id }).fetch()).toJSON();

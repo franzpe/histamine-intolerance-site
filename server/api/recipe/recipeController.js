@@ -77,6 +77,10 @@ export const update = async recipeArgs => {
 };
 
 export const rate = async (id, value) => {
+  if (!validator.isRating(value)) {
+    throw new Error('Rating value out of bounds');
+  }
+
   const recipe = (await new Recipe({ id }).fetch()).toJSON();
   recipe.rating = recipe.rating + value;
   const updatedRecipe = await new Recipe(recipe).save();

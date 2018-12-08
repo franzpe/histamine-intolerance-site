@@ -46,6 +46,7 @@ DB STRUCTURE:
 TASKS:
   ✔ scaffold db structrue create models @done(18-12-08 11:13)
   ✔ scaffold graphql schemas @done(18-12-08 11:13)
+  ☐ validations
   ☐ Change all db tables to InnoDB engine see example down
 
 // --- Features --- //

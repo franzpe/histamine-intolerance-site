@@ -1,7 +1,9 @@
+import bcrypt from 'bcrypt';
+
 import User from './userModel';
 import UserFoods from './userFoodsModel';
 import { signToken } from '../../auth/auth';
-import bcrypt from 'bcrypt';
+import validator from '../../utils/validator';
 
 export const getAll = async () => {
   const users = await User.fetchAll();
@@ -30,6 +32,9 @@ export const getOne = async id => {
 };
 
 export const update = async (args, user) => {
+  if (!validator.isEmail(args.contactEmail)) {
+    throw new Error('Wrong email format');
+  }
   const updatedUser = await new User({ ...user, ...args }).save();
   return updatedUser.toJson();
 };
