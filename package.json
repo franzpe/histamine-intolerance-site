@@ -8,6 +8,11 @@
     "start": "nodemon --exec BLUEBIRD_W_FORGOTTEN_RETURN=0 babel-node index.js",
     "build": "babel server -d build"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
