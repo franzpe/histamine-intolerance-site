@@ -46,8 +46,11 @@ DB STRUCTURE:
 TASKS:
   ✔ scaffold db structrue create models @done(18-12-08 11:13)
   ✔ scaffold graphql schemas @done(18-12-08 11:13)
-  ☐ validations
+  ✔ validations @done(18-12-08 12:58)
   ☐ Change all db tables to InnoDB engine see example down
+
+FEATURE:
+  ☐ consider data loader implementation on server
 
 // --- Features --- //
 ☐ User ma zoznam svojich potravin ktore hodnotil
@@ -58,6 +61,9 @@ TASKS:
 ☐ role aspon User, admin
 
 notes:
+  GRAPHQL GENERATOR:
+    https://github.com/dotansimha/graphql-code-generator
+
   ENGINE=InnoDB pouzivat v Mysql
   example:
     CREATE TABLE NameSubject (
@@ -65,3 +71,144 @@ notes:
       NameorSubject nvarchar(255),
       PRIMARY KEY (Autonumber)
     ) ENGINE=InnoDB;
+
+data loader :
+  https://github.com/gajus/gajus.com-blog/blob/master/posts/using-dataloader-to-batch-requests/index.md
+
+example:
+  import React, { Component } from 'react';
+  import { graphql, compose } from 'react-apollo';
+  import gql from 'graphql-tag';
+  
+  const query = gql`
+    {
+      foods {
+        name
+        rating
+        description
+      }
+    }
+  `;
+  
+  const mutation = gql`
+    mutation login($userName: String!, $password: String!) {
+      login(userName: $userName, password: $password)
+    }
+  `;
+  
+  const locState = gql`
+    {
+      userName @client
+      password @client
+    }
+  `;
+  
+  const updateUser = gql`
+    mutation updateUser($input: Object!) {
+      updateUser(input: $input) @client
+    }
+  `;
+  
+  class App extends Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        jwt: ''
+      };
+    }
+  
+    handleChange = e => {
+      const { name, value } = e.target;
+      this.props.updateUser({ variables: { input: { [name]: value } } });
+    };
+  
+    handleClick = e => {
+      e.preventDefault();
+      const { userName, password } = this.props.local;
+      this.props
+        .login({
+          variables: { userName, password }
+        })
+        .then(res => {
+          this.setState({ jwt: res.data.login });
+        })
+        .catch(err => {
+          console.log(err.graphQLErrors[0].message);
+        });
+    };
+  
+    delay = ms => new Promise(_ => setTimeout(_, ms));
+  
+    renderFoods() {
+      const { loading, foods, networkStatus } = this.props.remote;
+  
+      let element;
+      if (loading) {
+        element = <div>...loading</div>;
+      } else if (networkStatus === 4) {
+        element = <div>... refetching</div>;
+      } else {
+        element = foods.map((food, index) => <div key={index}>{food.name}</div>);
+      }
+  
+      return element;
+    }
+  
+    render() {
+      const { refetch } = this.props.remote;
+      const { userName, password } = this.props.local;
+      return (
+        <React.Fragment>
+          <input
+            name="userName"
+            placeholder="userName"
+            value={userName}
+            onChange={this.handleChange}
+          />
+          <input
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={this.handleChange}
+          />
+          <button name="login" onClick={this.handleClick}>
+            Login
+          </button>
+          {this.renderFoods()}
+          <br />
+          <div>Histamine intolerance app</div>
+          <button onClick={() => refetch()}>refetch</button>
+          <div>jwt: {this.state.jwt}</div>
+        </React.Fragment>
+      );
+    }
+  }
+  
+  export default compose(
+    graphql(locState, { name: 'local' }),
+    graphql(query, {
+      name: 'remote'
+    }),
+    graphql(mutation, { name: 'login' }),
+    graphql(updateUser, { name: 'updateUser' })
+  )(App);
+  
+
+  const resolvers = {
+  Mutation: {
+    updateUser: (_, { input }, { cache, getCacheKey }, info) => {
+      cache.writeData({ data: { ...input } });
+      console.log(
+        client.query({
+          query: gql`
+            {
+              userName @client
+            }
+          `
+        })
+      );
+      return null;
+    }
+  }
+};

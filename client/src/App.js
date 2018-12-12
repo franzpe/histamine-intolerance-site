@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+import Routes from './core/routes';
+
 const styles = theme => ({
   app: {
     fontFamily: 'Roboto'
@@ -13,7 +15,7 @@ class App extends Component {
 
     return (
       <div className={classes.app}>
-        <div>Histaminova intolerancia</div>
+        <Routes />
       </div>
     );
   }

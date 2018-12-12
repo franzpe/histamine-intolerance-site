@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Router } from 'react-router-dom';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 
 import App from './App';
 import * as serviceWorker from './_utils/serviceWorker';
 import client from './_client/configureClient';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import history from './_utils/history';
 
 const theme = createMuiTheme({
   typography: {
@@ -16,11 +19,17 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline>
-        <App />
-      </CssBaseline>
-    </MuiThemeProvider>
+    <ApolloHooksProvider client={client}>
+      <Suspense>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline>
+            <Router history={history}>
+              <App />
+            </Router>
+          </CssBaseline>
+        </MuiThemeProvider>
+      </Suspense>
+    </ApolloHooksProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );
