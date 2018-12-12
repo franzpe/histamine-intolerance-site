@@ -1,16 +1,7 @@
 import React from 'react';
 import FaceIcon from '@material-ui/icons/Face';
 import { landingStyles } from './styles';
-import {
-  withStyles,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Paper,
-  Avatar,
-  TextField,
-  Typography
-} from '@material-ui/core';
+import { withStyles, Button, Paper, Avatar, TextField, Typography } from '@material-ui/core';
 import { useRegistrationForm, registrationFormActions } from './useRegistrationForm';
 
 const RegisterPage = ({ classes }) => {

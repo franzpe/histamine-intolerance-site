@@ -25,7 +25,7 @@ export const LOGIN_MUTATION = gql`
 `;
 
 const LoginPage = ({ classes }) => {
-  const [staySigned, setStaySigned] = useState(false);
+  const [staySigned, setStaySigned] = useState(true);
   const [form, dispatch] = useAuthenticationForm();
 
   const login = useMutation(LOGIN_MUTATION, {
@@ -91,13 +91,15 @@ const LoginPage = ({ classes }) => {
           <FormControlLabel
             control={
               <Checkbox
-                value={staySigned.toString()}
-                onChange={e => setStaySigned(e.target.checked)}
+                checked={staySigned}
+                onChange={e => {
+                  setStaySigned(e.target.checked);
+                }}
                 color="primary"
                 disabled={form.isAuthenticating}
               />
             }
-            label="Zostat prihlaseny"
+            label="Zostať prihlasený"
           />
           <Button
             type="submit"
@@ -108,7 +110,7 @@ const LoginPage = ({ classes }) => {
             onClick={handleOnSubmit}
             disabled={form.isAuthenticating}
           >
-            Prihlasit
+            Prihlásiť
           </Button>
         </form>
         <Button

@@ -57,7 +57,8 @@ export function useRegistrationForm(initialFormState = initialState) {
 }
 
 function validate(field, state) {
-  let errors = {};
+  delete state.errors[field];
+  let errors = state.errors;
 
   if (field === 'userName') {
     const userNameError = validator.validateUserName(state.userName.value);
