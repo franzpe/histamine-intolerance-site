@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import * as routes from '../_constants/routesConstants';
-import LoginPage from '../login/LoginPage';
-import RegisterPage from '../login/LoginPage';
+import routes from '../_constants/routesConstants';
+import LoginPage from '../landing/LoginPage';
+import RegisterPage from '../landing/RegisterPage';
 
 class Routes extends Component {
   render() {

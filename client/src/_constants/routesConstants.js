@@ -1,4 +1,5 @@
 const LOGIN = '/login';
-const REGISTER = '/REGISTER';
+const REGISTER = '/register';
 
-export { LOGIN, REGISTER };
+const routes = { LOGIN, REGISTER };
+export default routes;

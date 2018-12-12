@@ -55,7 +55,7 @@ export const verifyUser = async ({ userName, password }) => {
   const user = await User.forge({ userName }).fetch();
 
   if (!user) {
-    throw new Error('No user with the given username');
+    throw new Error('Email alebo heslo je nesprávne');
   } else {
     if (!user.authenticate(password)) {
       throw new Error('Wrong password');

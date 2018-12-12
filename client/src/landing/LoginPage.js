@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import { useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 import {
   withStyles,
   FormControlLabel,
@@ -9,47 +12,11 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import LockIcon from '@material-ui/icons/LockOutlined';
-import { useMutation } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
-import { red } from '@material-ui/core/colors';
 
 import { useAuthenticationForm, authenticationFormActions } from './useAuthenticationForm';
-
-const styles = theme => ({
-  main: {
-    width: 'auto',
-    display: 'block',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
-  },
-  authError: {
-    color: red[500]
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 8,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
-  },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.light
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing.unit
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3
-  }
-});
+import history from '../_utils/history';
+import routes from '../_constants/routesConstants';
+import { landingStyles } from './styles';
 
 export const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -59,12 +26,7 @@ export const LOGIN_MUTATION = gql`
 
 const LoginPage = ({ classes }) => {
   const [staySigned, setStaySigned] = useState(false);
-  const [form, dispatch] = useAuthenticationForm({
-    userName: { value: '' },
-    password: { value: '' },
-    errors: {},
-    isAuthenticating: false
-  });
+  const [form, dispatch] = useAuthenticationForm();
 
   const login = useMutation(LOGIN_MUTATION, {
     variables: { userName: form.userName.value, password: form.password.value }
@@ -76,6 +38,9 @@ const LoginPage = ({ classes }) => {
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
+        <Typography component="h1" variant="h5">
+          Prihlásenie
+        </Typography>
         <Typography
           paragraph={false}
           gutterBottom={true}
@@ -146,6 +111,15 @@ const LoginPage = ({ classes }) => {
             Prihlasit
           </Button>
         </form>
+        <Button
+          className={classes.register}
+          onClick={e => {
+            e.preventDefault();
+            history.push(routes.REGISTER);
+          }}
+        >
+          Registrovať
+        </Button>
       </Paper>
     </main>
   );
@@ -153,26 +127,28 @@ const LoginPage = ({ classes }) => {
   function handleOnSubmit(e) {
     e.preventDefault();
 
-    dispatch({ type: authenticationFormActions.LOGIN_REQUEST });
-    login()
-      .then(res => {
-        if (form.staySigned) {
-          window.localStorage.setItem('X-JWT', res.data.login);
-        } else {
-          window.sessionStorage.setItem('X-JWT', res.data.login);
-        }
-        dispatch({
-          type: authenticationFormActions.LOGIN_SUCCESS,
-          payload: { jwt: res.data.login }
-        });
-      })
-      .catch(resErr =>
-        dispatch({
-          type: authenticationFormActions.LOGIN_ERROR,
-          payload: { error: resErr.graphQLErrors[0].message }
+    if (form.isValid) {
+      dispatch({ type: authenticationFormActions.LOGIN_REQUEST });
+      login()
+        .then(res => {
+          if (form.staySigned) {
+            window.localStorage.setItem('X-JWT', res.data.login);
+          } else {
+            window.sessionStorage.setItem('X-JWT', res.data.login);
+          }
+          dispatch({
+            type: authenticationFormActions.LOGIN_SUCCESS,
+            payload: { jwt: res.data.login }
+          });
         })
-      );
+        .catch(resErr =>
+          dispatch({
+            type: authenticationFormActions.LOGIN_ERROR,
+            payload: { error: resErr.graphQLErrors[0].message }
+          })
+        );
+    }
   }
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(landingStyles)(LoginPage);

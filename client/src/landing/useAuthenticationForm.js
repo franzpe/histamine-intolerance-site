@@ -1,8 +1,5 @@
 import { useReducer } from 'react';
-
-const emailRegex = new RegExp(
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-);
+import * as validator from './validator';
 
 export const authenticationFormActions = {
   SET_FIELD: 'SET_FIELD',
@@ -11,7 +8,15 @@ export const authenticationFormActions = {
   LOGIN_ERROR: 'LOGIN_ERROR'
 };
 
-export function useAuthenticationForm(initialFormState = initialFormState) {
+const initialState = {
+  userName: { value: '' },
+  password: { value: '' },
+  errors: {},
+  isAuthenticating: false,
+  isValid: false
+};
+
+export function useAuthenticationForm(initialFormState = initialState) {
   const [state, dispatch] = useReducer(reducer, initialFormState);
 
   return [state, dispatch];
@@ -19,7 +24,7 @@ export function useAuthenticationForm(initialFormState = initialFormState) {
   function reducer(prevState, action) {
     switch (action.type) {
       case authenticationFormActions.SET_FIELD: {
-        return withValidationErrors({
+        return withValidationErrors(action.payload.field, {
           ...prevState,
           [action.payload.field]: { value: action.payload.value }
         });
@@ -42,20 +47,27 @@ export function useAuthenticationForm(initialFormState = initialFormState) {
     }
   }
 
-  function withValidationErrors(nextState) {
-    return { ...nextState, errors: validateUser(nextState) };
+  function withValidationErrors(field, nextState) {
+    const errors = validate(field, nextState);
+    return { ...nextState, errors, isValid: Object.keys(errors).length === 0 };
   }
 }
 
-function validateUser(state) {
+function validate(field, state) {
   let errors = {};
 
-  if (!emailRegex.test(state.userName.value)) {
-    errors = { ...errors, userName: 'user name is inavalid' };
+  if (field === 'userName') {
+    const userNameError = validator.validateUserName(state.userName.value);
+    if (userNameError) {
+      errors = { ...errors, userName: userNameError };
+    }
   }
 
-  if (state.password.value.length < 3) {
-    errors = { ...errors, password: 'password needs to have atleast 8 characters' };
+  if (field === 'password') {
+    const passwordError = validator.validatePassword(state.password.value);
+    if (passwordError) {
+      errors = { ...errors, password: passwordError };
+    }
   }
 
   return errors;

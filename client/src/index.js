@@ -4,11 +4,11 @@ import { ApolloProvider } from 'react-apollo';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router } from 'react-router-dom';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 import App from './App';
 import * as serviceWorker from './_utils/serviceWorker';
-import client from './_client/configureClient';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import client from './_utils/configureClient';
 import history from './_utils/history';
 
 const theme = createMuiTheme({
