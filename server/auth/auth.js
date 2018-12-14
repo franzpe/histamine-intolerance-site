@@ -58,7 +58,7 @@ export const verifyUser = async ({ userName, password }) => {
     throw new Error('Email alebo heslo je nesprávne');
   } else {
     if (!user.authenticate(password)) {
-      throw new Error('Wrong password');
+      throw new Error('Email alebo heslo je nesprávne');
     } else {
       return signToken(user.id);
     }
