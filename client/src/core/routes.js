@@ -1,18 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import routes from '../_constants/routesConstants';
-import LoginPage from '../landing/LoginPage';
-import RegisterPage from '../landing/RegisterPage';
+
+const Login = lazy(() => import(/* webpackChunkName: "Login" */ '../landing/LoginPage'));
+const Register = lazy(() => import(/* webpackChunkName: "Register" */ '../landing/RegisterPage'));
 
 class Routes extends Component {
   render() {
     return (
-      <Switch>
-        <Route exact={true} path="/" component={() => <div>root</div>} />
-        <Route exact={true} path={routes.LOGIN} component={LoginPage} />
-        <Route exact={true} path={routes.REGISTER} component={RegisterPage} />
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Switch>
+          <Route exact={true} path="/" component={() => <div>root</div>} />
+          <Route exact={true} path={routes.LOGIN} component={Login} />
+          <Route exact={true} path={routes.REGISTER} component={Register} />
+        </Switch>
+      </Suspense>
     );
   }
 }

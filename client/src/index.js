@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,15 +20,13 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
-      <Suspense>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline>
-            <Router history={history}>
-              <App />
-            </Router>
-          </CssBaseline>
-        </MuiThemeProvider>
-      </Suspense>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline>
+          <Router history={history}>
+            <App />
+          </Router>
+        </CssBaseline>
+      </MuiThemeProvider>
     </ApolloHooksProvider>
   </ApolloProvider>,
   document.getElementById('root')
