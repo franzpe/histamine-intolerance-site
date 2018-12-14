@@ -1,4 +1,4 @@
-import { red } from '@material-ui/core/colors';
+import { red, green } from '@material-ui/core/colors';
 
 export const landingStyles = theme => ({
   main: {
@@ -12,8 +12,11 @@ export const landingStyles = theme => ({
       marginRight: 'auto'
     }
   },
-  authError: {
+  error: {
     color: red[500]
+  },
+  success: {
+    color: green[500]
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
@@ -36,5 +39,9 @@ export const landingStyles = theme => ({
   },
   register: {
     marginTop: theme.spacing.unit * 3
+  },
+  back: {
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 2
   }
 });

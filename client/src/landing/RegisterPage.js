@@ -1,11 +1,25 @@
 import React from 'react';
 import FaceIcon from '@material-ui/icons/Face';
-import { landingStyles } from './styles';
 import { withStyles, Button, Paper, Avatar, TextField, Typography } from '@material-ui/core';
+import gql from 'graphql-tag';
+import { useMutation } from 'react-apollo-hooks';
+
+import { landingStyles } from './styles';
 import { useRegistrationForm, registrationFormActions } from './useRegistrationForm';
+import history from '../_utils/history';
+import routes from '../_constants/routesConstants';
+
+const SIGNUP_MUTATION = gql`
+  mutation signup($userName: String!, $password: String!) {
+    signup(userName: $userName, password: $password)
+  }
+`;
 
 const RegisterPage = ({ classes }) => {
   const [form, dispatch] = useRegistrationForm();
+  const signup = useMutation(SIGNUP_MUTATION, {
+    variables: { userName: form.userName.value, password: form.password.value }
+  });
 
   return (
     <main className={classes.main}>
@@ -15,6 +29,14 @@ const RegisterPage = ({ classes }) => {
         </Avatar>
         <Typography component="h1" variant="h5">
           Registrácia
+        </Typography>
+        <Typography
+          paragraph={false}
+          gutterBottom={true}
+          variant="subtitle2"
+          className={form.isRegistered ? classes.success : classes.error}
+        >
+          {form.isRegistered ? 'Registration successful. Please log in.' : form.errors.registration}
         </Typography>
         <form className={classes.form}>
           <TextField
@@ -76,7 +98,6 @@ const RegisterPage = ({ classes }) => {
           />
           <Button
             type="submit"
-            fullWidth={true}
             variant="contained"
             color="primary"
             className={classes.submit}
@@ -85,6 +106,19 @@ const RegisterPage = ({ classes }) => {
           >
             Registrovať
           </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            className={classes.back}
+            onClick={e => {
+              e.preventDefault();
+              history.push(routes.LOGIN);
+            }}
+            disabled={form.isAuthenticating}
+          >
+            Späť
+          </Button>
         </form>
       </Paper>
     </main>
@@ -92,8 +126,20 @@ const RegisterPage = ({ classes }) => {
 
   function handleOnSubmit(e) {
     e.preventDefault();
+
+    dispatch({ type: registrationFormActions.REGISTER_REQUEST });
     if (form.isValid) {
-      // TODO REGISTER
+      dispatch({ type: registrationFormActions.REGISTER_SUCCESS });
+      signup()
+        .then(() => {
+          setTimeout(() => history.push(routes.LOGIN), 1500);
+        })
+        .catch(resErr =>
+          dispatch({
+            type: registrationFormActions.REGISTER_ERROR,
+            payload: { error: resErr.graphQLErrors[0].message }
+          })
+        );
     }
   }
 };

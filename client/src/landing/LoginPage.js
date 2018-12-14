@@ -18,7 +18,7 @@ import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { landingStyles } from './styles';
 
-export const LOGIN_MUTATION = gql`
+const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
     login(userName: $userName, password: $password)
   }
@@ -45,7 +45,7 @@ const LoginPage = ({ classes }) => {
           paragraph={false}
           gutterBottom={true}
           variant="subtitle2"
-          className={classes.authError}
+          className={classes.error}
         >
           {form.errors.authentication}
         </Typography>
@@ -142,6 +142,7 @@ const LoginPage = ({ classes }) => {
             type: authenticationFormActions.LOGIN_SUCCESS,
             payload: { jwt: res.data.login }
           });
+          history.push(routes.RECIPES);
         })
         .catch(resErr =>
           dispatch({
