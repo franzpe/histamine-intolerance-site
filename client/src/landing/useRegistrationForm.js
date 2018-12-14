@@ -16,6 +16,7 @@ const initialState = {
   confirmPassword: { value: '' },
   errors: {},
   isRegistering: false,
+  isRegistered: false,
   isValid: false
 };
 
@@ -36,13 +37,13 @@ export function useRegistrationForm(initialFormState = initialState) {
         return { ...prevState, isRegistering: true };
       }
       case registrationFormActions.REGISTER_SUCCESS: {
-        return { ...prevState, isRegistering: false };
+        return { ...prevState, isRegistering: false, isRegistered: true };
       }
       case registrationFormActions.REGISTER_ERROR: {
         return {
           ...prevState,
           isRegistering: false,
-          errors: { authentication: action.payload.error }
+          errors: { registration: action.payload.error }
         };
       }
       default:

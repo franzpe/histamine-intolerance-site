@@ -10,6 +10,7 @@ import App from './App';
 import * as serviceWorker from './_utils/serviceWorker';
 import client from './_utils/configureClient';
 import history from './_utils/history';
+import './index.css';
 
 const theme = createMuiTheme({
   typography: {
