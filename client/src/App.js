@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import Routes from './core/routes';
 import Header from './core/Header';
 import Footer from './core/Footer';
-import routes from './_constants/routesConstants';
+import 'react-toastify/dist/ReactToastify.css';
 
 const styles = theme => ({
   app: {
@@ -25,39 +26,29 @@ const styles = theme => ({
   },
   content: {
     flex: 1
+  },
+  toast: {
+    borderRadius: '5px !important',
+    fontFamily: 'Roboto !important',
+    fontSize: '14px !important',
+    fontWeight: 600,
+    letterSpacing: '0.5px',
+    boxShadow: '1px 0 10px rgba(0,0,0,0.55) !important'
   }
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showComponents:
-        props.location.pathname !== routes.LOGIN && props.location.pathname !== routes.REGISTER
-    };
-  }
-
-  componentDidUpdate = prevProps => {
-    const { location } = this.props;
-    if (location !== prevProps.location) {
-      this.setState({
-        showComponents: location.pathname !== routes.LOGIN && location.pathname !== routes.REGISTER
-      });
-    }
-  };
-
   render() {
     const { classes } = this.props;
-    const { showComponents } = this.state;
 
     return (
       <div className={classes.app}>
-        {showComponents && <Header />}
+        <ToastContainer toastClassName={classes.toast} />
+        <Header />
         <div className={classes.content}>
           <Routes />
         </div>
-        {showComponents && <Footer />}
+        <Footer />
       </div>
     );
   }

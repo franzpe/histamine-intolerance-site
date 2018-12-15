@@ -1,4 +1,4 @@
-import { red, green } from '@material-ui/core/colors';
+import { green, red } from '@material-ui/core/colors';
 
 export const landingStyles = theme => ({
   main: {

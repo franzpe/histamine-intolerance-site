@@ -1,18 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-const styles = theme => ({
-  wrapper: {
-    backgroundColor: theme.palette.primary.main
-  }
-});
+const styles = theme => ({});
 
 const RecipesPage = ({ classes }) => {
-  return (
-    <div className={classes.wrapper}>
-      Recipes whatever <br />
-    </div>
-  );
+  return <div>Recipes whatever</div>;
 };
 
 export default withStyles(styles)(RecipesPage);

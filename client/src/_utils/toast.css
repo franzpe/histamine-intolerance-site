@@ -1,0 +1,17 @@
+.toast {
+  border-radius: 5px !important;
+  font-family: Roboto !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.55) !important;
+}
+
+.toast--success {
+  background-color: #3f51b5 !important;
+}
+
+.toast--error {
+  /* equivalent to red[500] */
+  background-color: #f44336 !important;
+}
