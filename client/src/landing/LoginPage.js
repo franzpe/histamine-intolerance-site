@@ -17,6 +17,7 @@ import { useAuthenticationForm, authenticationFormActions } from './useAuthentic
 import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { landingStyles } from './styles';
+import { showSuccessToast } from '../_utils/toast';
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -29,7 +30,12 @@ const LoginPage = ({ classes }) => {
   const [form, dispatch] = useAuthenticationForm();
 
   const login = useMutation(LOGIN_MUTATION, {
-    variables: { userName: form.userName.value, password: form.password.value }
+    variables: { userName: form.userName.value, password: form.password.value },
+    update: (store, { data: { login } }) => {
+      if (login) {
+        store.writeData({ data: { isAuthenticated: true } });
+      }
+    }
   });
 
   return (
@@ -133,23 +139,27 @@ const LoginPage = ({ classes }) => {
       dispatch({ type: authenticationFormActions.LOGIN_REQUEST });
       login()
         .then(res => {
-          if (form.staySigned) {
+          if (staySigned) {
             window.localStorage.setItem('X-JWT', res.data.login);
           } else {
             window.sessionStorage.setItem('X-JWT', res.data.login);
           }
+
           dispatch({
             type: authenticationFormActions.LOGIN_SUCCESS,
             payload: { jwt: res.data.login }
           });
-          history.push(routes.RECIPES);
+
+          history.push('/');
+          showSuccessToast('Prihlásenie úspešné');
         })
-        .catch(resErr =>
+        .catch(resErr => {
+          console.log(resErr);
           dispatch({
             type: authenticationFormActions.LOGIN_ERROR,
             payload: { error: resErr.graphQLErrors[0].message }
-          })
-        );
+          });
+        });
     }
   }
 };

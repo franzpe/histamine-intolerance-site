@@ -6,11 +6,11 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
-import App from './App';
 import * as serviceWorker from './_utils/serviceWorker';
 import client from './_utils/configureClient';
 import history from './_utils/history';
 import routes from './_constants/routesConstants';
+import { verifyUser } from './_utils/verifyUser';
 
 const theme = createMuiTheme({
   typography: {
@@ -20,22 +20,25 @@ const theme = createMuiTheme({
 
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './landing/LoginPage'));
 const Register = lazy(() => import(/* webpackChunkName: "Register" */ './landing/RegisterPage'));
+const App = lazy(() => import(/* webpackChunkName: "App" */ './App'));
+
+verifyUser(client);
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
       <MuiThemeProvider theme={theme}>
-        <CssBaseline>
-          <Router history={history}>
-            <Suspense fallback={<div />}>
+        <Router history={history}>
+          <Suspense fallback={<div />}>
+            <CssBaseline>
               <Switch>
                 <Route exact={true} path={routes.LOGIN} component={Login} />
                 <Route exact={true} path={routes.REGISTER} component={Register} />
                 <Route component={App} />
               </Switch>
-            </Suspense>
-          </Router>
-        </CssBaseline>
+            </CssBaseline>
+          </Suspense>
+        </Router>
       </MuiThemeProvider>
     </ApolloHooksProvider>
   </ApolloProvider>,

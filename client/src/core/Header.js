@@ -1,9 +1,13 @@
 import React, { Fragment } from 'react';
 import { withStyles, Toolbar, Typography, Button } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 
 import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
+import { showErrorToast } from '../_utils/toast';
+import jwt from '../_utils/jwt';
 
 const styles = theme => ({
   appBar: {
@@ -22,6 +26,9 @@ const styles = theme => ({
   },
   activeSection: {
     color: theme.palette.secondary.main
+  },
+  profile: {
+    marginRight: theme.spacing.unit
   }
 });
 
@@ -30,7 +37,22 @@ const sections = [
   { to: routes.FOODS, label: 'Groceries' }
 ];
 
+const AUTHENTICATION_QUERY = gql`
+  {
+    isAuthenticated @client
+  }
+`;
+
+const LOGOUT_MUTATION = gql`
+  mutation logout {
+    logout @client
+  }
+`;
+
 function Header({ classes }) {
+  const { isAuthenticated } = useQuery(AUTHENTICATION_QUERY).data;
+  const logout = useMutation(LOGOUT_MUTATION);
+
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
@@ -44,16 +66,27 @@ function Header({ classes }) {
         >
           HIT
         </Typography>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={e => {
-            e.preventDefault();
-            history.push(routes.LOGIN);
-          }}
-        >
-          Prihlásiť
-        </Button>
+        {!isAuthenticated ? (
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={e => {
+              e.preventDefault();
+              history.push(routes.LOGIN);
+            }}
+          >
+            Prihlásiť
+          </Button>
+        ) : (
+          <Fragment>
+            <Button variant="outlined" size="small" className={classes.profile}>
+              Profile
+            </Button>
+            <Button variant="contained" size="small" color="primary" onClick={handleLogout}>
+              Odhlásiť
+            </Button>
+          </Fragment>
+        )}
       </Toolbar>
       <Toolbar variant="dense">
         {sections.map((section, index) => (
@@ -69,6 +102,12 @@ function Header({ classes }) {
       </Toolbar>
     </Fragment>
   );
+
+  function handleLogout(e) {
+    logout();
+    jwt.removeAll();
+    showErrorToast('Boli ste odhlásený');
+  }
 }
 
 export default withStyles(styles)(Header);
