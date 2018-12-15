@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   footer: {
-    height: '100px',
-    backgroundColor: theme.palette.secondary.main
+    height: '80px',
+    borderTop: '1px solid #e0e0e0'
   }
 });
 
