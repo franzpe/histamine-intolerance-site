@@ -12,6 +12,7 @@ class Routes extends Component {
     return (
       <Suspense fallback={<div />}>
         <Switch>
+          <Route exact={true} path="/" component={Recipes} />
           <Route exact={true} path={routes.RECIPES} component={Recipes} />
           <Route exact={true} path={routes.LOGIN} component={Login} />
           <Route exact={true} path={routes.REGISTER} component={Register} />

@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import { withStyles, Toolbar, Typography, IconButton, Button } from '@material-ui/core';
+import { withStyles, Toolbar, Typography, Button } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
 import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
-import { teal } from '@material-ui/core/colors';
 
 const styles = theme => ({
   appBar: {
@@ -43,7 +42,7 @@ function Header({ classes }) {
           noWrap
           className={classes.toolbarTitle}
         >
-          Blog
+          HIT
         </Typography>
         <Button
           variant="outlined"
@@ -53,7 +52,7 @@ function Header({ classes }) {
             history.push(routes.LOGIN);
           }}
         >
-          Sign up
+          Prihlásiť
         </Button>
       </Toolbar>
       <Toolbar variant="dense">

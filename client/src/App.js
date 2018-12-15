@@ -8,10 +8,12 @@ import Footer from './core/Footer';
 import routes from './_constants/routesConstants';
 
 const styles = theme => ({
-  appWrapper: {
+  app: {
     width: 'auto',
     height: '100%',
-    minHeight: '100%',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
@@ -20,6 +22,9 @@ const styles = theme => ({
       marginRight: 'auto'
     },
     fontFamily: 'Roboto'
+  },
+  content: {
+    flex: 1
   }
 });
 
@@ -44,12 +49,14 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { showComponents: showComponents } = this.state;
+    const { showComponents } = this.state;
 
     return (
-      <div className={classes.appWrapper}>
+      <div className={classes.app}>
         {showComponents && <Header />}
-        <Routes />
+        <div className={classes.content}>
+          <Routes />
+        </div>
         {showComponents && <Footer />}
       </div>
     );
