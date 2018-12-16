@@ -11,6 +11,7 @@ import client from './_utils/configureClient';
 import history from './_utils/history';
 import routes from './_constants/routesConstants';
 import { verifyUser } from './_utils/verifyUser';
+import './index.scss';
 
 const theme = createMuiTheme({
   typography: {
