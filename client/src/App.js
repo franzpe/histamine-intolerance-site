@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Routes from './core/routes';
-import Header from './core/Header';
 import Footer from './core/Footer';
+import Trend from './core/Trend';
+import history from './_utils/history';
+import routes from './_constants/routesConstants';
 import 'react-toastify/dist/ReactToastify.css';
+import Header from './core/Header';
 
 const styles = theme => ({
   app: {
@@ -25,7 +27,8 @@ const styles = theme => ({
     fontFamily: 'Roboto'
   },
   content: {
-    flex: 1
+    flex: 1,
+    padding: `${theme.spacing.unit * 4}px 0`
   },
   toast: {
     borderRadius: '5px !important',
@@ -40,11 +43,11 @@ const styles = theme => ({
 class App extends Component {
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.app}>
-        <ToastContainer toastClassName={classes.toast} />
         <Header />
+        <ToastContainer toastClassName={classes.toast} />
+        {!history.location.pathname.startsWith(routes.RECIPES + '/') && <Trend />}
         <div className={classes.content}>
           <Routes />
         </div>
@@ -54,4 +57,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(App));
+export default withStyles(styles)(App);

@@ -47,18 +47,26 @@ TASKS:
   ✔ scaffold db structrue create models @done(18-12-08 11:13)
   ✔ scaffold graphql schemas @done(18-12-08 11:13)
   ✔ validations @done(18-12-08 12:58)
-  ☐ Change all db tables to InnoDB engine see example down
-
-FEATURE:
   ☐ consider data loader implementation on server
+  ☐ Change all db tables to InnoDB engine see example down
+  ☐ Sticky footer 
+  ☐ client store 
+    ☐ authentication bool
+  ☐ Trend - text-overflow: elipsess
+  ☐ Mobile view in recipes adjust
+  ☐ rating styling
+    ☐ 0-49 secondary color
+    ☐ 49.01 - 50.99 yellow 700
+    ☐ 51 - 100 - grenn[500 -> more percentage]
+  
+FEATURE:
+  ☐ User ma zoznam svojich potravin ktore hodnotil
+  ☐ Kazda potravina ma rating
+  ☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost
+    ☐ recept ma rating
+    ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
+  ☐ role aspon User, admin
 
-// --- Features --- //
-☐ User ma zoznam svojich potravin ktore hodnotil
-☐ Kazda potravina ma rating
-☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost
-  ☐ recept ma rating
-  ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
-☐ role aspon User, admin
 
 notes:
   GRAPHQL GENERATOR:
