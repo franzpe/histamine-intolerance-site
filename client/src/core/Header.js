@@ -8,6 +8,7 @@ import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { showErrorToast } from '../_utils/toast';
 import jwt from '../_utils/jwt';
+import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 
 const styles = theme => ({
   appBar: {
@@ -29,6 +30,10 @@ const styles = theme => ({
   },
   profile: {
     marginRight: theme.spacing.unit
+  },
+  facebook: {
+    marginRight: theme.spacing.unit,
+    cursor: 'pointer'
   }
 });
 
@@ -67,16 +72,18 @@ function Header({ classes }) {
           HIT
         </Typography>
         {!isAuthenticated ? (
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={e => {
-              e.preventDefault();
-              history.push(routes.LOGIN);
-            }}
-          >
-            Prihlásiť
-          </Button>
+          <Fragment>
+            <FacebookSvg className={classes.facebook} onClick={handleFacebookLogin} />
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={e => {
+                history.push(routes.LOGIN);
+              }}
+            >
+              Prihlásiť
+            </Button>
+          </Fragment>
         ) : (
           <Fragment>
             <Button variant="outlined" size="small" className={classes.profile}>
@@ -102,6 +109,10 @@ function Header({ classes }) {
       </Toolbar>
     </Fragment>
   );
+
+  function handleFacebookLogin(e) {
+    console.log('facebook');
+  }
 
   function handleLogout(e) {
     logout();

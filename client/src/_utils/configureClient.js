@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-boost';
-import initialState from '../_state/index.js';
-import mutation from '../_mutations';
+import initialState from '_state/index.js';
+import mutation from '_mutations';
 import jwt from './jwt.js';
 
 function configureClient() {
