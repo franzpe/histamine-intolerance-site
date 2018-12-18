@@ -57,7 +57,11 @@ const RecipesPage = ({ classes }) => {
               <Typography>{recipe.content}</Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" comolr="primary" onClick={e => handleView(index, e)}>
+              <Button
+                size="small"
+                comolr="primary"
+                onClick={e => history.push(routes.RECIPES + '/' + index)}
+              >
                 View
               </Button>
             </CardActions>
@@ -66,10 +70,6 @@ const RecipesPage = ({ classes }) => {
       ))}
     </Grid>
   );
-  function handleView(index, e) {
-    e.preventDefault();
-    history.push(routes.RECIPES + '/' + index);
-  }
 };
 
 export default withStyles(styles)(RecipesPage);

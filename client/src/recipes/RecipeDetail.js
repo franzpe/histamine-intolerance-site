@@ -11,6 +11,7 @@ import {
   CardMedia
 } from '@material-ui/core';
 import { yellow } from '@material-ui/core/colors';
+
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
 
@@ -121,17 +122,17 @@ function RecipeDetail({ classes, match }) {
         </CardContent>
       </Card>
       <div className={classes.backWrapper}>
-        <Button variant="contained" color="secondary" onClick={handleBack} className={classes.back}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => history.push('/')}
+          className={classes.back}
+        >
           back
         </Button>
       </div>
     </Fragment>
   );
-
-  function handleBack(e) {
-    e.preventDefault();
-    history.push('/');
-  }
 }
 
 export default withStyles(styles)(memo(RecipeDetail));

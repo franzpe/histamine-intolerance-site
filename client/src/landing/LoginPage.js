@@ -119,13 +119,7 @@ const LoginPage = ({ classes }) => {
             Prihlásiť
           </Button>
         </form>
-        <Button
-          className={classes.register}
-          onClick={e => {
-            e.preventDefault();
-            history.push(routes.REGISTER);
-          }}
-        >
+        <Button className={classes.register} onClick={e => history.push(routes.REGISTER)}>
           Registrovať
         </Button>
       </Paper>
