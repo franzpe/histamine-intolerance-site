@@ -8,7 +8,7 @@ import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { showErrorToast } from '../_utils/toast';
 import jwt from '../_utils/jwt';
-import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
+import FacebookLoginBtn from '_components/buttons/FacebookLoginBtn';
 
 const styles = theme => ({
   appBar: {
@@ -73,7 +73,7 @@ function Header({ classes }) {
         </Typography>
         {!isAuthenticated ? (
           <Fragment>
-            <FacebookSvg className={classes.facebook} onClick={handleFacebookLogin} />
+            <FacebookLoginBtn className={classes.facebook} />
             <Button
               variant="outlined"
               size="small"
@@ -109,10 +109,6 @@ function Header({ classes }) {
       </Toolbar>
     </Fragment>
   );
-
-  function handleFacebookLogin(e) {
-    console.log('facebook');
-  }
 
   function handleLogout(e) {
     logout();

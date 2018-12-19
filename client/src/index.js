@@ -21,6 +21,9 @@ const theme = createMuiTheme({
 
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './landing/LoginPage'));
 const Register = lazy(() => import(/* webpackChunkName: "Register" */ './landing/RegisterPage'));
+const FacebookLogin = lazy(() =>
+  import(/* webpackChunkName: "FacebookLogin" */ './landing/FacebookLogin')
+);
 const App = lazy(() => import(/* webpackChunkName: "App" */ './App'));
 
 verifyUser(client);
@@ -35,6 +38,7 @@ ReactDOM.render(
               <Switch>
                 <Route exact={true} path={routes.LOGIN} component={Login} />
                 <Route exact={true} path={routes.REGISTER} component={Register} />
+                <Route exact={true} path="/facebook-callback" component={FacebookLogin} />
                 <Route component={App} />
               </Switch>
             </CssBaseline>

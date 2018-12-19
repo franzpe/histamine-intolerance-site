@@ -148,7 +148,6 @@ const LoginPage = ({ classes }) => {
           showSuccessToast('Prihlásenie úspešné');
         })
         .catch(resErr => {
-          console.log(resErr);
           dispatch({
             type: authenticationFormActions.LOGIN_ERROR,
             payload: { error: resErr.graphQLErrors[0].message }
