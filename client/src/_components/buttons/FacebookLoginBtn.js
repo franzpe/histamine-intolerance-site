@@ -15,7 +15,7 @@ function FacebookLoginBtn({ className }) {
   );
 
   function handleFacebookLogin(e) {
-    window.location = `https://www.facebook.com/v2.9/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(
+    window.location = `https://www.facebook.com/v2.9/dialog/oauth?scope=email&client_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(
       redirectUrl
     )}`;
   }

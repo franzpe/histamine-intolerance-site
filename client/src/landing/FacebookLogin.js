@@ -4,6 +4,7 @@ import qs from 'qs';
 import gql from 'graphql-tag';
 
 import history from '_utils/history';
+import { showErrorToast, showSuccessToast } from '_utils/toast';
 
 const FACEBOOK_LOGIN_MUTATION = gql`
   mutation facebookLogin($code: String!) {
@@ -23,9 +24,10 @@ function FacebookLogin() {
   facebookLogin({ variables: { code } })
     .then(({ data: { facebookLogin } }) => {
       window.localStorage.setItem('X-JWT', facebookLogin);
+      showSuccessToast('Prihlásenie úspešné');
       history.push('/');
     })
-    .catch(err => console.log(err));
+    .catch(() => showErrorToast('Prihlásenie nebolo úspešné. Prosím skúste znovu'));
 
   return <div />;
 }
