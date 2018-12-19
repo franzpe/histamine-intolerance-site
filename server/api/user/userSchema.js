@@ -82,6 +82,15 @@ export const MutationFields = {
       return verifyUser(args);
     }
   },
+  facebookLogin: {
+    type: GraphQLString,
+    args: {
+      code: { type: new GraphQLNonNull(GraphQLString) }
+    },
+    resolve: async function(parent, { code }) {
+      return await userController.facebookLogin(code);
+    }
+  },
   changePassword: {
     type: GraphQLBoolean,
     args: {

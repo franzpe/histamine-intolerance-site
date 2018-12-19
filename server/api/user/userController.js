@@ -1,9 +1,11 @@
 import bcrypt from 'bcrypt';
+import { Facebook } from 'fb';
 
 import User from './userModel';
 import UserFoods from './userFoodsModel';
 import { signToken } from '../../auth/auth';
 import validator from '../../utils/validator';
+import config from '../../config/config';
 
 export const getAll = async () => {
   const users = await User.fetchAll();
@@ -71,4 +73,32 @@ export const getUserFoods = async id => {
   }));
 
   return foods;
+};
+
+export const facebookLogin = async code => {
+  const fb = new Facebook();
+
+  return new Promise((resolve, reject) => {
+    fb.api(
+      `/oauth/access_token?client_id=${config.fb.app_id}&client_secret=${
+        config.fb.secret
+      }&code=${code}&redirect_uri=http://localhost:3000/facebook-callback`,
+      response => {
+        const { access_token } = response;
+
+        fb.api(`/me?fields=id&access_token=${access_token}`, async response => {
+          const { id } = response;
+          const user = await User.where({ userName: id }).fetch();
+
+          if (!user) {
+            const token = await post({ userName: id, password: 'WhateverForNow' });
+            resolve(token);
+          } else {
+            const token = signToken(user.toJSON().id);
+            resolve(token);
+          }
+        });
+      }
+    );
+  });
 };

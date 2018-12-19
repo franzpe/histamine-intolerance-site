@@ -1,4 +1,13 @@
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE, PORT, JWT } from 'babel-dotenv';
+import {
+  DB_HOST,
+  DB_USER,
+  DB_PASSWORD,
+  DB_DATABASE,
+  PORT,
+  JWT,
+  FACEBOOK_APP_ID,
+  FACEBOOK_SECRET
+} from 'babel-dotenv';
 
 const config = {
   dev: 'development',
@@ -15,6 +24,10 @@ const config = {
     user: DB_USER,
     password: DB_PASSWORD,
     database: DB_DATABASE
+  },
+  fb: {
+    app_id: FACEBOOK_APP_ID,
+    secret: FACEBOOK_SECRET
   }
 };
 
