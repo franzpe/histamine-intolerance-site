@@ -9,7 +9,7 @@ import Role from '../role/roleModel';
 // password - String
 // firstName - String
 // lastName - String
-// contactEmail - String
+// email - String
 // role - int FK Role
 class User extends db.Model {
   constructor(args) {

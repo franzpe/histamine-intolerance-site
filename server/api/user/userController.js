@@ -51,7 +51,13 @@ export const changePassword = async ({ oldPassword, newPassword }, user) => {
 };
 
 export const post = async userArgs => {
-  const user = new User({ ...userArgs, ...{ role: 'USR' } }).save();
+  let user;
+  try {
+    user = await new User({ ...userArgs, ...{ role: 'USR' } }).save();
+  } catch (err) {
+    throw new Error('User s takoutou emailovou adresou uz existuje');
+  }
+
   let token;
   if (user) {
     token = signToken(user.id);
@@ -82,22 +88,34 @@ export const facebookLogin = async code => {
     fb.api(
       `/oauth/access_token?client_id=${config.fb.app_id}&client_secret=${
         config.fb.secret
-      }&code=${code}&redirect_uri=http://localhost:3000/facebook-callback`,
+      }&code=${code}&redirect_uri=http://localhost:3000/facebook-callback&scope=email`,
       response => {
         const { access_token } = response;
 
-        fb.api(`/me?fields=id&access_token=${access_token}`, async response => {
-          const { id } = response;
-          const user = await User.where({ userName: id }).fetch();
+        fb.api(
+          `/me?fields=id,email,first_name,last_name&access_token=${access_token}`,
+          async response => {
+            const { id } = response;
+            const user = await User.where({ userName: id }).fetch();
 
-          if (!user) {
-            const token = await post({ userName: id, password: 'WhateverForNow' });
-            resolve(token);
-          } else {
-            const token = signToken(user.toJSON().id);
-            resolve(token);
+            if (!user) {
+              const { email, first_name, last_name } = response;
+              const userArgs = {
+                userName: id,
+                email: email || `${first_name}${last_name}@facebook.com`,
+                firstName: first_name,
+                lastName: last_name,
+                password: 'ThisIsGonnaBeRandomStuff'
+              };
+
+              const token = await post(userArgs);
+              resolve(token);
+            } else {
+              const token = signToken(user.toJSON().id);
+              resolve(token);
+            }
           }
-        });
+        );
       }
     );
   });

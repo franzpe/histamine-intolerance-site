@@ -23,7 +23,7 @@ export const UserType = new GraphQLObjectType({
     password: { type: GraphQLString },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
-    contactEmail: { type: GraphQLString },
+    email: { type: GraphQLString },
     role: {
       type: RoleType,
       resolve(parent, args) {
@@ -69,7 +69,7 @@ export const MutationFields = {
       password: { type: new GraphQLNonNull(GraphQLString) }
     },
     resolve(parent, args) {
-      return userController.post(args);
+      return userController.post({ ...args, email: args.userName });
     }
   },
   login: {
@@ -106,7 +106,7 @@ export const MutationFields = {
     args: {
       firstName: { type: GraphQLString },
       lastName: { type: GraphQLString },
-      contactEmail: { type: GraphQLString }
+      email: { type: GraphQLString }
     },
     resolve: authenticated((parent, args, { user }) => {
       return userController.update(args, user);
