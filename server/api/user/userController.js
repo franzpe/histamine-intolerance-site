@@ -71,8 +71,8 @@ export const deleteOne = async id => {
   return id;
 };
 
-export const getUserFoods = async id => {
-  const userFoods = await UserFoods.fetchAll({ withRelated: ['Food'] });
+export const getUserFoods = async userId => {
+  const userFoods = await UserFoods.where({ userId }).fetchAll({ withRelated: ['Food'] });
 
   const foods = userFoods.toJSON().map(userFood => ({
     ...userFood.Food

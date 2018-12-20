@@ -24,7 +24,12 @@ const FoodTypeFields = {
       return parent.histamineLevel && histamineLevelController.getOne(parent.histamineLevel);
     }
   },
-  rating: { type: GraphQLFloat },
+  totalRating: {
+    type: GraphQLFloat,
+    resolve(parent) {
+      return foodController.getTotalFoodRating(parent.id);
+    }
+  },
   description: { type: GraphQLString }
 };
 
@@ -39,6 +44,19 @@ export const FoodExtendedType = new GraphQLObjectType({
     ...FoodTypeFields,
     quantity: { type: new GraphQLNonNull(GraphQLFloat) },
     unit: { type: new GraphQLNonNull(UnitType) }
+  })
+});
+
+export const UserFoodType = new GraphQLObjectType({
+  name: 'UserFoodType',
+  fields: () => ({
+    ...FoodTypeFields,
+    myRating: {
+      type: GraphQLFloat,
+      resolve: authenticated((parent, args, { user }) => {
+        return foodController.getUserFoodRating(user.id, parent.id);
+      })
+    }
   })
 });
 
@@ -92,13 +110,13 @@ export const MutationFields = {
     })
   },
   rateFood: {
-    type: FoodType,
+    type: GraphQLFloat,
     args: {
       id: { type: new GraphQLNonNull(GraphQLInt) },
       value: { type: new GraphQLNonNull(GraphQLInt) }
     },
-    resolve: authenticated((parent, { id, value }) => {
-      return foodController.rate(id, value);
+    resolve: authenticated((parent, { id, value }, { user }) => {
+      return foodController.rate(id, user.id, value);
     })
   }
 };

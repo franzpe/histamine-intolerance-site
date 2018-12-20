@@ -4,7 +4,6 @@ import db from '../../utils/dbConnection';
 // id - Int
 // name - String
 // histamineLevel - int FK HistamineLevel
-// rating - Number
 // description - String
 class Food extends db.Model {
   constructor(args) {

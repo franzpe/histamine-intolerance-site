@@ -5,7 +5,7 @@ const isEmail = mail => {
 };
 
 const isRating = value => {
-  return value && (value === 1 || value === -1);
+  return typeof value !== 'undefined' && (value === 1 || value === 0);
 };
 
 export default { isEmail, isRating };

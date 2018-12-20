@@ -2,8 +2,9 @@ import db from '../../utils/dbConnection';
 import Food from '../food/foodModel';
 
 // Model attributes:
-// userId - Int
-// foodId - id
+// userId - Int (11)
+// foodId - id (11)
+// rating - Int (1)
 class UserFoodsModel extends db.Model {
   constructor(args) {
     super(args);
