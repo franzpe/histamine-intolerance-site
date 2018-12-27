@@ -36,10 +36,25 @@ const USER_FOODS_QUERY = gql`
 `;
 
 const columns = [
-  { id: 'name', numeric: false, label: 'Názov' },
-  { id: 'histamineLevel', numeric: true, label: 'Úroveň histamínu' },
-  { id: 'totalRating', numeric: true, label: 'Rating' },
-  { id: 'description', numeric: false, label: 'Poznámky' }
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Názov',
+    styles: () => ({ column: { width: '450px', minWidth: '235px' } })
+  },
+  {
+    id: 'histamineLevel',
+    numeric: true,
+    label: 'Úroveň histamínu',
+    styles: () => ({ column: { minWidth: '210px' } })
+  },
+  {
+    id: 'totalRating',
+    numeric: true,
+    label: 'Rating',
+    styles: () => ({ column: { minWidth: '150px' } })
+  },
+  { id: 'description', numeric: false, label: 'Poznámky', styles: () => ({}) }
 ];
 
 function Foods() {
@@ -49,7 +64,7 @@ function Foods() {
     order: 'asc',
     orderBy: 'name'
   });
-  console.log(userFoodsQuery.data);
+
   return (
     <Table>
       <FoodsHead

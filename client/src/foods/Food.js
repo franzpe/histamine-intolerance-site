@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, TableRow, TableCell, Typography, CircularProgress } from '@material-ui/core';
 import { yellow, green, grey } from '@material-ui/core/colors';

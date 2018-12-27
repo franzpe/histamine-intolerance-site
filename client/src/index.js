@@ -16,6 +16,13 @@ import './index.scss';
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true
+  },
+  overrides: {
+    MuiTableCell: {
+      root: {
+        padding: '4px 24px 4px 24px'
+      }
+    }
   }
 });
 
