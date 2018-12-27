@@ -44,11 +44,13 @@ const styles = theme => ({
 export default class App extends Component {
   render() {
     const { classes } = this.props;
+    const { pathname } = history.location;
+
     return (
       <div className={classes.app}>
         <Header />
         <ToastContainer toastClassName={classes.toast} />
-        {!history.location.pathname.startsWith(routes.RECIPES + '/') && <Trend />}
+        {(pathname === routes.RECIPES || pathname === '/') && <Trend />}
         <div className={classes.content}>
           <Routes />
         </div>

@@ -9,6 +9,7 @@ import routes from '../_constants/routesConstants';
 import { showErrorToast } from '../_utils/toast';
 import jwt from '../_utils/jwt';
 import FacebookLoginBtn from '_components/buttons/FacebookLoginBtn';
+import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 const styles = theme => ({
   appBar: {
@@ -41,12 +42,6 @@ const sections = [
   { to: routes.RECIPES, label: 'Recipes' },
   { to: routes.FOODS, label: 'Groceries' }
 ];
-
-const AUTHENTICATION_QUERY = gql`
-  {
-    isAuthenticated @client
-  }
-`;
 
 const LOGOUT_MUTATION = gql`
   mutation logout {
@@ -86,7 +81,12 @@ function Header({ classes }) {
           </Fragment>
         ) : (
           <Fragment>
-            <Button variant="outlined" size="small" className={classes.profile}>
+            <Button
+              variant="outlined"
+              size="small"
+              className={classes.profile}
+              onClick={() => history.push(routes.PROFILE)}
+            >
               Profile
             </Button>
             <Button variant="contained" size="small" color="primary" onClick={handleLogout}>

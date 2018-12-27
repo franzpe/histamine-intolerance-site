@@ -4,6 +4,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { routes } from '_constants/routesConstants';
 import history from '_utils/history';
 
+// TODO
+
 class PrivateRoute extends React.Component {
   render() {
     return this.props.isAuthenticated ? (

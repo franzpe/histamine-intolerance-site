@@ -3,10 +3,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import routes from '../_constants/routesConstants';
 
-const Recipes = lazy(() => import(/* webpackChunkName: "Recipes" */ '../recipes/RecipesPage'));
+const Recipes = lazy(() => import(/* webpackChunkName: "Recipes" */ 'recipes/RecipesPage'));
 const RecipeDetail = lazy(() =>
-  import(/* webpackChunkName: "RecipeDetail" */ '../recipes/RecipeDetail')
+  import(/* webpackChunkName: "RecipeDetail" */ 'recipes/RecipeDetail')
 );
+const Foods = lazy(() => import(/* webpackChunkName: "Foods" */ 'foods/FoodsPage'));
+const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ 'profile/ProfilePage'));
 
 class Routes extends Component {
   render() {
@@ -16,6 +18,8 @@ class Routes extends Component {
           <Route exact={true} path="/" component={Recipes} />
           <Route exact={true} path={routes.RECIPES} component={Recipes} />
           <Route exact={true} path={routes.RECIPES_WITH_ID} component={RecipeDetail} />
+          <Route exact={true} path={routes.PROFILE} component={Profile} />
+          <Route exact={true} path={routes.FOODS} component={Foods} />
         </Switch>
       </Suspense>
     );
