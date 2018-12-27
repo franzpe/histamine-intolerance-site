@@ -62,13 +62,14 @@ TASKS BEFORE RELEASE:
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
   ☐ put somewhere fast action to add recipe, show your grocery list 
-  ☐ RESET HEADER AFTER THE LOGIN
+  ☐ reset auth header after the client logs in for apollo client
 
-  GROCERIES:
+  GROCERIES: 
     ☐ LIST OF GROCERIES FROM SWISS LIST
     ☐ RATE GROCERY
     ☐ RATED GROCERY ADDS TO YOUR PROFILE LIST
     ☐ FILL THE LIST FROM SWISS LIST
+    ✔ OPTIMIZE RATING BEHAVIOUR @done(18-12-27 22:58)
 
   PROFILE:
     ☐ BASIC INFORMATION
