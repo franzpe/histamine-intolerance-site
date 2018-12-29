@@ -62,8 +62,8 @@ TASKS BEFORE RELEASE:
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
   ☐ put somewhere fast action to add recipe, show your grocery list 
-  ☐ reset auth header after the client logs in for apollo client
 
+  
   GROCERIES: 
     ☐ LIST OF GROCERIES FROM SWISS LIST
     ☐ RATE GROCERY
@@ -79,6 +79,12 @@ TASKS BEFORE RELEASE:
   BACKEND:
     ☐ redirect uri in facebook login 
   
+  MISCELLANEOUS:
+    ✔ migrate from apollo boost @done(18-12-29 14:34)
+    ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
+      ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
+
+
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server
 

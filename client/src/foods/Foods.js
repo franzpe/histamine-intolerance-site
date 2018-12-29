@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { withStyles, Table, TableBody } from '@material-ui/core';
 
 import Food from './Food';
@@ -54,7 +54,12 @@ const columns = [
     label: 'Rating',
     styles: () => ({ column: { minWidth: '150px' } })
   },
-  { id: 'description', numeric: false, label: 'Poznámky', styles: () => ({}) }
+  {
+    id: 'description',
+    numeric: false,
+    label: 'Poznámky',
+    styles: () => ({ column: { minWidth: '210px' } })
+  }
 ];
 
 function Foods() {
@@ -81,7 +86,9 @@ function Foods() {
               key={index}
               foodsQuery={foodsQuery}
               myFoodsQuery={userFoodsQuery}
-              myFood={userFoodsQuery.data.me.foods.find(f => f.id === food.id)}
+              myFood={
+                userFoodsQuery.data.me && userFoodsQuery.data.me.foods.find(f => f.id === food.id)
+              }
             />
           )
         )}
@@ -101,4 +108,4 @@ function Foods() {
   }
 }
 
-export default withStyles(styles)(Foods);
+export default withStyles(styles)(memo(Foods));
