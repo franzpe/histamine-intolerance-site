@@ -27,6 +27,11 @@ const styles = theme => ({
     position: 'relative',
     flexDirection: 'column'
   },
+  recipeGrid: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    }
+  },
   cardMedia: {
     padding: `${theme.spacing.unit * 8}px 0 `
   },
@@ -60,7 +65,7 @@ const RecipesPage = ({ classes }) => {
   return (
     <Grid container={true} spacing={40} className={classes.grid}>
       {recipes.map((recipe, index) => (
-        <Grid key={index} item={true} sm={6} md={4} lg={3}>
+        <Grid key={index} item={true} sm={6} md={4} lg={3} className={classes.recipeGrid}>
           <Card className={classes.card}>
             <CardMedia className={classes.cardMedia} image={recipeThumbnail} title="Image title" />
             <div className={classes.ratingContainer}>
