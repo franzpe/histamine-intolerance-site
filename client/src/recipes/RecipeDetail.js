@@ -14,6 +14,7 @@ import { yellow } from '@material-ui/core/colors';
 
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
+import Rating from '_components/Rating';
 
 const styles = theme => ({
   header: {
@@ -85,12 +86,7 @@ function RecipeDetail({ classes, match }) {
             {recipe.name}
           </Typography>
           <div>
-            <Typography variant="h4" component="span" className={classes.rating}>
-              50
-            </Typography>
-            <Typography variant="h6" component="span" className={classes.rating}>
-              %
-            </Typography>
+            <Rating value={60} valueVariant="h4" percentageVariant="h6" />
           </div>
         </div>
         <Grid container={true}>

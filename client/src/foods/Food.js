@@ -1,30 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, TableRow, TableCell, Typography, CircularProgress } from '@material-ui/core';
-import { yellow, green, grey } from '@material-ui/core/colors';
+import { withStyles, TableRow, TableCell, CircularProgress } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 import classNames from 'classnames';
-import DownIcon from '@material-ui/icons/ArrowDropDown';
-import UpIcon from '@material-ui/icons/ArrowDropUp';
+import DownIcon from '@material-ui/icons/ArrowDropDownRounded';
+import UpIcon from '@material-ui/icons/ArrowDropUpRounded';
 import { useQuery, useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
-import gql from 'graphql-tag';
+import Rating from '_components/Rating';
 
 const styles = theme => ({
   ratingCell: {
     position: 'relative'
-  },
-  rating: {
-    display: 'inline-block'
-  },
-  ratingLow: {
-    color: theme.palette.secondary.main
-  },
-  ratingMedium: {
-    color: yellow[700]
-  },
-  ratingHigh: {
-    color: green[700]
   },
   ratingButton: {
     position: 'absolute',
@@ -58,11 +47,6 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
   const rateFood = useMutation(RATE_FOOD_MUTATION);
   const [isRatingLoading, setIsRatingLoading] = useState(false);
 
-  const ratingClasses = classNames(classes.rating, {
-    [classes.ratingLow]: food.totalRating < 0.49,
-    [classes.ratingMedium]: food.totalRating >= 0.49 && food.totalRating <= 0.51,
-    [classes.ratingHigh]: food.totalRating > 0.51
-  });
   const ratingButtonClasses = classNames(classes.ratingButton, {
     [classes.ratingButtonVertical]:
       typeof food.totalRating === 'undefined' || food.totalRating === null
@@ -102,14 +86,11 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
               />
             )}
             {(food.totalRating || food.totalRating === 0) && (
-              <Fragment>
-                <Typography variant="h6" component="span" className={ratingClasses}>
-                  {Math.round(food.totalRating * 10000) / 100}
-                </Typography>
-                <Typography variant="body2" component="span" className={ratingClasses}>
-                  %
-                </Typography>
-              </Fragment>
+              <Rating
+                value={Math.round(food.totalRating * 10000) / 100}
+                valueVariant="h6"
+                percentageVariant="body2"
+              />
             )}
             {isAuthenticated && (
               <DownIcon

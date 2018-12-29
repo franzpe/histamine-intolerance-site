@@ -51,7 +51,7 @@ const columns = [
   {
     id: 'totalRating',
     numeric: true,
-    label: 'Rating',
+    label: 'Znášanlivosť (% ľudí)',
     styles: () => ({ column: { minWidth: '150px' } })
   },
   {
