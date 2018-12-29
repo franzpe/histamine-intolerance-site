@@ -10,6 +10,7 @@ import gql from 'graphql-tag';
 
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 import Rating from '_components/Rating';
+import { showSuccessToast, showErrorToast } from '_utils/toast';
 
 const styles = theme => ({
   ratingCell: {
@@ -68,22 +69,7 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
         {!isRatingLoading ? (
           <Fragment>
             {isAuthenticated && (
-              <UpIcon
-                className={upRatingButtonClasses}
-                onClick={() => {
-                  setIsRatingLoading(true);
-                  rateFood({
-                    variables: {
-                      foodId: food.id,
-                      value: 1
-                    }
-                  }).then(() => {
-                    Promise.all([foodsQuery.refetch(), myFoodsQuery.refetch()]).then(() =>
-                      setIsRatingLoading(false)
-                    );
-                  });
-                }}
-              />
+              <UpIcon className={upRatingButtonClasses} onClick={() => handleRateClick(1)} />
             )}
             {(food.totalRating || food.totalRating === 0) && (
               <Rating
@@ -93,22 +79,7 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
               />
             )}
             {isAuthenticated && (
-              <DownIcon
-                className={downRatingButtonClasses}
-                onClick={() => {
-                  setIsRatingLoading(true);
-                  rateFood({
-                    variables: {
-                      foodId: food.id,
-                      value: 0
-                    }
-                  }).then(() => {
-                    Promise.all([foodsQuery.refetch(), myFoodsQuery.refetch()]).then(() =>
-                      setIsRatingLoading(false)
-                    );
-                  });
-                }}
-              />
+              <DownIcon className={downRatingButtonClasses} onClick={() => handleRateClick(0)} />
             )}
           </Fragment>
         ) : (
@@ -118,6 +89,25 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
       <TableCell>{food.description}</TableCell>
     </TableRow>
   );
+
+  function handleRateClick(value) {
+    setIsRatingLoading(true);
+    rateFood({
+      variables: {
+        foodId: food.id,
+        value
+      }
+    }).then(() => {
+      Promise.all([foodsQuery.refetch(), myFoodsQuery.refetch()]).then(() => {
+        setIsRatingLoading(false);
+        if (value !== 0) {
+          showSuccessToast(`Ohodnotili ste ${food.name} ako dobre znášané`);
+        } else {
+          showErrorToast(`Ohodnotili ste ${food.name} ako zle znášané`);
+        }
+      });
+    });
+  }
 }
 
 Food.propTypes = {
