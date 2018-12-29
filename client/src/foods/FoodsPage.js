@@ -1,17 +1,37 @@
-import React from 'react';
-import { withStyles, Paper } from '@material-ui/core';
+import React, { Fragment } from 'react';
+import { withStyles, Paper, Button } from '@material-ui/core';
+import ListIcon from '@material-ui/icons/ViewList';
 
 import Foods from './Foods';
+import { useQuery } from 'react-apollo-hooks';
+import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto'
+  },
+  listIcon: {
+    marginRight: theme.spacing.unit
+  },
+  container: {
+    textAlign: 'right'
+  },
+  listButton: {
+    margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`
   }
 });
 
 function FoodsPage({ classes }) {
+  const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
+
   return (
-    <Paper>
+    <Paper className={classes.container}>
+      {isAuthenticated && (
+        <Button variant="flat" size="small" className={classes.listButton}>
+          <ListIcon className={classes.listIcon} />
+          Show your grocery list
+        </Button>
+      )}
       <div className={classes.tableWrapper}>
         <Foods />
       </div>
