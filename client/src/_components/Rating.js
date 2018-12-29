@@ -29,7 +29,7 @@ function Rating({ value, classes, valueVariant, percentageVariant }) {
   return (
     <Fragment>
       <Typography variant={valueVariant} component="span" className={ratingClasses}>
-        {value}
+        {Math.round(value * 10000) / 100}
       </Typography>
       <Typography variant={percentageVariant} component="span" className={ratingClasses}>
         %
@@ -43,4 +43,4 @@ Rating.propTypes = {
   class: PropTypes.string
 };
 
-export default withStyles(styles)(memo(Rating));
+export default withStyles(styles)(Rating);

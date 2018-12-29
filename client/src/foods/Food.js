@@ -72,11 +72,7 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
               <UpIcon className={upRatingButtonClasses} onClick={() => handleRateClick(1)} />
             )}
             {(food.totalRating || food.totalRating === 0) && (
-              <Rating
-                value={Math.round(food.totalRating * 10000) / 100}
-                valueVariant="h6"
-                percentageVariant="body2"
-              />
+              <Rating value={food.totalRating} valueVariant="h6" percentageVariant="body2" />
             )}
             {isAuthenticated && (
               <DownIcon className={downRatingButtonClasses} onClick={() => handleRateClick(0)} />

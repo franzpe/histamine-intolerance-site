@@ -86,7 +86,7 @@ function RecipeDetail({ classes, match }) {
             {recipe.name}
           </Typography>
           <div>
-            <Rating value={60} valueVariant="h4" percentageVariant="h6" />
+            <Rating value={0.6} valueVariant="h4" percentageVariant="h6" />
           </div>
         </div>
         <Grid container={true}>

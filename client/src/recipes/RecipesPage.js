@@ -69,7 +69,7 @@ const RecipesPage = ({ classes }) => {
           <Card className={classes.card}>
             <CardMedia className={classes.cardMedia} image={recipeThumbnail} title="Image title" />
             <div className={classes.ratingContainer}>
-              <Rating value={50} valueVariant="h5" percentageVariant="body1" />
+              <Rating value={0.5} valueVariant="h5" percentageVariant="body1" />
             </div>
             <CardContent>
               <Typography gutterBottom={true} variant="h5" component="h6">
