@@ -34,7 +34,7 @@ export const getOne = async id => {
 };
 
 export const update = async (args, user) => {
-  if (!validator.isEmail(args.contactEmail)) {
+  if (!validator.isEmail(args.email)) {
     throw new Error('Wrong email format');
   }
   const updatedUser = await new User({ ...user, ...args }).save();
