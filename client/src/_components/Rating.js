@@ -43,4 +43,4 @@ Rating.propTypes = {
   class: PropTypes.string
 };
 
-export default withStyles(styles)(Rating);
+export default withStyles(styles)(memo(Rating));

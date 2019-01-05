@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import * as validator from './validator';
+import * as validator from '_utils/validator';
 
 export const authenticationFormActions = {
   SET_FIELD: 'SET_FIELD',

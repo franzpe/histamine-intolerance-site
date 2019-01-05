@@ -47,43 +47,48 @@ TASKS BEFORE RELEASE:
   ✔ scaffold db structrue create models @done(18-12-08 11:13)
   ✔ scaffold graphql schemas @done(18-12-08 11:13)
   ✔ validations @done(18-12-08 12:58)
-  ☐ Change all db tables to InnoDB engine see example down
   ✔ Sticky footer @done(18-12-18 22:31)
   ✔ client store @done(18-12-18 22:31)
     ✔ authentication bool @done(18-12-18 22:31)
-  ☐ Trend - text-overflow: elipsess
-  ☐ Mobile view in recipes adjust
+  ✔ Mobile view in recipes adjust @done(18-12-29 19:04)
   ✔ rating formula food @done(18-12-20 21:45)
-  ☐ rating formula racipes
-  ☐ rating styling
-    ☐ 0-49 secondary color
-    ☐ 49.01 - 50.99 yellow 700
-    ☐ 51 - 100 - grenn[500 -> more percentage]
+  ✔ rating styling @done(18-12-29 18:51)
+    ✔ 0-49 secondary color @done(18-12-29 18:51)
+    ✔ 49.01 - 50.99 yellow 700 @done(18-12-29 18:51)
+    ✔ 51 - 100 - grenn[500 -> more percentage] @done(18-12-29 18:51)
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
-  ☐ put somewhere fast action to add recipe, show your grocery list 
 
+  RECIPES:
+    ☐ filtering, pagination
+    ☐ fast action add recipe 
   
   GROCERIES: 
-    ☐ LIST OF GROCERIES FROM SWISS LIST
-    ☐ RATE GROCERY
-    ☐ RATED GROCERY ADDS TO YOUR PROFILE LIST
-    ☐ FILL THE LIST FROM SWISS LIST
+    ✔ design @done(18-12-29 18:25)
+    ✔ rate grocery @done(18-12-29 18:24)
     ✔ OPTIMIZE RATING BEHAVIOUR @done(18-12-27 22:58)
+    ☐ fast action to show your grocery list
+      ✔ style @done(18-12-29 19:39)
+      ☐ add concrete route
+    ☐ fill the list from swiss list
 
   PROFILE:
-    ☐ BASIC INFORMATION
-    ☐ RECIPIES MANAGEMENT
-    ☐ FOOD LIST
+    ✔ basic information @done(19-01-05 21:42)
+    ☐ food list
+    ☐ recipes management
   
   BACKEND:
     ☐ redirect uri in facebook login 
-  
+    ☐ Change all db tables to InnoDB engine see example down
+    ☐ rating formula racipes  
+    ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
+
   MISCELLANEOUS:
     ✔ migrate from apollo boost @done(18-12-29 14:34)
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
-
+      ☐ Trend - text-overflow: elipsess
+    ☐ reroute after login to previous page the user was on not the root route 
 
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server
@@ -91,7 +96,7 @@ TASKS AFTER RELEASE:
 FEATURE:
   ☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost
     ☐ recept ma rating
-    ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
+  ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
 
 notes:
   GRAPHQL GENERATOR:
@@ -107,141 +112,3 @@ notes:
 
 data loader :
   https://github.com/gajus/gajus.com-blog/blob/master/posts/using-dataloader-to-batch-requests/index.md
-
-example:
-  import React, { Component } from 'react';
-  import { graphql, compose } from 'react-apollo';
-  import gql from 'graphql-tag';
-  
-  const query = gql`
-    {
-      foods {
-        name
-        rating
-        description
-      }
-    }
-  `;
-  
-  const mutation = gql`
-    mutation login($userName: String!, $password: String!) {
-      login(userName: $userName, password: $password)
-    }
-  `;
-  
-  const locState = gql`
-    {
-      userName @client
-      password @client
-    }
-  `;
-  
-  const updateUser = gql`
-    mutation updateUser($input: Object!) {
-      updateUser(input: $input) @client
-    }
-  `;
-  
-  class App extends Component {
-    constructor(props) {
-      super(props);
-  
-      this.state = {
-        jwt: ''
-      };
-    }
-  
-    handleChange = e => {
-      const { name, value } = e.target;
-      this.props.updateUser({ variables: { input: { [name]: value } } });
-    };
-  
-    handleClick = e => {
-      e.preventDefault();
-      const { userName, password } = this.props.local;
-      this.props
-        .login({
-          variables: { userName, password }
-        })
-        .then(res => {
-          this.setState({ jwt: res.data.login });
-        })
-        .catch(err => {
-          console.log(err.graphQLErrors[0].message);
-        });
-    };
-  
-    delay = ms => new Promise(_ => setTimeout(_, ms));
-  
-    renderFoods() {
-      const { loading, foods, networkStatus } = this.props.remote;
-  
-      let element;
-      if (loading) {
-        element = <div>...loading</div>;
-      } else if (networkStatus === 4) {
-        element = <div>... refetching</div>;
-      } else {
-        element = foods.map((food, index) => <div key={index}>{food.name}</div>);
-      }
-  
-      return element;
-    }
-  
-    render() {
-      const { refetch } = this.props.remote;
-      const { userName, password } = this.props.local;
-      return (
-        <React.Fragment>
-          <input
-            name="userName"
-            placeholder="userName"
-            value={userName}
-            onChange={this.handleChange}
-          />
-          <input
-            name="password"
-            placeholder="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <button name="login" onClick={this.handleClick}>
-            Login
-          </button>
-          {this.renderFoods()}
-          <br />
-          <div>Histamine intolerance app</div>
-          <button onClick={() => refetch()}>refetch</button>
-          <div>jwt: {this.state.jwt}</div>
-        </React.Fragment>
-      );
-    }
-  }
-  
-  export default compose(
-    graphql(locState, { name: 'local' }),
-    graphql(query, {
-      name: 'remote'
-    }),
-    graphql(mutation, { name: 'login' }),
-    graphql(updateUser, { name: 'updateUser' })
-  )(App);
-  
-
-  const resolvers = {
-  Mutation: {
-    updateUser: (_, { input }, { cache, getCacheKey }, info) => {
-      cache.writeData({ data: { ...input } });
-      console.log(
-        client.query({
-          query: gql`
-            {
-              userName @client
-            }
-          `
-        })
-      );
-      return null;
-    }
-  }
-};

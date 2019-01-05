@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { withStyles, Paper, Button } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/ViewList';
+import { useQuery } from 'react-apollo-hooks';
 
 import Foods from './Foods';
-import { useQuery } from 'react-apollo-hooks';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 const styles = theme => ({
@@ -27,7 +27,7 @@ function FoodsPage({ classes }) {
   return (
     <Paper className={classes.container}>
       {isAuthenticated && (
-        <Button variant="flat" size="small" className={classes.listButton}>
+        <Button variant="text" size="small" className={classes.listButton}>
           <ListIcon className={classes.listIcon} />
           Show your grocery list
         </Button>
