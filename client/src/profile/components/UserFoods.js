@@ -11,7 +11,7 @@ const styles = theme => ({
     textAlign: 'right',
     marginBottom: theme.spacing.unit / 2,
     [theme.breakpoints.down('xs')]: {
-      textAlign: 'right'
+      textAlign: 'center'
     }
   },
   foodsContainer: {

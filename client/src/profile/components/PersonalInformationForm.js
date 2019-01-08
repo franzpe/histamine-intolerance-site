@@ -121,7 +121,7 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <div className={classes.header}>
-        <Typography variant="h6" component="h4" gutterBottom={true}>
+        <Typography variant="h5" component="h4" gutterBottom={true}>
           Osobné informácie
         </Typography>
       </div>

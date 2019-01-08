@@ -49,7 +49,7 @@ function ChangePasswordForm({ classes, toggleChangePasswordForm }) {
   return (
     <form className={classes.form}>
       <div className={classes.header}>
-        <Typography variant="h6" component="h4" gutterBottom={true}>
+        <Typography variant="h5" component="h4" gutterBottom={true}>
           Change password
         </Typography>
       </div>

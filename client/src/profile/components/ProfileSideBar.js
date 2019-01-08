@@ -12,14 +12,15 @@ const styles = theme => ({
     backgroundColor: '#FAFAFA',
     flex: '0.2',
     minWidth: '206px',
-    padding: `${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 2}px`,
     [theme.breakpoints.down('xs')]: {
       minWidth: '60px',
       flex: '0'
     }
   },
   sidebarItem: {
-    height: `${theme.spacing.unit * 4}px`,
+    marginBottom: theme.spacing.unit / 2,
+    height: theme.spacing.unit * 4,
     display: 'flex',
     alignItems: 'center'
   },
@@ -29,7 +30,7 @@ const styles = theme => ({
     }
   },
   sidebarItemIcon: {
-    marginRight: `${theme.spacing.unit}px`,
+    marginRight: theme.spacing.unit,
     fontSize: '28px',
     [theme.breakpoints.down('xs')]: {
       marginRight: '0px'
