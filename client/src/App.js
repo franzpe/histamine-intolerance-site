@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { ToastContainer } from 'react-toastify';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
@@ -29,14 +28,6 @@ const styles = theme => ({
   content: {
     flex: 1,
     padding: `${theme.spacing.unit * 4}px 0`
-  },
-  toast: {
-    borderRadius: '5px !important',
-    fontFamily: 'Roboto !important',
-    fontSize: '14px !important',
-    fontWeight: 600,
-    letterSpacing: '0.5px',
-    boxShadow: '1px 0 10px rgba(0,0,0,0.55) !important'
   }
 });
 
@@ -49,7 +40,6 @@ export default class App extends Component {
     return (
       <div className={classes.app}>
         <Header />
-        <ToastContainer toastClassName={classes.toast} />
         {(pathname === routes.RECIPES || pathname === '/') && <Trend />}
         <div className={classes.content}>
           <Routes />

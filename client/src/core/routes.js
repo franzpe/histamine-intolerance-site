@@ -1,7 +1,8 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import routes from '../_constants/routesConstants';
+import routes from '_constants/routesConstants';
+import PrivateRoute from '_utils/PrivateRoute';
 
 const Recipes = lazy(() => import(/* webpackChunkName: "Recipes" */ 'recipes/RecipesPage'));
 const RecipeDetail = lazy(() =>
@@ -18,7 +19,7 @@ class Routes extends Component {
           <Route exact={true} path="/" component={Recipes} />
           <Route exact={true} path={routes.RECIPES} component={Recipes} />
           <Route exact={true} path={routes.RECIPES_WITH_ID} component={RecipeDetail} />
-          <Route path={routes.PROFILE} component={Profile} />
+          <PrivateRoute path={routes.PROFILE} component={Profile} />
           <Route exact={true} path={routes.FOODS} component={Foods} />
         </Switch>
       </Suspense>

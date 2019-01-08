@@ -11,6 +11,8 @@ import client from './_utils/configureClient';
 import history from './_utils/history';
 import routes from './_constants/routesConstants';
 import { verifyUser } from './_utils/verifyUser';
+import ToastInit from '_components/ToastInit';
+
 import './index.scss';
 
 const theme = createMuiTheme({
@@ -42,6 +44,7 @@ ReactDOM.render(
         <Router history={history}>
           <Suspense fallback={<div />}>
             <CssBaseline>
+              <ToastInit />
               <Switch>
                 <Route exact={true} path={routes.LOGIN} component={Login} />
                 <Route exact={true} path={routes.REGISTER} component={Register} />

@@ -144,7 +144,7 @@ const LoginPage = ({ classes }) => {
             payload: { jwt: res.data.login }
           });
 
-          history.push('/');
+          history.push(history.location.state ? history.location.state.target.pathname : '/');
           showSuccessToast('Prihlásenie úspešné');
         })
         .catch(resErr => {

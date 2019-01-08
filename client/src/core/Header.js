@@ -69,13 +69,7 @@ function Header({ classes }) {
         {!isAuthenticated ? (
           <Fragment>
             <FacebookLoginBtn className={classes.facebook} />
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={e => {
-                history.push(routes.LOGIN);
-              }}
-            >
+            <Button variant="outlined" size="small" onClick={handleLogin}>
               Prihlásiť
             </Button>
           </Fragment>
@@ -109,6 +103,10 @@ function Header({ classes }) {
       </Toolbar>
     </Fragment>
   );
+
+  function handleLogin(e) {
+    history.push({ pathname: routes.LOGIN, state: { target: history.location } });
+  }
 
   function handleLogout(e) {
     logout();
