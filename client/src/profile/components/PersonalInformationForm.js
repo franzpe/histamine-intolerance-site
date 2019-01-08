@@ -42,26 +42,48 @@ const styles = theme => ({
     }
   },
   section: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing.unit * 2
   },
   detail: {
+    display: 'inline-block',
+    width: '100%',
     height: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing.unit,
+
+    [theme.breakpoints.down('xs')]: {
+      height: 'auto',
+      marginBottom: theme.spacing.unit * 2
+    }
   },
   detailLabel: {
     display: 'inline-block',
     width: '160px',
     textAlign: 'left',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
+
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   },
   detailInformation: {
     display: 'inline-block',
     verticalAlign: 'top'
   },
   contactEmail: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
+  },
+  contactEmailInput: {
     verticalAlign: 'top',
     padding: `1px 0 ${theme.spacing.unit / 2}px 0`,
-    letterSpacing: '0.01071em'
+    letterSpacing: '0.01071em',
+    fontSize: '0.875rem'
+  },
+  textFieldMargin: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '16px'
+    }
   }
 });
 
@@ -106,12 +128,12 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
       <div className={classes.formContent}>
         <div className={classes.section}>
           <div className={classes.detail}>
-            <Typography variant="body2" component="span" className={classes.detailLabel}>
+            <Typography variant="body2" component="div" className={classes.detailLabel}>
               Contact email:
             </Typography>
             {!informationForm.isContactEmailEditable ? (
               <Fragment>
-                <Typography variant="body2" component="span" className={classes.detailInformation}>
+                <Typography variant="body2" component="div" className={classes.detailInformation}>
                   {informationForm.contactEmail}
                 </Typography>
                 &nbsp;&nbsp;
@@ -127,11 +149,10 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
                 name="contactEmail"
                 value={informationForm.contactEmail}
                 inputProps={{
-                  className: classes.contactEmail,
-                  style: { fontSize: '0.875rem' }
+                  className: classes.contactEmailInput
                 }}
+                className={classes.contactEmail}
                 onChange={handleInputChange}
-                style={{ fontSize: '0.875rem' }}
               />
             )}
           </div>
@@ -154,6 +175,11 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
               fullWidth={true}
               value={informationForm.firstName}
               onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true
+              }}
+              className={classes.textFieldMargin}
+              placeholder="Type here"
             />
           </Grid>
           <Grid item={true} xs={12} sm={12} md={6} className={classes.lGridPadding}>
@@ -163,6 +189,10 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
               fullWidth={true}
               value={informationForm.lastName}
               onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true
+              }}
+              placeholder="Type here"
             />
           </Grid>
         </Grid>

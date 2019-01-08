@@ -6,23 +6,9 @@ import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
 import FoodsHead from './FoodsHead';
 import { stableSort, getSorting } from '_utils/sort';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({});
-
-const FOODS_QUERY = gql`
-  {
-    foods {
-      id
-      name
-      histamineLevel {
-        value
-        name
-      }
-      totalRating
-      description
-    }
-  }
-`;
 
 const USER_FOODS_QUERY = gql`
   {
@@ -62,8 +48,7 @@ const columns = [
   }
 ];
 
-function Foods() {
-  const foodsQuery = useQuery(FOODS_QUERY);
+function Foods({ foods, foodsQuery, isRatingAllowed }) {
   const userFoodsQuery = useQuery(USER_FOODS_QUERY);
   const [orderState, setOrderState] = useState({
     order: 'asc',
@@ -79,19 +64,18 @@ function Foods() {
         onRequestSort={handleSortRequest}
       />
       <TableBody>
-        {stableSort(foodsQuery.data.foods, getSorting(orderState.order, orderState.orderBy)).map(
-          (food, index) => (
-            <Food
-              food={food}
-              key={index}
-              foodsQuery={foodsQuery}
-              myFoodsQuery={userFoodsQuery}
-              myFood={
-                userFoodsQuery.data.me && userFoodsQuery.data.me.foods.find(f => f.id === food.id)
-              }
-            />
-          )
-        )}
+        {stableSort(foods, getSorting(orderState.order, orderState.orderBy)).map((food, index) => (
+          <Food
+            food={food}
+            key={index}
+            foodsQuery={foodsQuery}
+            myFoodsQuery={userFoodsQuery}
+            isRatingAllowed={isRatingAllowed}
+            myFood={
+              userFoodsQuery.data.me && userFoodsQuery.data.me.foods.find(f => f.id === food.id)
+            }
+          />
+        ))}
       </TableBody>
     </Table>
   );
@@ -107,5 +91,11 @@ function Foods() {
     setOrderState({ order, orderBy });
   }
 }
+
+Foods.propTypes = {
+  foods: PropTypes.object.isRequired,
+  isRatingAllowed: PropTypes.bool.isRequired,
+  foodsQuery: PropTypes.func
+};
 
 export default withStyles(styles)(memo(Foods));

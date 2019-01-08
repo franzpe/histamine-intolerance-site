@@ -43,7 +43,7 @@ const RATE_FOOD_MUTATION = gql`
   }
 `;
 
-function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
+function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes }) {
   const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
   const rateFood = useMutation(RATE_FOOD_MUTATION);
   const [isRatingLoading, setIsRatingLoading] = useState(false);
@@ -68,13 +68,13 @@ function Food({ food, foodsQuery, myFood, myFoodsQuery, classes }) {
       <TableCell className={classes.ratingCell}>
         {!isRatingLoading ? (
           <Fragment>
-            {isAuthenticated && (
+            {isAuthenticated && isRatingAllowed && (
               <UpIcon className={upRatingButtonClasses} onClick={() => handleRateClick(1)} />
             )}
             {(food.totalRating || food.totalRating === 0) && (
               <Rating value={food.totalRating} valueVariant="h6" percentageVariant="body2" />
             )}
-            {isAuthenticated && (
+            {isAuthenticated && isRatingAllowed && (
               <DownIcon className={downRatingButtonClasses} onClick={() => handleRateClick(0)} />
             )}
           </Fragment>

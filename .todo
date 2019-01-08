@@ -74,6 +74,7 @@ TASKS BEFORE RELEASE:
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
+      ☐ contact email transition into text field, needs to remain the same width
       ☐ translations
     ☐ food list
     ☐ recipes management
@@ -89,7 +90,7 @@ TASKS BEFORE RELEASE:
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
       ☐ Trend - text-overflow: elipsess
-    ☐ reroute after login to previous page the user was on not the root route 
+    ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
 
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server
