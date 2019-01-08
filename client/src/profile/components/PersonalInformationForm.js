@@ -129,7 +129,7 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
         <div className={classes.section}>
           <div className={classes.detail}>
             <Typography variant="body2" component="div" className={classes.detailLabel}>
-              Contact email:
+              Kontaktný email:
             </Typography>
             {!informationForm.isContactEmailEditable ? (
               <Fragment>
@@ -158,7 +158,7 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
           </div>
           <div className={classes.detail}>
             <Typography variant="body2" component="span" className={classes.detailLabel}>
-              Password:
+              Heslo:
             </Typography>
             <Typography variant="body2" component="span" className={classes.detailInformation}>
               ******
@@ -171,7 +171,7 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
           <Grid item={true} xs={12} sm={12} md={6} className={classes.rGridPadding}>
             <TextField
               name="firstName"
-              label="First name"
+              label="Meno"
               fullWidth={true}
               value={informationForm.firstName}
               onChange={handleInputChange}
@@ -179,20 +179,20 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
                 shrink: true
               }}
               className={classes.textFieldMargin}
-              placeholder="Type here"
+              placeholder="Píš sem"
             />
           </Grid>
           <Grid item={true} xs={12} sm={12} md={6} className={classes.lGridPadding}>
             <TextField
               name="lastName"
-              label="Last name"
+              label="Priezvisko"
               fullWidth={true}
               value={informationForm.lastName}
               onChange={handleInputChange}
               InputLabelProps={{
                 shrink: true
               }}
-              placeholder="Type here"
+              placeholder="Píš sem"
             />
           </Grid>
         </Grid>

@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import Foods from 'foods/Foods';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Button, withStyles, Tooltip } from '@material-ui/core';
 import GoodMoodIcon from '@material-ui/icons/Mood';
 import BadMoodIcon from '@material-ui/icons/MoodBad';
+
+import Foods from 'foods/Foods';
 
 const styles = theme => ({
   btnContainer: {

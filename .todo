@@ -75,8 +75,8 @@ TASKS BEFORE RELEASE:
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
       ☐ contact email transition into text field, needs to remain the same width
-      ☐ translations
-    ☐ food list
+      ✔ translations @done(19-01-08 21:20)
+    ✔ food list @done(19-01-08 18:47)
     ☐ recipes management
   
   BACKEND:

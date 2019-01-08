@@ -50,7 +50,7 @@ function ChangePasswordForm({ classes, toggleChangePasswordForm }) {
     <form className={classes.form}>
       <div className={classes.header}>
         <Typography variant="h5" component="h4" gutterBottom={true}>
-          Change password
+          Zmena hesla
         </Typography>
       </div>
       <div className={classes.container}>
