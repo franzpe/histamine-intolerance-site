@@ -2,9 +2,10 @@ import React, { Suspense } from 'react';
 import { withStyles, Paper } from '@material-ui/core';
 import { Switch, Route, withRouter } from 'react-router';
 
-import PersonalInformation from './components/PersonalInformation';
-import UserFoods from './components/UserFoods';
+import PersonalInformation from './components/personalInformation/PersonalInformation';
+import UserFoods from './components/foods/UserFoods';
 import ProfileSideBar from './components/ProfileSideBar';
+import UserRecipes from './components/recipes/UserRecipes';
 
 const styles = theme => ({
   paper: {
@@ -32,7 +33,7 @@ function ProfilePage({ classes, match: { path } }) {
         <Suspense fallback={<div />}>
           <Switch>
             <Route path={path + '/food-list'} exact={true} component={UserFoods} />
-            <Route path={path + '/recipes'} exact={true} component={() => <div>Recipes</div>} />
+            <Route path={path + '/recipes'} exact={true} component={UserRecipes} />
             <Route path={path} component={PersonalInformation} />
           </Switch>
         </Suspense>

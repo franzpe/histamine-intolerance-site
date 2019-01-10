@@ -70,7 +70,7 @@ function ProfileSideBar({ path, classes }) {
         className={classNames(classes.sidebarItem, classes.navLink)}
       >
         <ReceiptIcon className={classes.sidebarItemIcon} />
-        <span className={classes.sidebarItemDescription}>Recepty</span>
+        <span className={classes.sidebarItemDescription}>Moje recepty</span>
       </NavLink>
     </div>
   );

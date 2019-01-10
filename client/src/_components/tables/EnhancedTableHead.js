@@ -9,12 +9,12 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-function FoodsHead({ columns, order, orderBy, onRequestSort }) {
+function EnhancedTableHead({ columns, order, orderBy, onRequestSort }) {
   return (
     <TableHead>
       <TableRow>
         {columns.map((column, index) => {
-          const HeadCell = withStyles(column.styles)(({ classes }) => (
+          const HeadCell = withStyles(column.styles || {})(({ classes }) => (
             <TableCell
               align={column.numeric ? 'right' : 'left'}
               sortDirection={orderBy === column.id ? order : false}
@@ -38,11 +38,11 @@ function FoodsHead({ columns, order, orderBy, onRequestSort }) {
   );
 }
 
-FoodsHead.propTypes = {
+EnhancedTableHead.propTypes = {
   columns: PropTypes.array.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
   onRequestSort: PropTypes.func.isRequired
 };
 
-export default FoodsHead;
+export default EnhancedTableHead;

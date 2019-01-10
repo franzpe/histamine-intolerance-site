@@ -4,7 +4,7 @@ import { withStyles, Table, TableBody } from '@material-ui/core';
 import Food from './Food';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
-import FoodsHead from './FoodsHead';
+import EnhancedTableHead from '../_components/tables/EnhancedTableHead';
 import { stableSort, getSorting } from '_utils/sort';
 import PropTypes from 'prop-types';
 
@@ -57,7 +57,7 @@ function Foods({ foods, foodsQuery, isRatingAllowed }) {
 
   return (
     <Table>
-      <FoodsHead
+      <EnhancedTableHead
         columns={columns}
         orderBy={orderState.orderBy}
         order={orderState.order}
