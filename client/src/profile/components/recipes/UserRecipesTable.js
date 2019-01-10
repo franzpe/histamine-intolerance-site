@@ -1,30 +1,11 @@
 import React, { useState } from 'react';
-import { withStyles, Table, TableBody, TableRow, TableCell, IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import classNames from 'classnames';
+import { Table, TableBody } from '@material-ui/core';
+import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 
 import EnhancedTableHead from '_components/tables/EnhancedTableHead';
-
-const styles = theme => ({
-  iconRightMargin: {
-    marginRight: theme.spacing.unit / 4
-  },
-  actionsTableCell: {
-    minWidth: '140px',
-    position: 'relative'
-  },
-  actions: {
-    position: 'absolute',
-    left: theme.spacing.unit * 1.5,
-    top: 0
-  },
-  action: {
-    '&:hover': {
-      color: theme.palette.secondary.main
-    }
-  }
-});
+import { stableSort, getSorting } from '_utils/sort';
+import UserRecipeTableRow from './UserRecipeTableRow';
 
 const columns = [
   {
@@ -45,7 +26,21 @@ const columns = [
   }
 ];
 
-function UserRecipesTable({ classes }) {
+const USER_RECIPES_QUERY = gql`
+  {
+    me {
+      recipes {
+        id
+        name
+        rating
+      }
+    }
+  }
+`;
+
+function UserRecipesTable() {
+  const userRecipes = useQuery(USER_RECIPES_QUERY);
+
   const [orderState, setOrderState] = useState({
     order: 'asc',
     orderBy: 'name'
@@ -60,23 +55,12 @@ function UserRecipesTable({ classes }) {
         onRequestSort={handleSortRequest}
       />
       <TableBody>
-        <TableRow>
-          <TableCell>Pariz</TableCell>
-          <TableCell>86%</TableCell>
-          <TableCell className={classes.actionsTableCell}>
-            <div className={classes.actions}>
-              <IconButton
-                aria-label="Delete"
-                className={classNames(classes.action, classes.iconRightMargin)}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
-              <IconButton className={classes.action}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </div>
-          </TableCell>
-        </TableRow>
+        {stableSort(
+          userRecipes.data.me.recipes,
+          getSorting(orderState.order, orderState.orderBy)
+        ).map(recipe => (
+          <UserRecipeTableRow key={recipe.id} recipe={recipe} recipesQuery={userRecipes} />
+        ))}
       </TableBody>
     </Table>
   );
@@ -93,4 +77,4 @@ function UserRecipesTable({ classes }) {
   }
 }
 
-export default withStyles(styles)(UserRecipesTable);
+export default UserRecipesTable;
