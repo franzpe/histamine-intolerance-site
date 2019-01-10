@@ -85,8 +85,8 @@ export const MutationFields = {
     args: {
       id: { type: GraphQLInt }
     },
-    resolve: authenticated((parent, { id }) => {
-      return recipeController.deleteOne(id);
+    resolve: authenticated((parent, { id }, { user }) => {
+      return recipeController.deleteOne(id, user.id);
     })
   },
   updateRecipe: {

@@ -92,8 +92,14 @@ export const rate = async (id, value) => {
   return updatedRecipe.toJSON();
 };
 
-export const deleteOne = async id => {
-  await new Recipe({ id }).destroy();
+export const deleteOne = async (id, userId) => {
+  const recipe = await new Recipe({ id }).fetch();
+
+  if (recipe.toJSON().creatorId !== userId) {
+    throw new Error('You can not delete others recipe');
+  }
+
+  recipe.destroy();
 
   return id;
 };
