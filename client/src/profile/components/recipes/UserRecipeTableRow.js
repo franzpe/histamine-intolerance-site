@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-
-import Rating from '_components/Rating';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
+import { withRouter } from 'react-router-dom';
+
+import Rating from '_components/Rating';
 import { showSuccessToast } from '_utils/toast';
+import history from '_utils/history';
 
 const styles = theme => ({
   iconRightMargin: {
@@ -36,7 +38,7 @@ const REMOVE_RECIPE_MUTATION = gql`
   }
 `;
 
-function UserRecipeTableRow({ classes, recipe, recipesQuery }) {
+function UserRecipeTableRow({ classes, recipe, recipesQuery, match: { path } }) {
   const removeRecipe = useMutation(REMOVE_RECIPE_MUTATION, { variables: { id: recipe.id } });
 
   return (
@@ -63,8 +65,7 @@ function UserRecipeTableRow({ classes, recipe, recipesQuery }) {
   );
 
   function handleEdit(e) {
-    // TODO
-    console.log('edit item', recipe.id);
+    history.push(path + '/' + recipe.id);
   }
 
   function handleDelete(e) {
@@ -82,4 +83,4 @@ UserRecipeTableRow.propTypes = {
   recipesQuery: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(UserRecipeTableRow);
+export default withStyles(styles)(withRouter(UserRecipeTableRow));
