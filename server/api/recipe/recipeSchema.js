@@ -99,8 +99,8 @@ export const MutationFields = {
         type: new GraphQLList(IngredientInputType)
       }
     },
-    resolve: authenticated((parent, args) => {
-      return recipeController.update(args);
+    resolve: authenticated((parent, args, { user }) => {
+      return recipeController.update(args, user.id);
     })
   },
   rateRecipe: {

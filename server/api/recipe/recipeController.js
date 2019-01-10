@@ -60,7 +60,13 @@ export const add = async recipeArgs => {
   return recipe;
 };
 
-export const update = async recipeArgs => {
+export const update = async (recipeArgs, userId) => {
+  const storedRecipe = await new Recipe({ id: recipeArgs.id }).fetch();
+
+  if (storedRecipe.toJSON().creatorId !== userId) {
+    throw new Error('You can not update others recipe');
+  }
+
   const recipe = (await new Recipe({
     id: recipeArgs.id,
     name: recipeArgs.name,
