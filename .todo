@@ -83,6 +83,7 @@ TASKS BEFORE RELEASE:
     ☐ redirect uri in facebook login 
     ☐ Change all db tables to InnoDB engine see example down
     ☐ rating formula racipes  
+    ✔ users recipes @done(19-01-10 19:48)
     ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
 
   MISCELLANEOUS:

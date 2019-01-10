@@ -18,6 +18,11 @@ export const getAll = async () => {
   return recipes.toJSON();
 };
 
+export const getUserRecipes = async userId => {
+  const recipes = await Recipe.where({ creatorId: userId }).fetchAll();
+  return recipes.toJSON();
+};
+
 export const getRecipeFoods = async id => {
   const recipeFoods = await RecipeFoods.where({ recipeId: id }).fetchAll({
     withRelated: ['Food', 'Unit']

@@ -4,7 +4,9 @@ import { RoleType } from '../role/roleSchema';
 import { authenticated, verifyUser } from '../../auth/auth';
 import * as userController from './userController';
 import * as roleController from '../role/roleController';
+import * as recipeController from '../recipe/recipeController';
 import { UserFoodType } from '../food/foodSchema';
+import { RecipeType } from '../recipe/recipeSchema';
 
 const {
   GraphQLObjectType,
@@ -34,6 +36,12 @@ export const UserType = new GraphQLObjectType({
       type: new GraphQLList(UserFoodType),
       resolve(parent) {
         return userController.getUserFoods(parent.id);
+      }
+    },
+    recipes: {
+      type: new GraphQLList(RecipeType),
+      resolve(parent) {
+        return recipeController.getUserRecipes(parent.id);
       }
     }
   })
