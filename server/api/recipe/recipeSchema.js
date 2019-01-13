@@ -70,14 +70,13 @@ export const MutationFields = {
     type: RecipeType,
     args: {
       name: { type: GraphQLString },
-      creatorId: { type: GraphQLInt },
       process: { type: GraphQLString },
       ingredients: {
         type: new GraphQLList(IngredientInputType)
       }
     },
-    resolve: authenticated((parent, args, context, info) => {
-      return recipeController.add(args);
+    resolve: authenticated((parent, args, { user }, info) => {
+      return recipeController.add({ ...args, creatorId: user.id });
     })
   },
   deleteRecipe: {
