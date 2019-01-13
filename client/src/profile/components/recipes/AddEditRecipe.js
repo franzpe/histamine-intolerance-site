@@ -23,6 +23,7 @@ import history from '_utils/history';
 import routes, { profileRoutes } from '_constants/routesConstants';
 import Action from '_components/Action';
 import { showErrorToast, showSuccessToast } from '_utils/toast';
+import { USER_RECIPES_QUERY } from './UserRecipesTable';
 
 const RECIPE_QUERY = gql`
   query recipe($id: Int!) {
@@ -217,7 +218,7 @@ function AddEditRecipe({
   const units = useQuery(UNITS_QUERY).data.units;
   const addRecipe = useMutation(ADD_RECIPE_MUTATION, {
     variables: { name: form.name, process: form.process, ingredients: form.ingredients },
-    refetchQueries: ['userRecipes']
+    refetchQueries: [{ query: USER_RECIPES_QUERY }]
   });
 
   if (!isNew) {
@@ -228,7 +229,7 @@ function AddEditRecipe({
         process: form.process,
         ingredients: form.ingredients
       },
-      refetchQueries: ['userRecipes']
+      refetchQueries: [{ query: USER_RECIPES_QUERY }]
     });
   }
 
