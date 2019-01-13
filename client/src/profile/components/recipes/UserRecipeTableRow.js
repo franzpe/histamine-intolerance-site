@@ -1,16 +1,15 @@
 import React from 'react';
-import { withStyles, TableRow, TableCell, IconButton } from '@material-ui/core';
+import { withStyles, TableRow, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
-import { withRouter } from 'react-router-dom';
 
 import Rating from '_components/Rating';
 import { showSuccessToast } from '_utils/toast';
 import history from '_utils/history';
+import Action from '_components/Action';
 
 const styles = theme => ({
   iconRightMargin: {
@@ -24,11 +23,6 @@ const styles = theme => ({
     position: 'absolute',
     left: theme.spacing.unit * 1.5,
     top: 0
-  },
-  action: {
-    '&:hover': {
-      color: theme.palette.secondary.main
-    }
   }
 });
 
@@ -38,7 +32,7 @@ const REMOVE_RECIPE_MUTATION = gql`
   }
 `;
 
-function UserRecipeTableRow({ classes, recipe, recipesQuery, match: { path } }) {
+function UserRecipeTableRow({ classes, recipe, recipesQuery }) {
   const removeRecipe = useMutation(REMOVE_RECIPE_MUTATION, { variables: { id: recipe.id } });
 
   return (
@@ -49,23 +43,19 @@ function UserRecipeTableRow({ classes, recipe, recipesQuery, match: { path } }) 
       </TableCell>
       <TableCell className={classes.actionsTableCell}>
         <div className={classes.actions}>
-          <IconButton
-            aria-label="Edit"
-            className={classNames(classes.action, classes.iconRightMargin)}
-            onClick={handleEdit}
-          >
+          <Action aria-label="Edit" className={classes.iconRightMargin} onClick={handleEdit}>
             <EditIcon fontSize="small" />
-          </IconButton>
-          <IconButton aria-label="Delete" className={classes.action} onClick={handleDelete}>
+          </Action>
+          <Action aria-label="Delete" onClick={handleDelete}>
             <DeleteIcon fontSize="small" />
-          </IconButton>
+          </Action>
         </div>
       </TableCell>
     </TableRow>
   );
 
   function handleEdit(e) {
-    history.push(path + '/' + recipe.id);
+    history.push('/recipes/edit/' + recipe.id);
   }
 
   function handleDelete(e) {
@@ -80,7 +70,7 @@ function UserRecipeTableRow({ classes, recipe, recipesQuery, match: { path } }) 
 
 UserRecipeTableRow.propTypes = {
   recipe: PropTypes.object.isRequired,
-  recipesQuery: PropTypes.func.isRequired
+  recipesQuery: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(withRouter(UserRecipeTableRow));
+export default withStyles(styles)(UserRecipeTableRow);

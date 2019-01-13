@@ -62,6 +62,7 @@ TASKS BEFORE RELEASE:
   RECIPES:
     ☐ filtering, pagination
     ☐ fast action add recipe 
+    
   
   GROCERIES: 
     ✔ design @done(18-12-29 18:25)
@@ -78,6 +79,12 @@ TASKS BEFORE RELEASE:
       ✔ translations @done(19-01-08 21:20)
     ✔ food list @done(19-01-08 18:47)
     ☐ recipes management
+      ☐ add / edit recipes layout
+      ☐ mobile layout
+      ☐ upload image
+      ☐ saving / updating
+      ☐ validation
+        ☐ FE validation of ingrediences primary key
   
   BACKEND:
     ☐ redirect uri in facebook login 
@@ -92,7 +99,8 @@ TASKS BEFORE RELEASE:
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
       ☐ Trend - text-overflow: elipsess
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-
+    ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
+     
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server
 

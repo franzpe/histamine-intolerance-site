@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-const FOODS_QUERY = gql`
+export const FOODS_QUERY = gql`
   {
     foods {
       id

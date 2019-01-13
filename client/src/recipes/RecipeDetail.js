@@ -10,7 +10,6 @@ import {
   Button,
   CardMedia
 } from '@material-ui/core';
-import { yellow } from '@material-ui/core/colors';
 
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
@@ -25,10 +24,6 @@ const styles = theme => ({
       padding: `${theme.spacing.unit * 2}px`
     }
   },
-  rating: {
-    color: yellow[700],
-    display: 'inline-block'
-  },
   cardMedia: {
     minHeight: '280px',
     padding: `${theme.spacing.unit * 8}px 0 `
@@ -37,11 +32,11 @@ const styles = theme => ({
     padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`
   },
   backWrapper: {
+    marginTop: theme.spacing.unit * 3,
     width: '100%',
     textAlign: 'center'
   },
   back: {
-    marginTop: `${theme.spacing.unit * 3}px`,
     padding: `0 ${theme.spacing.unit * 5}px`
   },
   foodList: {},
@@ -73,14 +68,13 @@ function RecipeDetail({ classes, match }) {
   } = useQuery(RECIPE_QUERY, {
     variables: { id: Number(match.params.id) }
   });
-
   if (error) {
     return null;
   }
 
   return (
     <Fragment>
-      <Card className={classes.card}>
+      <Card>
         <div className={classes.header}>
           <Typography variant="h4" component="div">
             {recipe.name}

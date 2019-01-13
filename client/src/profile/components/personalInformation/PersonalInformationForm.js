@@ -6,21 +6,13 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 
 import { showSuccessToast, showErrorToast } from '_utils/toast';
 import SaveBtn from '_components/buttons/SaveBtn';
+import combineStyles from '_utils/combineStyles';
+import { profileFormStyles } from 'profile/styles';
 
 const styles = theme => ({
   header: {
     width: '100%',
     textAlign: 'center'
-  },
-  form: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end'
-  },
-  formContent: {
-    flex: '1',
-    width: '100%'
   },
   editIcon: {
     cursor: 'pointer',
@@ -220,4 +212,4 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
   }
 }
 
-export default withStyles(styles)(PersonalInformationForm);
+export default withStyles(combineStyles(styles, profileFormStyles))(PersonalInformationForm);

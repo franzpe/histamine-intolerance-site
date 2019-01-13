@@ -19,7 +19,14 @@ const styles = theme => ({
   }
 });
 
-function Rating({ value, classes, valueVariant, percentageVariant }) {
+function Rating({
+  value,
+  classes,
+  valueVariant,
+  percentageVariant,
+  valueClassName,
+  percentageClassName
+}) {
   const ratingClasses = classNames(classes.rating, {
     [classes.ratingLow]: value < 0.49,
     [classes.ratingMedium]: value >= 0.49 && value <= 0.51,
@@ -28,10 +35,18 @@ function Rating({ value, classes, valueVariant, percentageVariant }) {
 
   return (
     <Fragment>
-      <Typography variant={valueVariant} component="span" className={ratingClasses}>
+      <Typography
+        variant={valueVariant}
+        component="span"
+        className={classNames(ratingClasses, valueClassName)}
+      >
         {Math.round(value * 10000) / 100}
       </Typography>
-      <Typography variant={percentageVariant} component="span" className={ratingClasses}>
+      <Typography
+        variant={percentageVariant}
+        component="span"
+        className={classNames(ratingClasses, percentageClassName)}
+      >
         %
       </Typography>
     </Fragment>

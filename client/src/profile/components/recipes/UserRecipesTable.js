@@ -26,8 +26,8 @@ const columns = [
   }
 ];
 
-const USER_RECIPES_QUERY = gql`
-  {
+export const USER_RECIPES_QUERY = gql`
+  query userRecipes {
     me {
       recipes {
         id

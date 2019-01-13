@@ -62,6 +62,7 @@ const recipes = [
 ];
 
 const RecipesPage = ({ classes }) => {
+  console.log('recipes page');
   return (
     <Grid container={true} spacing={40} className={classes.grid}>
       {recipes.map((recipe, index) => (
