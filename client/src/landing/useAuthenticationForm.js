@@ -39,7 +39,7 @@ export function useAuthenticationForm(initialFormState = initialState) {
         return {
           ...prevState,
           isAuthenticating: false,
-          errors: { authentication: action.payload.error }
+          errors: { ...prevState.errors, authentication: action.payload.error }
         };
       }
       default:
@@ -49,6 +49,7 @@ export function useAuthenticationForm(initialFormState = initialState) {
 
   function withValidationErrors(field, nextState) {
     const errors = validate(field, nextState);
+    delete errors.authentication;
     return { ...nextState, errors, isValid: Object.keys(errors).length === 0 };
   }
 }
