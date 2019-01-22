@@ -1,5 +1,6 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 import logger from './utils/logger';
 import appMiddleware from './middleware/appMiddleware';
@@ -14,6 +15,7 @@ appMiddleware(app);
 app.use(
   '/graphql',
   auth.checkUser,
+  graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
   graphqlHTTP(req => ({
     schema,
     graphiql: process.env.NODE_ENV === config.dev,

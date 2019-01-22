@@ -1,5 +1,7 @@
 import Recipe from './recipeModel';
 import RecipeFoods from './recipeFoodsModel';
+import Picture from '../picture/pictureModel';
+import { processFileUpload } from '../../utils/fileUpload';
 
 export const getOne = async id => {
   const recipe = await Recipe.where({
@@ -37,11 +39,19 @@ export const getRecipeFoods = async id => {
   return foods;
 };
 
+const uploadNewPicture = async picture => {
+  const processedPicture = await processFileUpload(picture, 'pictures');
+  return new Picture(processedPicture).save(null, { method: 'insert' });
+};
+
 export const add = async recipeArgs => {
+  const picture = (await uploadNewPicture(recipeArgs.picture)).toJSON();
+
   const recipe = (await new Recipe({
     name: recipeArgs.name,
     creatorId: recipeArgs.creatorId,
-    process: recipeArgs.process
+    process: recipeArgs.process,
+    pictureId: picture.id
   }).save()).toJSON();
 
   const promises = [];

@@ -1,4 +1,5 @@
 import * as graphql from 'graphql';
+import { GraphQLUpload } from 'graphql-upload';
 
 import * as userController from '../user/userController';
 import * as recipeController from './recipeController';
@@ -73,7 +74,8 @@ export const MutationFields = {
       process: { type: GraphQLString },
       ingredients: {
         type: new GraphQLList(IngredientInputType)
-      }
+      },
+      picture: { type: GraphQLUpload }
     },
     resolve: authenticated((parent, args, { user }, info) => {
       return recipeController.add({ ...args, creatorId: user.id });
@@ -96,7 +98,8 @@ export const MutationFields = {
       process: { type: GraphQLString },
       ingredients: {
         type: new GraphQLList(IngredientInputType)
-      }
+      },
+      picture: { type: GraphQLUpload }
     },
     resolve: authenticated((parent, args, { user }) => {
       return recipeController.update(args, user.id);
