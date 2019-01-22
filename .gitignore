@@ -2,6 +2,7 @@
 node_modules
 client/node_modules
 client/build
+pictures/*.*
 
 #files to exclude
 .env

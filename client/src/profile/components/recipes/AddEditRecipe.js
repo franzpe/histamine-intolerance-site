@@ -13,17 +13,21 @@ import {
   Button
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import classNames from 'classnames';
 
 import { FOODS_QUERY } from 'foods/FoodsPage';
 import SaveBtn from '_components/buttons/SaveBtn';
 import SelectField from '_components/SelectField';
 import Rating from '_components/Rating';
-import { recipeThumbnail } from 'recipes/recipeThumbnail';
 import history from '_utils/history';
 import routes, { profileRoutes } from '_constants/routesConstants';
 import Action from '_components/Action';
 import { showErrorToast, showSuccessToast } from '_utils/toast';
 import { USER_RECIPES_QUERY } from './UserRecipesTable';
+import DropzoneField from '_components/DropzoneField';
+
+const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
+const acceptedFileTypesArray = acceptedFileTypes.split(',').map(item => item.trim());
 
 const RECIPE_QUERY = gql`
   query recipe($id: Int!) {
@@ -48,8 +52,13 @@ const UNITS_QUERY = gql`
 `;
 
 const ADD_RECIPE_MUTATION = gql`
-  mutation addRecipe($name: String!, $process: String!, $ingredients: [Ingredients]!) {
-    addRecipe(name: $name, process: $process, ingredients: $ingredients) {
+  mutation addRecipe(
+    $name: String!
+    $process: String!
+    $ingredients: [Ingredients]!
+    $picture: Upload
+  ) {
+    addRecipe(name: $name, process: $process, ingredients: $ingredients, picture: $picture) {
       name
     }
   }
@@ -61,8 +70,15 @@ const UPDATE_RECIPE_MUTATION = gql`
     $name: String!
     $process: String!
     $ingredients: [Ingredients]!
+    $picture: Upload
   ) {
-    updateRecipe(id: $id, name: $name, process: $process, ingredients: $ingredients) {
+    updateRecipe(
+      id: $id
+      name: $name
+      process: $process
+      ingredients: $ingredients
+      picture: $picture
+    ) {
       name
     }
   }
@@ -192,7 +208,33 @@ const styles = theme => ({
     padding: '7px'
   },
   foodList: {},
-  foodItem: {}
+  foodItem: {},
+  dropzone: {
+    backgroundColor: 'rgba(255,255,255,0.70)',
+    width: '100%',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    minHeight: '280px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+
+    '&:hover': {
+      visibility: 'visible'
+    }
+  },
+  dropzoneEmpty: {
+    position: 'relative',
+    backgroundColor: 'rgba(0,0,0,0.25)'
+  },
+  dropzonePicked: {
+    opacity: 0,
+    '&:hover': {
+      opacity: 1
+    }
+  }
 });
 
 function AddEditRecipe({
@@ -211,13 +253,19 @@ function AddEditRecipe({
     name: recipe ? recipe.name : '',
     process: recipe ? recipe.process : '',
     ingredients: [{ id: 0, quantity: 0, unit: '' }],
+    picture: null,
     isSaving: false
   });
 
   const foods = useQuery(FOODS_QUERY).data.foods;
   const units = useQuery(UNITS_QUERY).data.units;
   const addRecipe = useMutation(ADD_RECIPE_MUTATION, {
-    variables: { name: form.name, process: form.process, ingredients: form.ingredients },
+    variables: {
+      name: form.name,
+      process: form.process,
+      ingredients: form.ingredients,
+      picture: form.picture
+    },
     refetchQueries: [{ query: USER_RECIPES_QUERY }]
   });
 
@@ -227,7 +275,8 @@ function AddEditRecipe({
         id: recipe.id,
         name: form.name,
         process: form.process,
-        ingredients: form.ingredients
+        ingredients: form.ingredients,
+        picture: form.picture
       },
       refetchQueries: [{ query: USER_RECIPES_QUERY }]
     });
@@ -268,11 +317,25 @@ function AddEditRecipe({
             )}
           </div>
           <Grid container={true}>
-            <Grid item={true} xs={12} sm={6}>
-              <CardMedia
-                className={classes.cardMedia}
-                image={recipeThumbnail}
-                title="Image title"
+            <Grid item={true} xs={12} sm={6} style={{ position: 'relative' }}>
+              {form.picture && (
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={form.picture.preview}
+                  title="Image title"
+                  style={{ opacity: 1 }}
+                />
+              )}
+              <DropzoneField
+                onDrop={handleDrop}
+                accept={acceptedFileTypes}
+                multiple={false}
+                containerProps={{
+                  className: classNames(classes.dropzone, {
+                    [classes.dropzoneEmpty]: !form.picture,
+                    [classes.dropzonePicked]: form.picture
+                  })
+                }}
               />
             </Grid>
             <Grid item={true} xs={12} sm={6} md={6} className={classes.foods}>
@@ -473,13 +536,40 @@ function AddEditRecipe({
           }, 800);
         })
         .catch(error => {
-          console.log(error);
           showErrorToast('Recept nebol uložený. Skúste ešte raz');
           dispatch({
             type: recipeFormActions.SET_FIELD,
             payload: { field: 'isSaving', value: false }
           });
         });
+    }
+  }
+
+  function verifyFile(file) {
+    let result = true;
+    const currentFileType = file.type;
+
+    if (!(acceptedFileTypesArray.indexOf(currentFileType) > -1)) {
+      result = false;
+    }
+
+    return result;
+  }
+
+  function handleDrop(acceptedFiles, rejectedFiles, e) {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      if (verifyFile(file)) {
+        file.preview = URL.createObjectURL(file);
+        console.log(file);
+        dispatch({
+          type: recipeFormActions.SET_FIELD,
+          payload: {
+            field: 'picture',
+            value: file
+          }
+        });
+      }
     }
   }
 

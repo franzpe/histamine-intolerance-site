@@ -1,7 +1,7 @@
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
+import { createUploadLink } from 'apollo-upload-client';
 import { withClientState } from 'apollo-link-state';
 import { onError } from 'apollo-link-error';
 
@@ -24,7 +24,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-const httpLink = new HttpLink({ uri: GRAPHQL_API_URI });
+const link = createUploadLink({ uri: GRAPHQL_API_URI });
 const cache = new InMemoryCache();
 
 function configureClient() {
@@ -47,7 +47,7 @@ function configureClient() {
         },
         cache
       }),
-      httpLink
+      link
     ]),
     cache
   });
