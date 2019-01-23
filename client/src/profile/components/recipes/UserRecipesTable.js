@@ -40,7 +40,6 @@ export const USER_RECIPES_QUERY = gql`
 
 function UserRecipesTable() {
   const userRecipes = useQuery(USER_RECIPES_QUERY);
-
   const [orderState, setOrderState] = useState({
     order: 'asc',
     orderBy: 'name'

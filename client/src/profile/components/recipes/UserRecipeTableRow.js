@@ -10,6 +10,7 @@ import Rating from '_components/Rating';
 import { showSuccessToast } from '_utils/toast';
 import history from '_utils/history';
 import Action from '_components/Action';
+import { USER_RECIPES_QUERY } from './UserRecipesTable';
 
 const styles = theme => ({
   iconRightMargin: {
@@ -32,8 +33,11 @@ const REMOVE_RECIPE_MUTATION = gql`
   }
 `;
 
-function UserRecipeTableRow({ classes, recipe, recipesQuery }) {
-  const removeRecipe = useMutation(REMOVE_RECIPE_MUTATION, { variables: { id: recipe.id } });
+function UserRecipeTableRow({ classes, recipe }) {
+  const removeRecipe = useMutation(REMOVE_RECIPE_MUTATION, {
+    variables: { id: recipe.id },
+    refetchQueries: [{ query: USER_RECIPES_QUERY }]
+  });
 
   return (
     <TableRow>
@@ -62,7 +66,6 @@ function UserRecipeTableRow({ classes, recipe, recipesQuery }) {
     removeRecipe()
       .then(() => {
         showSuccessToast('Recipe has been removed');
-        recipesQuery.refetch();
       })
       .catch(err => console.log(err));
   }

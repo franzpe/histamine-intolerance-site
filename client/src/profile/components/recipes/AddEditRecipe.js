@@ -37,6 +37,13 @@ const RECIPE_QUERY = gql`
       process
       foods {
         id
+        quantity
+        unit {
+          id
+        }
+      }
+      picture {
+        url
       }
     }
   }
@@ -237,6 +244,17 @@ const styles = theme => ({
   }
 });
 
+function getIgredients(foods) {
+  const ingredients = [];
+  if (foods) {
+    foods.forEach(food =>
+      ingredients.push({ id: food.id, quantity: food.quantity, unit: food.unit.id })
+    );
+  }
+
+  return ingredients;
+}
+
 function AddEditRecipe({
   classes,
   match: {
@@ -252,18 +270,19 @@ function AddEditRecipe({
   const [form, dispatch] = useRecipeForm({
     name: recipe ? recipe.name : '',
     process: recipe ? recipe.process : '',
-    ingredients: [{ id: 0, quantity: 0, unit: '' }],
+    ingredients: [...getIgredients(recipe && recipe.foods), { id: 0, quantity: 0, unit: '' }],
     picture: null,
     isSaving: false
   });
 
   const foods = useQuery(FOODS_QUERY).data.foods;
   const units = useQuery(UNITS_QUERY).data.units;
+
   const addRecipe = useMutation(ADD_RECIPE_MUTATION, {
     variables: {
       name: form.name,
       process: form.process,
-      ingredients: form.ingredients,
+      ingredients: form.ingredients.filter(i => i.id !== 0),
       picture: form.picture
     },
     refetchQueries: [{ query: USER_RECIPES_QUERY }]
@@ -275,10 +294,13 @@ function AddEditRecipe({
         id: recipe.id,
         name: form.name,
         process: form.process,
-        ingredients: form.ingredients,
+        ingredients: form.ingredients.filter(i => i.id !== 0),
         picture: form.picture
       },
-      refetchQueries: [{ query: USER_RECIPES_QUERY }]
+      refetchQueries: [
+        { query: USER_RECIPES_QUERY },
+        { query: RECIPE_QUERY, variables: { id: recipe.id } }
+      ]
     });
   }
 
@@ -307,7 +329,7 @@ function AddEditRecipe({
             {!isNew && (
               <div className={classes.rating}>
                 <Rating
-                  value={0.6}
+                  value={recipe.rating || 0}
                   valueVariant="h4"
                   percentageVariant="h6"
                   valueClassName={classes.ratingValue}
@@ -318,10 +340,10 @@ function AddEditRecipe({
           </div>
           <Grid container={true}>
             <Grid item={true} xs={12} sm={6} style={{ position: 'relative' }}>
-              {form.picture && (
+              {(form.picture || (recipe && recipe.picture)) && (
                 <CardMedia
                   className={classes.cardMedia}
-                  image={form.picture.preview}
+                  image={(form.picture && form.picture.preview) || recipe.picture.url}
                   title="Image title"
                   style={{ opacity: 1 }}
                 />
@@ -332,8 +354,8 @@ function AddEditRecipe({
                 multiple={false}
                 containerProps={{
                   className: classNames(classes.dropzone, {
-                    [classes.dropzoneEmpty]: !form.picture,
-                    [classes.dropzonePicked]: form.picture
+                    [classes.dropzoneEmpty]: !(form.picture || (recipe && recipe.picture)),
+                    [classes.dropzonePicked]: form.picture || (recipe && recipe.picture)
                   })
                 }}
               />
@@ -412,7 +434,7 @@ function AddEditRecipe({
                             onChange={e =>
                               dispatch({
                                 type: recipeFormActions.SET_INGREDIENT,
-                                payload: { index, field: 'quantity', value: e.target.value }
+                                payload: { index, field: 'quantity', value: Number(e.target.value) }
                               })
                             }
                           />
@@ -512,7 +534,7 @@ function AddEditRecipe({
 
     if (isNew) {
       addRecipe()
-        .then(() => {
+        .then(res => {
           showSuccessToast('Recept bol uložený');
           const timeout = setTimeout(() => {
             history.push(routes.PROFILE + profileRoutes.RECIPES);
@@ -561,7 +583,6 @@ function AddEditRecipe({
       const file = acceptedFiles[0];
       if (verifyFile(file)) {
         file.preview = URL.createObjectURL(file);
-        console.log(file);
         dispatch({
           type: recipeFormActions.SET_FIELD,
           payload: {
