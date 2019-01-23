@@ -87,12 +87,15 @@ export const add = async recipeArgs => {
 };
 
 export const update = async (recipeArgs, userId) => {
-  const storedRecipe = (await new Recipe({ id: recipeArgs.id }).fetch()).toJSON();
+  const storedRecipe = (await new Recipe({ id: recipeArgs.id }).fetch({
+    withRelated: ['foods']
+  })).toJSON();
 
   if (storedRecipe.creatorId !== userId) {
     throw new Error('You can not update others recipe');
   }
 
+  // upload and insert picture
   let picture = null;
   if (recipeArgs.picture) {
     if (storedRecipe.pictureId) {
@@ -102,25 +105,38 @@ export const update = async (recipeArgs, userId) => {
     }
   }
 
-  const recipe = (await new Recipe({
+  const updatedRecipe = (await new Recipe({
     id: recipeArgs.id,
     name: recipeArgs.name,
     process: recipeArgs.process,
     pictureId: picture && picture.id
   }).save()).toJSON();
 
+  // Remove all entries
+  const foods = await RecipeFoods.where({ recipeId: storedRecipe.id }).fetchAll();
+  const foodsCount = Object.keys(foods.toJSON()).length;
+
+  if (foodsCount > 0) {
+    await RecipeFoods.where({ recipeId: storedRecipe.id }).destroy();
+  }
+
+  // Insert new ingredients
   const promises = [];
-  recipeArgs.ingredients.forEach(food => {
+
+  recipeArgs.ingredients.forEach(ingredient => {
     new RecipeFoods({
-      quantity: food.quantity,
-      unit: food.unit
-    })
-      .where({ recipeId: recipe.id, foodId: food.id })
-      .save(null, { method: 'update' });
+      recipeId: storedRecipe.id,
+      foodId: ingredient.id,
+      quantity: ingredient.quantity,
+      unit: ingredient.unit
+    }).save(null, {
+      method: 'insert'
+    });
   });
+
   await Promise.all(promises);
 
-  return recipe;
+  return updatedRecipe;
 };
 
 export const rate = async (id, value) => {
