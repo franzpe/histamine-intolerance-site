@@ -191,10 +191,40 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0 `
   },
   foods: {
-    padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`,
+    width: '100%',
+    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px 0 ${theme.spacing.unit *
+      3}px`,
     [theme.breakpoints.down('xs')]: {
       padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit *
         2}px`
+    }
+  },
+  food: {
+    marginBottom: '8px',
+    width: '100%',
+    alignItems: 'flex-end',
+    height: '35px'
+  },
+  addFoodWrapper: {
+    textAlign: 'center',
+    borderRadius: '5px',
+    background: 'rgba(0,0,0,0.025)',
+    marginBottom: '8px'
+  },
+  foodPadding: {
+    '&:nth-child(even)': {
+      paddingLeft: theme.spacing.unit
+    },
+    '&:nth-child(odd)': {
+      paddingRight: theme.spacing.unit
+    },
+    [theme.breakpoints.down('sm')]: {
+      '&:nth-child(even)': {
+        paddingLeft: 0
+      },
+      '&:nth-child(odd)': {
+        paddingRight: 0
+      }
     }
   },
   btnWrapper: {
@@ -362,151 +392,147 @@ function AddEditRecipe({
               </div>
             )}
           </div>
-          <Grid container={true}>
-            <Grid item={true} xs={12} sm={6} className={classes.cardMediaWrapper}>
-              {(form.picture || (recipe && recipe.picture)) && (
-                <CardMedia
-                  className={classes.cardMedia}
-                  image={(form.picture && form.picture.preview) || recipe.picture.url}
-                  title="Image title"
-                  style={{ opacity: 1 }}
-                />
-              )}
-              <DropzoneField
-                onDrop={handleDrop}
-                accept={acceptedFileTypes}
-                multiple={false}
-                containerProps={{
-                  className: classNames(classes.dropzone, {
-                    [classes.dropzoneEmpty]: !(form.picture || (recipe && recipe.picture)),
-                    [classes.dropzonePicked]: form.picture || (recipe && recipe.picture)
-                  })
-                }}
+          <div className={classes.cardMediaWrapper}>
+            {(form.picture || (recipe && recipe.picture)) && (
+              <CardMedia
+                className={classes.cardMedia}
+                image={(form.picture && form.picture.preview) || recipe.picture.url}
+                title="Image title"
+                style={{ opacity: 1 }}
               />
-            </Grid>
-            <Grid item={true} xs={12} sm={6} md={6} className={classes.foods}>
-              <Typography
-                variant="h6"
-                component="span"
-                style={{
-                  lineHeight: '1.25rem',
-                  marginBottom: ingredienceHeaderBottomMargin
-                }}
-              >
-                Ingrediencie:
-              </Typography>
-              <Grid container={true}>
-                {form.ingredients.map((ingredient, index) => {
-                  if (ingredient.id === 0) {
-                    return (
-                      <Grid
-                        key={index}
-                        item={true}
-                        xs={12}
-                        style={{
-                          textAlign: 'center',
-                          borderRadius: '5px',
-                          padding: '4px 0',
-                          background: 'rgba(0,0,0,0.025)'
-                        }}
-                      >
-                        <Button onClick={handleAddIngredient} fullWidth={true}>
-                          Pridaj potravinu
-                        </Button>
-                      </Grid>
-                    );
-                  } else {
-                    return (
-                      <Grid
-                        key={index}
-                        container={true}
-                        item={true}
-                        sm={12}
-                        md={12}
-                        style={{ marginBottom: '8px', width: '100%', alignItems: 'flex-end' }}
-                      >
-                        <Grid item={true} xs={7} sm={7} md={7}>
-                          <SelectField
-                            placeholder="Vyber potravinu"
-                            className={classes.rPadding}
-                            value={form.ingredients[index].id}
-                            clearRenderer={() => <Fragment />}
-                            options={foods.map(food => ({
-                              value: food.id,
-                              label: food.name,
-                              clearableValue: false
-                            }))}
-                            onChange={option => {
-                              if (option) {
-                                dispatch({
-                                  type: recipeFormActions.SET_INGREDIENT,
-                                  payload: {
-                                    index,
-                                    field: 'id',
-                                    value: option ? option.value : ''
-                                  }
-                                });
-                              }
-                            }}
-                          />
-                        </Grid>
-                        <Grid item={true} xs={2} sm={2} md={2}>
-                          <TextField
-                            type="number"
-                            placeholder="Množstvo"
-                            value={form.ingredients[index].quantity}
-                            onChange={e =>
+            )}
+            <DropzoneField
+              onDrop={handleDrop}
+              accept={acceptedFileTypes}
+              multiple={false}
+              containerProps={{
+                className: classNames(classes.dropzone, {
+                  [classes.dropzoneEmpty]: !(form.picture || (recipe && recipe.picture)),
+                  [classes.dropzonePicked]: form.picture || (recipe && recipe.picture)
+                })
+              }}
+            />
+          </div>
+          <div className={classes.foods}>
+            <Typography
+              variant="h6"
+              component="span"
+              style={{
+                lineHeight: '1.25rem',
+                marginBottom: ingredienceHeaderBottomMargin
+              }}
+            >
+              Ingrediencie:
+            </Typography>
+            <Grid container={true}>
+              {form.ingredients.map((ingredient, index) => {
+                if (ingredient.id === 0) {
+                  return (
+                    <Grid
+                      key={index}
+                      item={true}
+                      xs={12}
+                      sm={12}
+                      md={form.ingredients.length > 1 ? 6 : 12}
+                      className={classes.addFoodWrapper}
+                    >
+                      <Button onClick={handleAddIngredient} fullWidth={true}>
+                        Pridaj potravinu
+                      </Button>
+                    </Grid>
+                  );
+                } else {
+                  return (
+                    <Grid
+                      key={index}
+                      container={true}
+                      item={true}
+                      xs={12}
+                      sm={12}
+                      md={6}
+                      className={classNames(classes.food, classes.foodPadding)}
+                    >
+                      <Grid item={true} xs={7} sm={7} md={7}>
+                        <SelectField
+                          placeholder="Vyber potravinu"
+                          className={classes.rPadding}
+                          value={form.ingredients[index].id}
+                          clearRenderer={() => <Fragment />}
+                          options={foods.map(food => ({
+                            value: food.id,
+                            label: food.name,
+                            clearableValue: false
+                          }))}
+                          onChange={option => {
+                            if (option) {
                               dispatch({
                                 type: recipeFormActions.SET_INGREDIENT,
-                                payload: { index, field: 'quantity', value: Number(e.target.value) }
-                              })
+                                payload: {
+                                  index,
+                                  field: 'id',
+                                  value: option ? option.value : ''
+                                }
+                              });
                             }
-                          />
-                        </Grid>
-                        <Grid item={true} xs={2} sm={2} md={2}>
-                          <SelectField
-                            isMulti={false}
-                            placeholder="jednotka"
-                            className={classes.lPadding}
-                            cleareable={false}
-                            value={form.ingredients[index].unit}
-                            options={units.map(unit => ({
-                              value: unit.id,
-                              label: unit.id,
-                              clearableValue: false
-                            }))}
-                            clearRenderer={() => <Fragment />}
-                            onChange={option => {
-                              if (option) {
-                                dispatch({
-                                  type: recipeFormActions.SET_INGREDIENT,
-                                  payload: { index, field: 'unit', value: option }
-                                });
-                              }
-                            }}
-                          />
-                        </Grid>
-                        <Grid item={true} container={true} xs={1} sm={1} md={1} justify="center">
-                          <Action
-                            aria-label="Delete"
-                            className={classes.deleteAction}
-                            onClick={() =>
-                              dispatch({
-                                type: recipeFormActions.DELETE_INGREDIENT,
-                                payload: { index }
-                              })
-                            }
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </Action>
-                        </Grid>
+                          }}
+                        />
                       </Grid>
-                    );
-                  }
-                })}
-              </Grid>
+                      <Grid item={true} xs={2} sm={2} md={2}>
+                        <TextField
+                          type="number"
+                          placeholder="Množstvo"
+                          value={form.ingredients[index].quantity}
+                          onChange={e =>
+                            dispatch({
+                              type: recipeFormActions.SET_INGREDIENT,
+                              payload: { index, field: 'quantity', value: Number(e.target.value) }
+                            })
+                          }
+                        />
+                      </Grid>
+                      <Grid item={true} xs={2} sm={2} md={2}>
+                        <SelectField
+                          isMulti={false}
+                          placeholder="jednotka"
+                          className={classes.lPadding}
+                          cleareable={false}
+                          value={form.ingredients[index].unit}
+                          options={units.map(unit => ({
+                            value: unit.id,
+                            label: unit.id,
+                            clearableValue: false
+                          }))}
+                          clearRenderer={() => <Fragment />}
+                          onChange={option => {
+                            if (option) {
+                              dispatch({
+                                type: recipeFormActions.SET_INGREDIENT,
+                                payload: { index, field: 'unit', value: option }
+                              });
+                            }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item={true} container={true} xs={1} sm={1} md={1} justify="center">
+                        <Action
+                          aria-label="Delete"
+                          className={classes.deleteAction}
+                          onClick={() =>
+                            dispatch({
+                              type: recipeFormActions.DELETE_INGREDIENT,
+                              payload: { index }
+                            })
+                          }
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </Action>
+                      </Grid>
+                    </Grid>
+                  );
+                }
+              })}
             </Grid>
-          </Grid>
+          </div>
           <CardContent style={{ width: '100%' }}>
             <div className={classes.row}>
               <Typography variant="h6" component="span">
