@@ -1,13 +1,13 @@
 #folders to exclude
-node_modules
+server/node_modules
 client/node_modules
 client/build
-pictures/*.*
+server/pictures/*.*
 
 #files to exclude
-.env
+server/.env
 client/.env
-.DS_STORE
+server/.DS_STORE
 client/.DS_STORE
-package-lock.json
+server/package-lock.json
 client/package-lock.json

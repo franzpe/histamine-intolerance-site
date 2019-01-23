@@ -62,8 +62,11 @@ TASKS BEFORE RELEASE:
   RECIPES:
     ☐ filtering, pagination
     ☐ fast action add recipe 
-    
-  
+    ☐ after recipe update, the user recipes list is updated but, when u go back to details update is not saved
+    ☐ upload picture
+      https://www.youtube.com/watch?v=22S5P_d55dM
+      ☐ fit the picture to card media 
+
   GROCERIES: 
     ✔ design @done(18-12-29 18:25)
     ✔ rate grocery @done(18-12-29 18:24)
@@ -92,7 +95,13 @@ TASKS BEFORE RELEASE:
     ☐ rating formula racipes  
     ✔ users recipes @done(19-01-10 19:48)
     ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
-
+    ✔ file upload @done(19-01-23 08:22)
+      https://github.com/jaydenseric/apollo-upload-examples/blob/master/api/resolvers.mjs
+      https://www.youtube.com/watch?v=qCVzfqkoJCQ&index=44&list=PLN3n1USn4xlnfJIQBa6bBjjiECnk6zL6s
+    ✔ add picture @done(19-01-23 08:22)
+    ☐ update picture
+    ☐ get picture
+    
   MISCELLANEOUS:
     ✔ migrate from apollo boost @done(18-12-29 14:34)
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
@@ -110,6 +119,8 @@ FEATURE:
   ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
 
 notes:
+  MULTIPLE LINES WRAP:
+  https://stackoverflow.com/questions/7993067/text-overflow-ellipsis-not-working
   GRAPHQL GENERATOR:
     https://github.com/dotansimha/graphql-code-generator
 

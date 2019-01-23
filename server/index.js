@@ -1,8 +1,8 @@
 // starting point for our server
-import config from './server/config/config';
-import app from './server/server';
+import config from './src/config/config';
+import app from './src/server';
 import { Server } from 'http';
-import logger from './server/utils/logger';
+import logger from './src/utils/logger';
 
 const server = Server(app);
 
