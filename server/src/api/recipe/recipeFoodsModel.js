@@ -3,7 +3,7 @@ import Food from '../food/foodModel';
 import Unit from '../unit/unitModel';
 
 // Model attributes:
-// userId - Int
+// recipeId - Int
 // foodId - id
 // quantity - float
 // unit - string

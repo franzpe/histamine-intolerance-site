@@ -1,4 +1,5 @@
 import db from '../../utils/dbConnection';
+import Recipe from '../recipe/recipeModel';
 
 // Model attributes:
 // id - Int
@@ -12,6 +13,10 @@ class Picture extends db.Model {
 
   get tableName() {
     return 'Picture';
+  }
+
+  recipe() {
+    return this.hasOne(Recipe, 'pictureId');
   }
 }
 

@@ -5,9 +5,5 @@ export const getOne = async id => {
     id
   }).fetch();
 
-  if (!picture) {
-    throw new Error('No picture with the given id');
-  }
-
-  return picture.toJSON();
+  return picture && picture.toJSON();
 };

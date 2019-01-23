@@ -58,13 +58,16 @@ const uploadNewPicture = async (picture, storedPictureId) => {
 };
 
 export const add = async recipeArgs => {
-  const picture = (await uploadNewPicture(recipeArgs.picture)).toJSON();
+  let processedPicture = null;
+  if (recipeArgs.picture) {
+    processedPicture = (await uploadNewPicture(recipeArgs.picture)).toJSON();
+  }
 
   const recipe = (await new Recipe({
     name: recipeArgs.name,
     creatorId: recipeArgs.creatorId,
     process: recipeArgs.process,
-    pictureId: picture.id
+    pictureId: processedPicture && processedPicture.id
   }).save()).toJSON();
 
   const promises = [];
@@ -138,7 +141,6 @@ export const deleteOne = async (id, userId) => {
     throw new Error('You can not delete others recipe');
   }
 
-  recipe.destroy();
-
+  await recipe.destroy();
   return id;
 };
