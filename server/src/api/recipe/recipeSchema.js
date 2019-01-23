@@ -3,9 +3,11 @@ import { GraphQLUpload } from 'graphql-upload';
 
 import * as userController from '../user/userController';
 import * as recipeController from './recipeController';
+import * as pictureController from '../picture/pictureController';
 import { UserType } from '../user/userSchema';
 import { FoodExtendedType } from '../food/foodSchema';
 import { authenticated } from '../../auth/auth';
+import { PictureType } from '../picture/pictureSchema';
 
 const {
   GraphQLObjectType,
@@ -43,6 +45,12 @@ export const RecipeType = new GraphQLObjectType({
       type: new GraphQLList(FoodExtendedType),
       resolve(parent) {
         return recipeController.getRecipeFoods(parent.id);
+      }
+    },
+    picture: {
+      type: PictureType,
+      resolve(parent) {
+        return pictureController.getOne(parent.pictureId);
       }
     }
   })

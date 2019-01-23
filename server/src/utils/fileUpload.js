@@ -1,9 +1,9 @@
 import shortid from 'shortid';
 import fs from 'fs';
 
-const storeFS = ({ stream, filename, folderPath }) => {
+const storeFS = ({ stream, folderPath }) => {
   const id = shortid.generate();
-  const path = `${folderPath}/${id}-${filename}`;
+  const path = `${folderPath}/${id}`;
 
   return new Promise((resolve, reject) =>
     stream
@@ -22,6 +22,6 @@ const storeFS = ({ stream, filename, folderPath }) => {
 export const processFileUpload = async (file, folderPath) => {
   const { filename, mimetype, createReadStream } = await file;
   const stream = createReadStream();
-  const { id, path } = await storeFS({ stream, filename, folderPath });
+  const { id, path } = await storeFS({ stream, folderPath });
   return { id, filename, mimetype, path };
 };

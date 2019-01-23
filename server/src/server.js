@@ -12,6 +12,8 @@ const app = express();
 // setup the app middlware
 appMiddleware(app);
 
+app.use('/images', express.static('images'));
+
 app.use(
   '/graphql',
   auth.checkUser,
@@ -20,6 +22,7 @@ app.use(
     schema,
     graphiql: process.env.NODE_ENV === config.dev,
     context: {
+      url: req.protocol + '://' + req.get('host'),
       user: req.user
     }
   }))

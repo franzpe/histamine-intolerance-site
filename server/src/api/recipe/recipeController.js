@@ -1,3 +1,4 @@
+import fs from 'fs';
 import Recipe from './recipeModel';
 import RecipeFoods from './recipeFoodsModel';
 import Picture from '../picture/pictureModel';
@@ -39,8 +40,20 @@ export const getRecipeFoods = async id => {
   return foods;
 };
 
-const uploadNewPicture = async picture => {
-  const processedPicture = await processFileUpload(picture, 'pictures');
+/**
+ * If storedPictureId param is present, that means we have already stored some picture for certain recipe, therefore we need to remove that image before inserting a new one
+ * @param {object} picture
+ * @param {string} storedPictureId
+ */
+const uploadNewPicture = async (picture, storedPictureId) => {
+  const folderPath = 'images';
+
+  if (storedPictureId) {
+    fs.unlinkSync(folderPath + '/' + storedPictureId);
+    new Picture({ id: storedPictureId }).destroy();
+  }
+
+  const processedPicture = await processFileUpload(picture, folderPath);
   return new Picture(processedPicture).save(null, { method: 'insert' });
 };
 
@@ -71,16 +84,26 @@ export const add = async recipeArgs => {
 };
 
 export const update = async (recipeArgs, userId) => {
-  const storedRecipe = await new Recipe({ id: recipeArgs.id }).fetch();
+  const storedRecipe = (await new Recipe({ id: recipeArgs.id }).fetch()).toJSON();
 
-  if (storedRecipe.toJSON().creatorId !== userId) {
+  if (storedRecipe.creatorId !== userId) {
     throw new Error('You can not update others recipe');
+  }
+
+  let picture = null;
+  if (recipeArgs.picture) {
+    if (storedRecipe.pictureId) {
+      picture = (await uploadNewPicture(recipeArgs.picture, storedRecipe.pictureId)).toJSON();
+    } else {
+      picture = (await uploadNewPicture(recipeArgs.picture)).toJSON();
+    }
   }
 
   const recipe = (await new Recipe({
     id: recipeArgs.id,
     name: recipeArgs.name,
-    process: recipeArgs.process
+    process: recipeArgs.process,
+    pictureId: picture && picture.id
   }).save()).toJSON();
 
   const promises = [];

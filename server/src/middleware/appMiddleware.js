@@ -6,8 +6,6 @@ import override from 'method-override';
 import helmet from 'helmet';
 import compression from 'compression';
 
-import path from 'path';
-
 // setup global middleware here
 export default function(app) {
   app.set('json spaces', 2);
@@ -18,5 +16,5 @@ export default function(app) {
   app.use(override());
   app.use(helmet());
   app.use(compression());
-  app.use(express.static(path.join(__dirname, '../../client/build')));
+  app.use(express.static('../client/build'));
 }
