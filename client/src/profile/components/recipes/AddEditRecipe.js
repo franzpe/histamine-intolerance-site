@@ -29,7 +29,7 @@ import DropzoneField from '_components/DropzoneField';
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
 const acceptedFileTypesArray = acceptedFileTypes.split(',').map(item => item.trim());
 
-const RECIPE_QUERY = gql`
+export const RECIPE_QUERY = gql`
   query recipe($id: Int!) {
     recipe(id: $id) {
       id
@@ -45,6 +45,7 @@ const RECIPE_QUERY = gql`
       picture {
         url
       }
+      description
     }
   }
 `;
@@ -64,8 +65,15 @@ const ADD_RECIPE_MUTATION = gql`
     $process: String!
     $ingredients: [Ingredients]!
     $picture: Upload
+    $description: String!
   ) {
-    addRecipe(name: $name, process: $process, ingredients: $ingredients, picture: $picture) {
+    addRecipe(
+      name: $name
+      process: $process
+      ingredients: $ingredients
+      picture: $picture
+      description: $description
+    ) {
       name
     }
   }
@@ -78,6 +86,7 @@ const UPDATE_RECIPE_MUTATION = gql`
     $process: String!
     $ingredients: [Ingredients]!
     $picture: Upload
+    $description: String!
   ) {
     updateRecipe(
       id: $id
@@ -85,6 +94,7 @@ const UPDATE_RECIPE_MUTATION = gql`
       process: $process
       ingredients: $ingredients
       picture: $picture
+      description: $description
     ) {
       name
     }
@@ -241,6 +251,9 @@ const styles = theme => ({
     '&:hover': {
       opacity: 1
     }
+  },
+  row: {
+    marginBottom: theme.spacing.unit * 3
   }
 });
 
@@ -272,6 +285,7 @@ function AddEditRecipe({
     process: recipe ? recipe.process : '',
     ingredients: [...getIgredients(recipe && recipe.foods), { id: 0, quantity: 0, unit: '' }],
     picture: null,
+    description: recipe ? recipe.description : '',
     isSaving: false
   });
 
@@ -283,7 +297,8 @@ function AddEditRecipe({
       name: form.name,
       process: form.process,
       ingredients: form.ingredients.filter(i => i.id !== 0),
-      picture: form.picture
+      picture: form.picture,
+      description: form.description
     },
     refetchQueries: [{ query: USER_RECIPES_QUERY }]
   });
@@ -295,7 +310,8 @@ function AddEditRecipe({
         name: form.name,
         process: form.process,
         ingredients: form.ingredients.filter(i => i.id !== 0),
-        picture: form.picture
+        picture: form.picture,
+        description: form.description
       },
       refetchQueries: [
         { query: USER_RECIPES_QUERY },
@@ -484,15 +500,37 @@ function AddEditRecipe({
             </Grid>
           </Grid>
           <CardContent style={{ width: '100%' }}>
+            <div className={classes.row}>
+              <Typography variant="h6" component="span">
+                Popis:
+              </Typography>
+              <TextField
+                name="description"
+                multiline={true}
+                rowsMax={50}
+                placeholder="Sem napíš krátky popis o recepte (max 50 znakov)"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                fullWidth={true}
+                value={form.description}
+                onChange={e =>
+                  dispatch({
+                    type: recipeFormActions.SET_FIELD,
+                    payload: { field: e.target.name, value: e.target.value }
+                  })
+                }
+              />
+            </div>
             <Typography variant="h6" component="span">
               Postup:
             </Typography>
             <TextField
               name="process"
+              placeholder="Sem napíš postup receptu"
               multiline={true}
               rows={5}
               rowsMax={50}
-              placeholder="Sem napíš postup receptu"
               InputLabelProps={{
                 shrink: true
               }}

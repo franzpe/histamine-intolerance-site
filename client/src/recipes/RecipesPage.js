@@ -14,6 +14,22 @@ import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { recipeThumbnail } from './recipeThumbnail';
 import Rating from '_components/Rating';
+import { useQuery } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
+
+const RECIPES_QUERY = gql`
+  {
+    recipes {
+      id
+      name
+      process
+      rating
+      picture {
+        url
+      }
+    }
+  }
+`;
 
 const styles = theme => ({
   grid: {
@@ -46,42 +62,33 @@ const styles = theme => ({
   }
 });
 
-const recipes = [
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' },
-  { heading: 'Heading', content: 'Post content Post content. Post content.' }
-];
-
 const RecipesPage = ({ classes }) => {
+  const recipes = useQuery(RECIPES_QUERY).data.recipes;
+
   return (
     <Grid container={true} spacing={40} className={classes.grid}>
       {recipes.map((recipe, index) => (
-        <Grid key={index} item={true} sm={6} md={4} lg={3} className={classes.recipeGrid}>
+        <Grid key={recipe.id} item={true} sm={6} md={4} lg={3} className={classes.recipeGrid}>
           <Card className={classes.card}>
-            <CardMedia className={classes.cardMedia} image={recipeThumbnail} title="Image title" />
+            <CardMedia
+              className={classes.cardMedia}
+              image={recipe.picture ? recipe.picture.url : recipeThumbnail}
+              title="Image title"
+            />
             <div className={classes.ratingContainer}>
-              <Rating value={0.5} valueVariant="h5" percentageVariant="body1" />
+              <Rating value={recipe.rating} valueVariant="h5" percentageVariant="body1" />
             </div>
             <CardContent>
               <Typography gutterBottom={true} variant="h5" component="h6">
-                {recipe.heading}
+                {recipe.name}
               </Typography>
-              <Typography>{recipe.content}</Typography>
+              <Typography>{recipe.process}</Typography>
             </CardContent>
             <CardActions>
               <Button
                 size="small"
                 comolr="primary"
-                onClick={e => history.push(routes.RECIPES + '/' + index)}
+                onClick={() => history.push(routes.RECIPES + '/' + recipe.id)}
               >
                 View
               </Button>

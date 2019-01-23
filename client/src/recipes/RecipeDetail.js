@@ -1,6 +1,5 @@
 import React, { memo, Fragment } from 'react';
 import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
 import {
   withStyles,
   Grid,
@@ -14,6 +13,7 @@ import {
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
 import Rating from '_components/Rating';
+import { RECIPE_QUERY } from 'profile/components/recipes/AddEditRecipe';
 
 const styles = theme => ({
   header: {
@@ -42,19 +42,6 @@ const styles = theme => ({
   foodList: {},
   foodItem: {}
 });
-
-const RECIPE_QUERY = gql`
-  query recipe($id: Int!) {
-    recipe(id: $id) {
-      name
-      process
-      rating
-      foods {
-        name
-      }
-    }
-  }
-`;
 
 /*
 0-49 secondary color
