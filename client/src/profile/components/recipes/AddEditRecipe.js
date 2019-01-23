@@ -182,12 +182,20 @@ const styles = theme => ({
   recipeNameInput: {
     fontSize: '32px'
   },
+  cardMediaWrapper: {
+    position: 'relative',
+    height: 'fit-content'
+  },
   cardMedia: {
     minHeight: '280px',
     padding: `${theme.spacing.unit * 8}px 0 `
   },
   foods: {
-    padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`
+    padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`,
+    [theme.breakpoints.down('xs')]: {
+      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit *
+        2}px`
+    }
   },
   btnWrapper: {
     marginTop: theme.spacing.unit * 3,
@@ -355,7 +363,7 @@ function AddEditRecipe({
             )}
           </div>
           <Grid container={true}>
-            <Grid item={true} xs={12} sm={6} style={{ position: 'relative' }}>
+            <Grid item={true} xs={12} sm={6} className={classes.cardMediaWrapper}>
               {(form.picture || (recipe && recipe.picture)) && (
                 <CardMedia
                   className={classes.cardMedia}

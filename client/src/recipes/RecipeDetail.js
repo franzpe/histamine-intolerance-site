@@ -55,6 +55,7 @@ function RecipeDetail({ classes, match }) {
   } = useQuery(RECIPE_QUERY, {
     variables: { id: Number(match.params.id) }
   });
+
   if (error) {
     return null;
   }
@@ -67,12 +68,16 @@ function RecipeDetail({ classes, match }) {
             {recipe.name}
           </Typography>
           <div>
-            <Rating value={0.6} valueVariant="h4" percentageVariant="h6" />
+            <Rating value={recipe.rating || 0} valueVariant="h4" percentageVariant="h6" />
           </div>
         </div>
         <Grid container={true}>
           <Grid item={true} xs={12} sm={6}>
-            <CardMedia className={classes.cardMedia} image={recipeThumbnail} title="Image title" />
+            <CardMedia
+              className={classes.cardMedia}
+              image={recipe.picture ? recipe.picture.url : recipeThumbnail}
+              title="Image title"
+            />
           </Grid>
           <Grid item={true} md={6} className={classes.foods}>
             <Typography variant="subtitle1" component="span" style={{ fontWeight: 500 }}>
