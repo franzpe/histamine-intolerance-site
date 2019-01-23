@@ -2,7 +2,6 @@ import knex from 'knex';
 import bookshelf from 'bookshelf';
 
 import config from '../config/config';
-import cascadeDelete from 'bookshelf-cascade-delete';
 
 const knexInstance = knex({
   client: 'mysql',
@@ -15,7 +14,16 @@ const knexInstance = knex({
   }
 });
 
+if (config.showDbQueries) {
+  knexInstance.on('query', function(queryData) {
+    console.log(queryData.sql);
+  });
+
+  knexInstance.on('delete', function(queryData) {
+    console.log(queryData);
+  });
+}
+
 const bookshelfInstance = bookshelf(knexInstance);
-bookshelfInstance.plugin(cascadeDelete);
 
 export default bookshelfInstance;
