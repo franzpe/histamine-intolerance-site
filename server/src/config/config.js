@@ -6,7 +6,8 @@ import {
   PORT,
   JWT,
   FACEBOOK_APP_ID,
-  FACEBOOK_SECRET
+  FACEBOOK_SECRET,
+  SHOW_DB_QUERIES
 } from 'babel-dotenv';
 
 const config = {
@@ -28,7 +29,8 @@ const config = {
   fb: {
     app_id: FACEBOOK_APP_ID,
     secret: FACEBOOK_SECRET
-  }
+  },
+  showDbQueries: SHOW_DB_QUERIES === 'true'
 };
 
 process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
