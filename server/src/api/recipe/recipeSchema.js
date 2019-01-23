@@ -52,6 +52,9 @@ export const RecipeType = new GraphQLObjectType({
       resolve(parent) {
         return pictureController.getOne(parent.pictureId);
       }
+    },
+    description: {
+      type: GraphQLString
     }
   })
 });
@@ -83,7 +86,8 @@ export const MutationFields = {
       ingredients: {
         type: new GraphQLList(IngredientInputType)
       },
-      picture: { type: GraphQLUpload }
+      picture: { type: GraphQLUpload },
+      description: { type: GraphQLString }
     },
     resolve: authenticated((parent, args, { user }, info) => {
       return recipeController.add({ ...args, creatorId: user.id });
@@ -107,7 +111,8 @@ export const MutationFields = {
       ingredients: {
         type: new GraphQLList(IngredientInputType)
       },
-      picture: { type: GraphQLUpload }
+      picture: { type: GraphQLUpload },
+      description: { type: GraphQLString }
     },
     resolve: authenticated((parent, args, { user }) => {
       return recipeController.update(args, user.id);

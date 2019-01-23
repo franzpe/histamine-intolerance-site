@@ -10,6 +10,7 @@ import bookshelfInstance from '../../utils/dbConnection';
 // creatorId - int FK User
 // rating - Number
 // process - String
+// description - String
 class Recipe extends db.Model {
   idAttribute;
 

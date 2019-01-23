@@ -67,7 +67,8 @@ export const add = async recipeArgs => {
     name: recipeArgs.name,
     creatorId: recipeArgs.creatorId,
     process: recipeArgs.process,
-    pictureId: processedPicture && processedPicture.id
+    pictureId: processedPicture && processedPicture.id,
+    description: recipeArgs.description
   }).save()).toJSON();
 
   const promises = [];
@@ -96,6 +97,7 @@ export const update = async (recipeArgs, userId) => {
   }
 
   // upload and insert picture
+  console.log(recipeArgs.picture);
   let picture = null;
   if (recipeArgs.picture) {
     if (storedRecipe.pictureId) {
@@ -109,7 +111,8 @@ export const update = async (recipeArgs, userId) => {
     id: recipeArgs.id,
     name: recipeArgs.name,
     process: recipeArgs.process,
-    pictureId: picture && picture.id
+    pictureId: picture ? picture.id : storedRecipe.pictureId,
+    description: recipeArgs.description
   }).save()).toJSON();
 
   // Remove all entries
