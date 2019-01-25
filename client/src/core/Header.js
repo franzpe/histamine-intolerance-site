@@ -15,8 +15,15 @@ const styles = theme => ({
   appBar: {
     position: 'relative'
   },
+  toolbarTitleWrapper: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center'
+  },
   toolbarTitle: {
-    flex: 1
+    cursor: 'pointer',
+    display: 'inline-block',
+    width: 'auto'
   },
   section: {
     marginRight: theme.spacing.unit * 5,
@@ -56,16 +63,19 @@ function Header({ classes }) {
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          HIT
-        </Typography>
+        <div className={classes.toolbarTitleWrapper}>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap={true}
+            className={classes.toolbarTitle}
+            onClick={() => history.push(routes.RECIPES)}
+          >
+            HIT
+          </Typography>
+        </div>
         {!isAuthenticated ? (
           <Fragment>
             <FacebookLoginBtn className={classes.facebook} />
@@ -81,7 +91,7 @@ function Header({ classes }) {
               className={classes.profile}
               onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
             >
-              Profile
+              Profil
             </Button>
             <Button variant="contained" size="small" color="primary" onClick={handleLogout}>
               Odhlásiť

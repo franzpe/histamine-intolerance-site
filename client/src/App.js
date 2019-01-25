@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import ReactTooltip from 'react-tooltip';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
@@ -39,6 +40,7 @@ export default class App extends Component {
 
     return (
       <div className={classes.app}>
+        <ReactTooltip effect="float" delayShow={500} delayHide={200} multiline={true} />
         <Header />
         {(pathname === routes.RECIPES || pathname === '/') && <Trend />}
         <div className={classes.content}>
