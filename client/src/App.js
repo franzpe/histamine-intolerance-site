@@ -3,9 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
-import Trend from './core/Trend';
-import history from './_utils/history';
-import routes from './_constants/routesConstants';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './core/Header';
 
@@ -27,7 +24,7 @@ const styles = theme => ({
   },
   content: {
     flex: 1,
-    padding: `${theme.spacing.unit * 4}px 0`
+    padding: `${theme.spacing.unit}px 0`
   }
 });
 
@@ -35,12 +32,10 @@ const styles = theme => ({
 export default class App extends Component {
   render() {
     const { classes } = this.props;
-    const { pathname } = history.location;
 
     return (
       <div className={classes.app}>
         <Header />
-        {(pathname === routes.RECIPES || pathname === '/') && <Trend />}
         <div className={classes.content}>
           <Routes />
         </div>

@@ -37,7 +37,10 @@ export const RECIPE_QUERY = gql`
       process
       foods {
         id
+        name
         quantity
+        myRating
+        totalRating
         unit {
           id
         }

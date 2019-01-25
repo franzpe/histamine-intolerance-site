@@ -14,6 +14,8 @@ import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
 import Rating from '_components/Rating';
 import { RECIPE_QUERY } from 'profile/components/recipes/AddEditRecipe';
+import Ingredient from './Ingredient';
+import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 const styles = theme => ({
   header: {
@@ -29,7 +31,12 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0 `
   },
   foods: {
-    padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`
+    padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`,
+    [theme.breakpoints.down('sm')]: {
+      padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px ${
+        theme.spacing.unit
+      }px ${theme.spacing.unit * 3}px`
+    }
   },
   backWrapper: {
     marginTop: theme.spacing.unit * 3,
@@ -38,9 +45,7 @@ const styles = theme => ({
   },
   back: {
     padding: `0 ${theme.spacing.unit * 5}px`
-  },
-  foodList: {},
-  foodItem: {}
+  }
 });
 
 /*
@@ -55,6 +60,8 @@ function RecipeDetail({ classes, match }) {
   } = useQuery(RECIPE_QUERY, {
     variables: { id: Number(match.params.id) }
   });
+
+  const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
 
   if (error) {
     return null;
@@ -72,31 +79,31 @@ function RecipeDetail({ classes, match }) {
           </div>
         </div>
         <Grid container={true}>
-          <Grid item={true} xs={12} sm={6}>
+          <Grid item={true} xs={12} sm={12} md={6}>
             <CardMedia
               className={classes.cardMedia}
               image={recipe.picture ? recipe.picture.url : recipeThumbnail}
               title="Image title"
             />
           </Grid>
-          <Grid item={true} md={6} className={classes.foods}>
+          <Grid item={true} xs={12} sm={12} md={6} className={classes.foods}>
             <Typography variant="subtitle1" component="span" style={{ fontWeight: 500 }}>
-              Ingredients:
+              Ingrediencie:
             </Typography>
-            <ul className={classes.foodList}>
+            <Grid container={true}>
               {recipe.foods.map((food, index) => (
-                <li key={index} className={classes.foodItem}>
+                <Grid key={index} item={true} xs={12} sm={4} md={6}>
                   <Typography component="span" variant="body2">
-                    {food.name}
+                    <Ingredient food={food} isAuthenticated={isAuthenticated} />
                   </Typography>
-                </li>
+                </Grid>
               ))}
-            </ul>
+            </Grid>
           </Grid>
         </Grid>
         <CardContent>
           <Typography variant="h6" component="span">
-            Process:
+            Postup:
           </Typography>
           <Typography gutterBottom={true} variant="body2" component="div" align="justify">
             {recipe.process}
@@ -110,7 +117,7 @@ function RecipeDetail({ classes, match }) {
           onClick={() => history.push('/')}
           className={classes.back}
         >
-          back
+          Späť
         </Button>
       </div>
     </Fragment>

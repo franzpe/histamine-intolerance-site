@@ -9,13 +9,13 @@ import {
   Button,
   CardMedia
 } from '@material-ui/core';
+import { useQuery } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 
 import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { recipeThumbnail } from './recipeThumbnail';
 import Rating from '_components/Rating';
-import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
 
 const RECIPES_QUERY = gql`
   {
@@ -93,7 +93,7 @@ const RecipesPage = ({ classes }) => {
                 comolr="primary"
                 onClick={() => history.push(routes.RECIPES + '/' + recipe.id)}
               >
-                View
+                Pozrieť
               </Button>
             </CardActions>
           </Card>
