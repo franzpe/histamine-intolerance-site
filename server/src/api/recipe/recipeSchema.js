@@ -41,6 +41,12 @@ export const RecipeType = new GraphQLObjectType({
     },
     process: { type: GraphQLString },
     rating: { type: GraphQLFloat },
+    totalRating: {
+      type: GraphQLFloat,
+      resolve(parent) {
+        return recipeController.getTotalRecipeRating(parent.id);
+      }
+    },
     foods: {
       type: new GraphQLList(FoodExtendedType),
       resolve(parent) {
@@ -119,13 +125,13 @@ export const MutationFields = {
     })
   },
   rateRecipe: {
-    type: RecipeType,
+    type: GraphQLFloat,
     args: {
-      id: { type: GraphQLInt },
-      value: { type: GraphQLInt }
+      id: { type: new GraphQLNonNull(GraphQLInt) },
+      value: { type: new GraphQLNonNull(GraphQLInt) }
     },
-    resolve: authenticated((parent, { id, value }) => {
-      return recipeController.rate(id, value);
+    resolve: authenticated((parent, { id, value }, { user }) => {
+      return userController.rateRecipe(id, user.id, value);
     })
   }
 };

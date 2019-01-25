@@ -3,6 +3,7 @@ import { Facebook } from 'fb';
 
 import User from './userModel';
 import UserFoods from './userFoodsModel';
+import UserRecipes from './userRecipesModel';
 import { signToken } from '../../auth/auth';
 import validator from '../../utils/validator';
 import config from '../../config/config';
@@ -119,4 +120,56 @@ export const facebookLogin = async code => {
       }
     );
   });
+};
+
+export const getRating = async (model, args) => {
+  // When toJSON() is called upon an model collection the result is an object that looks like and array but it isn't. It doesn't have length property but we can call every function as for array. We can get the length of an 'array' by getting a number of object keys
+  const obj = (await model.where({ ...args }).fetchAll()).toJSON();
+  const totSum = obj.reduce((a, currValue) => a + currValue.rating, 0);
+  const totalRating = totSum / Object.keys(obj).length;
+
+  return totalRating;
+};
+
+export const rateFood = async (foodId, userId, value) => {
+  if (!validator.isRating(value)) {
+    throw new Error('Rating value out of bounds');
+  }
+
+  let userFood = await UserFoods.where({ userId, foodId }).fetch();
+
+  if (!userFood) {
+    userFood = await new UserFoods({ userId, foodId, rating: value }).save();
+  } else {
+    userFood = await UserFoods.where({ userId, foodId }).save(
+      { rating: value },
+      { method: 'update' }
+    );
+  }
+
+  return await getRating(UserFoods, { foodId });
+};
+
+export const getUserFoodRating = async (userId, foodId) => {
+  const food = (await UserFoods.where({ userId, foodId }).fetch()).toJSON();
+  return food.rating;
+};
+
+export const rateRecipe = async (recipeId, userId, value) => {
+  if (!validator.isRating(value)) {
+    throw new Error('Rating value out of bounds');
+  }
+
+  let userRecipe = await UserRecipes.where({ userId, recipeId }).fetch();
+
+  if (!userRecipe) {
+    userRecipe = await new UserRecipes({ userId, recipeId, rating: value }).save();
+  } else {
+    userRecipe = await UserRecipes.where({ userId, recipeId }).save(
+      { rating: value },
+      { method: 'update' }
+    );
+  }
+
+  return await getRating(UserRecipes, { recipeId });
 };

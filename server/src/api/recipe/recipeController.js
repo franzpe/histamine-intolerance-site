@@ -3,6 +3,7 @@ import Recipe from './recipeModel';
 import RecipeFoods from './recipeFoodsModel';
 import Picture from '../picture/pictureModel';
 import { processFileUpload } from '../../utils/fileUpload';
+import UserRecipes from '../user/userRecipesModel';
 
 export const getOne = async id => {
   const recipe = await Recipe.where({
@@ -97,7 +98,6 @@ export const update = async (recipeArgs, userId) => {
   }
 
   // upload and insert picture
-  console.log(recipeArgs.picture);
   let picture = null;
   if (recipeArgs.picture) {
     if (storedRecipe.pictureId) {
@@ -142,17 +142,6 @@ export const update = async (recipeArgs, userId) => {
   return updatedRecipe;
 };
 
-export const rate = async (id, value) => {
-  if (!validator.isRating(value)) {
-    throw new Error('Rating value out of bounds');
-  }
-
-  const recipe = (await new Recipe({ id }).fetch()).toJSON();
-  recipe.rating = recipe.rating + value;
-  const updatedRecipe = await new Recipe(recipe).save();
-  return updatedRecipe.toJSON();
-};
-
 export const deleteOne = async (id, userId) => {
   const recipe = await new Recipe({ id }).fetch();
 
@@ -162,4 +151,12 @@ export const deleteOne = async (id, userId) => {
 
   await recipe.destroy();
   return id;
+};
+
+export const getTotalRecipeRating = async recipeId => {
+  const recipes = (await UserRecipes.where({ recipeId }).fetchAll()).toJSON();
+  const totSum = recipes.reduce((a, currValue) => a + currValue.rating, 0);
+  const totalRating = totSum / Object.keys(recipes).length;
+
+  return totalRating;
 };

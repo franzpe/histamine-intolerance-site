@@ -5,6 +5,7 @@ import { HistamineLevelType } from '../histamineLevel/histamineLevelSchema';
 import { UnitType } from '../unit/unitSchema';
 import * as histamineLevelController from '../histamineLevel/histamineLevelController';
 import * as foodController from './foodController';
+import * as userController from '../user/userController';
 
 const {
   GraphQLObjectType,
@@ -47,7 +48,7 @@ export const FoodExtendedType = new GraphQLObjectType({
     myRating: {
       type: GraphQLFloat,
       resolve: (parent, args, { user }) => {
-        return user ? foodController.getUserFoodRating(user.id, parent.id) : null;
+        return user ? userController.getUserFoodRating(user.id, parent.id) : null;
       }
     }
   })
@@ -60,7 +61,7 @@ export const UserFoodType = new GraphQLObjectType({
     myRating: {
       type: GraphQLFloat,
       resolve: authenticated((parent, args, { user }) => {
-        return foodController.getUserFoodRating(user.id, parent.id);
+        return userController.getUserFoodRating(user.id, parent.id);
       })
     }
   })
@@ -122,7 +123,7 @@ export const MutationFields = {
       value: { type: new GraphQLNonNull(GraphQLInt) }
     },
     resolve: authenticated((parent, { id, value }, { user }) => {
-      return foodController.rate(id, user.id, value);
+      return userController.rateFood(id, user.id, value);
     })
   }
 };
