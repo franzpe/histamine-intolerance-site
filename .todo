@@ -66,14 +66,14 @@ TASKS BEFORE RELEASE:
     ✔ upload picture @done(19-01-23 15:50)
       https://www.youtube.com/watch?v=22S5P_d55dM
       ✔ fit the picture to card media @done(19-01-23 15:50)
-
+  
   GROCERIES: 
     ✔ design @done(18-12-29 18:25)
     ✔ rate grocery @done(18-12-29 18:24)
     ✔ OPTIMIZE RATING BEHAVIOUR @done(18-12-27 22:58)
-    ☐ fast action to show your grocery list
+    ✔ fast action to show your grocery list @done(19-01-25 09:02)
       ✔ style @done(18-12-29 19:39)
-      ☐ add concrete route
+      ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
 
   PROFILE:
@@ -88,12 +88,13 @@ TASKS BEFORE RELEASE:
       ✔ saving / updating @done(19-01-25 08:42)
       ☐ validation
         ☐ consider using required on text fields
+        ☐ short description validation 50 chars
         ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
   
   BACKEND:
     ☐ redirect uri in facebook login 
     ☐ Change all db tables to InnoDB engine see example down
-    ☐ rating formula racipes  
+    ✔ rating formula recipes @done(19-01-25 16:50)
     ✔ users recipes @done(19-01-10 19:48)
     ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
     ✔ file upload @done(19-01-23 08:22)
@@ -104,16 +105,19 @@ TASKS BEFORE RELEASE:
     ✔ get picture @done(19-01-23 15:49)
     
   MISCELLANEOUS:
+    ☐ refetch recipe queries after login
     ✔ migrate from apollo boost @done(18-12-29 14:34)
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
-      ☐ Trend - text-overflow: elipsess
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
     ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
     ☐ validations everywhere
      
 TASKS AFTER RELEASE: 
-  ☐ consider data loader implementation on server
+  ☐ consider data loader implementation on server 
+  ☐ Trend implementation
+  ☐ Trend - text-overflow: elipsess
+
 
 FEATURE:
   ☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost

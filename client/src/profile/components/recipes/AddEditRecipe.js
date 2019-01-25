@@ -35,6 +35,8 @@ export const RECIPE_QUERY = gql`
       id
       name
       process
+      myRating
+      totalRating
       foods {
         id
         name
@@ -510,7 +512,7 @@ function AddEditRecipe({
                             if (option) {
                               dispatch({
                                 type: recipeFormActions.SET_INGREDIENT,
-                                payload: { index, field: 'unit', value: option }
+                                payload: { index, field: 'unit', value: option.value }
                               });
                             }
                           }}

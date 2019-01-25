@@ -23,7 +23,7 @@ const RECIPES_QUERY = gql`
       id
       name
       description
-      rating
+      totalRating
       picture {
         url
       }
@@ -57,11 +57,10 @@ const styles = theme => ({
   ratingContainer: {
     display: 'inline-block',
     position: 'absolute',
-    top: '8px',
-    right: '8px',
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: '5%',
-    padding: `0px ${theme.spacing.unit / 2}px`
+    right: '0px',
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    borderBottomLeftRadius: '25px',
+    padding: '0 4px 2px 10px'
   }
 });
 
@@ -79,7 +78,7 @@ const RecipesPage = ({ classes }) => {
               title="Image title"
             />
             <div className={classes.ratingContainer}>
-              <Rating value={recipe.rating} valueVariant="h5" percentageVariant="body1" />
+              <Rating value={recipe.totalRating} valueVariant="h5" percentageVariant="body1" />
             </div>
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom={true} variant="h5" component="h6">

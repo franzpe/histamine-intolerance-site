@@ -1,5 +1,5 @@
-import React, { memo, Fragment } from 'react';
-import { useQuery } from 'react-apollo-hooks';
+import React, { memo, Fragment, useState } from 'react';
+import { useQuery, useMutation } from 'react-apollo-hooks';
 import {
   withStyles,
   Grid,
@@ -9,6 +9,7 @@ import {
   Button,
   CardMedia
 } from '@material-ui/core';
+import gql from 'graphql-tag';
 
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
@@ -16,6 +17,13 @@ import Rating from '_components/Rating';
 import { RECIPE_QUERY } from 'profile/components/recipes/AddEditRecipe';
 import Ingredient from './Ingredient';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
+import { showSuccessToast, showErrorToast } from '_utils/toast';
+
+const RATE_RECIPE_MUTATION = gql`
+  mutation rateRecipe($recipeId: Int!, $value: Int!) {
+    rateRecipe(id: $recipeId, value: $value)
+  }
+`;
 
 const styles = theme => ({
   header: {
@@ -45,6 +53,16 @@ const styles = theme => ({
   },
   back: {
     padding: `0 ${theme.spacing.unit * 5}px`
+  },
+  upRatingButton: {
+    top: '6px',
+    left: '-26px',
+    fontSize: '30px'
+  },
+  downRatingButton: {
+    top: '4px',
+    right: '-24px',
+    fontSize: '30px'
   }
 });
 
@@ -56,17 +74,19 @@ const styles = theme => ({
 function RecipeDetail({ classes, match }) {
   const {
     error,
-    data: { recipe }
+    data: { recipe },
+    refetch
   } = useQuery(RECIPE_QUERY, {
     variables: { id: Number(match.params.id) }
   });
 
+  const [isRating, setIsRating] = useState(false);
   const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
+  const rateRecipe = useMutation(RATE_RECIPE_MUTATION);
 
   if (error) {
     return null;
   }
-
   return (
     <Fragment>
       <Card>
@@ -74,8 +94,19 @@ function RecipeDetail({ classes, match }) {
           <Typography variant="h4" component="div">
             {recipe.name}
           </Typography>
-          <div>
-            <Rating value={recipe.rating || 0} valueVariant="h4" percentageVariant="h6" />
+          <div style={{ position: 'relative', ...(!recipe.myRating && { marginRight: '15px' }) }}>
+            <Rating
+              value={recipe.totalRating || 0}
+              valueVariant="h4"
+              percentageVariant="h6"
+              isRatingAllowed={isAuthenticated}
+              upButtonClass={classes.upRatingButton}
+              downButtonClass={classes.downRatingButton}
+              upRatingButtonUnavailable={!!recipe.myRating || isRating}
+              downRatingButtonUnavailable={!!recipe.myRating || isRating}
+              showTooltips={true}
+              onRateClick={handleRateClick}
+            />
           </div>
         </div>
         <Grid container={true}>
@@ -105,7 +136,13 @@ function RecipeDetail({ classes, match }) {
           <Typography variant="h6" component="span">
             Postup:
           </Typography>
-          <Typography gutterBottom={true} variant="body2" component="div" align="justify">
+          <Typography
+            gutterBottom={true}
+            variant="body2"
+            component="span"
+            align="justify"
+            style={{ whiteSpace: 'pre-wrap' }}
+          >
             {recipe.process}
           </Typography>
         </CardContent>
@@ -122,6 +159,30 @@ function RecipeDetail({ classes, match }) {
       </div>
     </Fragment>
   );
+
+  function handleRateClick(value) {
+    setIsRating(true);
+    rateRecipe({
+      variables: {
+        recipeId: recipe.id,
+        value
+      }
+    })
+      .then(() => {
+        Promise.all([refetch()]).then(() => {
+          setIsRating(false);
+          if (value !== 0) {
+            showSuccessToast(`Ohodnotili ste ${recipe.name} ako dobre znášané`);
+          } else {
+            showErrorToast(`Ohodnotili ste ${recipe.name} ako zle znášané`);
+          }
+        });
+      })
+      .catch(() => {
+        showErrorToast(`Vyskitla sa chyba. Prosím ohodnoďte ešte raz`);
+        setIsRating(false);
+      });
+  }
 }
 
 export default withStyles(styles)(memo(RecipeDetail));

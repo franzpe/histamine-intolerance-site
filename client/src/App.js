@@ -24,7 +24,7 @@ const styles = theme => ({
   },
   content: {
     flex: 1,
-    padding: `${theme.spacing.unit}px 0`
+    padding: `${theme.spacing.unit}px 0 ${theme.spacing.unit * 3}px 0`
   }
 });
 
