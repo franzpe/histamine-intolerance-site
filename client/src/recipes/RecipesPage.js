@@ -22,7 +22,7 @@ const RECIPES_QUERY = gql`
     recipes {
       id
       name
-      process
+      description
       rating
       picture {
         url
@@ -37,16 +37,19 @@ const styles = theme => ({
       justifyContent: 'center'
     }
   },
+  recipeGrid: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    }
+  },
   card: {
     height: '100%',
     display: 'flex',
     position: 'relative',
     flexDirection: 'column'
   },
-  recipeGrid: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
+  cardContent: {
+    flex: 1
   },
   cardMedia: {
     padding: `${theme.spacing.unit * 8}px 0 `
@@ -78,11 +81,11 @@ const RecipesPage = ({ classes }) => {
             <div className={classes.ratingContainer}>
               <Rating value={recipe.rating} valueVariant="h5" percentageVariant="body1" />
             </div>
-            <CardContent>
+            <CardContent className={classes.cardContent}>
               <Typography gutterBottom={true} variant="h5" component="h6">
                 {recipe.name}
               </Typography>
-              <Typography>{recipe.process}</Typography>
+              <Typography>{recipe.description}</Typography>
             </CardContent>
             <CardActions>
               <Button

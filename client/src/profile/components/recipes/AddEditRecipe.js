@@ -595,6 +595,17 @@ function AddEditRecipe({
     </Fragment>
   );
 
+  function checkForDupliciteIngredients() {
+    const duplicates = form.ingredients
+      .map(i => i.id)
+      .reduce((acc, el, i, arr) => {
+        if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el);
+        return acc;
+      }, []);
+
+    return duplicates.length > 0;
+  }
+
   function handleAddIngredient() {
     dispatch({
       type: recipeFormActions.ADD_INGREDIENT
@@ -602,6 +613,11 @@ function AddEditRecipe({
   }
 
   function handleSubmit(e) {
+    if (checkForDupliciteIngredients()) {
+      showErrorToast('Recept nemôže obsahovať duplicitné ingrediencie');
+      return;
+    }
+
     dispatch({ type: recipeFormActions.SET_FIELD, payload: { field: 'isSaving', value: true } });
 
     if (isNew) {

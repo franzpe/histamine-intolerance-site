@@ -5,7 +5,7 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import history from '../_utils/history';
-import routes from '../_constants/routesConstants';
+import routes, { profileRoutes } from '../_constants/routesConstants';
 import { showErrorToast } from '../_utils/toast';
 import jwt from '../_utils/jwt';
 import FacebookLoginBtn from '_components/buttons/FacebookLoginBtn';
@@ -39,8 +39,8 @@ const styles = theme => ({
 });
 
 const sections = [
-  { to: routes.RECIPES, label: 'Recipes' },
-  { to: routes.FOODS, label: 'Groceries' }
+  { to: routes.RECIPES, label: 'Recepty' },
+  { to: routes.FOODS, label: 'Zoznam potravín' }
 ];
 
 const LOGOUT_MUTATION = gql`
@@ -79,7 +79,7 @@ function Header({ classes }) {
               variant="outlined"
               size="small"
               className={classes.profile}
-              onClick={() => history.push(routes.PROFILE)}
+              onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
             >
               Profile
             </Button>

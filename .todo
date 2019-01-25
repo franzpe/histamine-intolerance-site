@@ -62,10 +62,10 @@ TASKS BEFORE RELEASE:
   RECIPES:
     ☐ filtering, pagination
     ☐ fast action add recipe 
-    ☐ after recipe update, the user recipes list is updated but, when u go back to details update is not saved
-    ☐ upload picture
+    ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
+    ✔ upload picture @done(19-01-23 15:50)
       https://www.youtube.com/watch?v=22S5P_d55dM
-      ☐ fit the picture to card media 
+      ✔ fit the picture to card media @done(19-01-23 15:50)
 
   GROCERIES: 
     ✔ design @done(18-12-29 18:25)
@@ -82,12 +82,13 @@ TASKS BEFORE RELEASE:
       ✔ translations @done(19-01-08 21:20)
     ✔ food list @done(19-01-08 18:47)
     ☐ recipes management
-      ☐ add / edit recipes layout
-      ☐ mobile layout
-      ☐ upload image
-      ☐ saving / updating
+      ✔ add / edit recipes layout @done(19-01-25 08:41)
+      ✔ mobile layout @done(19-01-25 08:41)
+      ✔ upload image @done(19-01-25 08:41)
+      ✔ saving / updating @done(19-01-25 08:42)
       ☐ validation
-        ☐ FE validation of ingrediences primary key
+        ☐ consider using required on text fields
+        ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
   
   BACKEND:
     ☐ redirect uri in facebook login 
@@ -99,8 +100,8 @@ TASKS BEFORE RELEASE:
       https://github.com/jaydenseric/apollo-upload-examples/blob/master/api/resolvers.mjs
       https://www.youtube.com/watch?v=qCVzfqkoJCQ&index=44&list=PLN3n1USn4xlnfJIQBa6bBjjiECnk6zL6s
     ✔ add picture @done(19-01-23 08:22)
-    ☐ update picture
-    ☐ get picture
+    ✔ update picture @done(19-01-23 15:49)
+    ✔ get picture @done(19-01-23 15:49)
     
   MISCELLANEOUS:
     ✔ migrate from apollo boost @done(18-12-29 14:34)
@@ -109,6 +110,7 @@ TASKS BEFORE RELEASE:
       ☐ Trend - text-overflow: elipsess
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
     ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
+    ☐ validations everywhere
      
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server
