@@ -43,7 +43,13 @@ export const FoodExtendedType = new GraphQLObjectType({
   fields: () => ({
     ...FoodTypeFields,
     quantity: { type: new GraphQLNonNull(GraphQLFloat) },
-    unit: { type: new GraphQLNonNull(UnitType) }
+    unit: { type: new GraphQLNonNull(UnitType) },
+    myRating: {
+      type: GraphQLFloat,
+      resolve: (parent, args, { user }) => {
+        return user ? foodController.getUserFoodRating(user.id, parent.id) : null;
+      }
+    }
   })
 });
 
