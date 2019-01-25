@@ -1,8 +1,7 @@
 import React from 'react';
-import { withStyles, Paper, Button } from '@material-ui/core';
+import { withStyles, Paper, Button, Tooltip } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/ViewList';
 import { useQuery } from 'react-apollo-hooks';
-import ReactTooltip from 'react-tooltip';
 import gql from 'graphql-tag';
 
 import Foods from './Foods';
@@ -43,21 +42,25 @@ export const FOODS_QUERY = gql`
 function FoodsPage({ classes }) {
   const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
   const foodsQuery = useQuery(FOODS_QUERY);
-  ReactTooltip.rebuild();
 
   return (
     <Paper className={classes.container}>
       {isAuthenticated && (
-        <Button
-          variant="text"
-          size="small"
-          className={classes.listButton}
-          onClick={() => history.push(routes.PROFILE + profileRoutes.FOOD_LIST)}
-          data-tip="Zobrazí zoznam potravín, ktoré ste hodnotili, rozdelený do vhodných a nevhodných potravín"
+        <Tooltip
+          title="Zobrazí zoznam potravín, ktoré ste hodnotili, pričom je rozdelený do vhodných a nevhodných potravín"
+          enterDelay={500}
+          leaveDelay={200}
         >
-          <ListIcon className={classes.listIcon} />
-          Zobraz tvoj zoznam potravín
-        </Button>
+          <Button
+            variant="text"
+            size="small"
+            className={classes.listButton}
+            onClick={() => history.push(routes.PROFILE + profileRoutes.FOOD_LIST)}
+          >
+            <ListIcon className={classes.listIcon} />
+            Zobraz tvoj zoznam potravín
+          </Button>
+        </Tooltip>
       )}
       <div className={classes.tableWrapper}>
         <Foods isRatingAllowed={true} foods={foodsQuery.data.foods} foodsQuery={foodsQuery} />
