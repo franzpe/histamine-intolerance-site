@@ -4,6 +4,7 @@ import RecipeFoods from './recipeFoodsModel';
 import Picture from '../picture/pictureModel';
 import { processFileUpload } from '../../utils/fileUpload';
 import UserRecipes from '../user/userRecipesModel';
+import logger from '../../utils/logger';
 
 export const getOne = async id => {
   const recipe = await Recipe.where({
@@ -154,7 +155,14 @@ export const deleteOne = async (id, userId) => {
 };
 
 export const getTotalRecipeRating = async recipeId => {
-  const recipes = (await UserRecipes.where({ recipeId }).fetchAll()).toJSON();
+  const recipesDb = await UserRecipes.where({ recipeId }).fetchAll();
+
+  if (!recipesDb) {
+    logger.error('getTotalRecipeRating: No recipes found');
+    return null;
+  }
+
+  const recipes = recipesDb.toJSON();
   const totSum = recipes.reduce((a, currValue) => a + currValue.rating, 0);
   const totalRating = totSum / Object.keys(recipes).length;
 

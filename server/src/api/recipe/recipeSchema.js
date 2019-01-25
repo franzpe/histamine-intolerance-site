@@ -41,6 +41,12 @@ export const RecipeType = new GraphQLObjectType({
     },
     process: { type: GraphQLString },
     rating: { type: GraphQLFloat },
+    myRating: {
+      type: GraphQLFloat,
+      resolve: (parent, args, { user }) => {
+        return user ? userController.getUserRecipeRating(user.id, parent.id) : null;
+      }
+    },
     totalRating: {
       type: GraphQLFloat,
       resolve(parent) {

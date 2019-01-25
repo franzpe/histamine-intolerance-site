@@ -7,6 +7,7 @@ import UserRecipes from './userRecipesModel';
 import { signToken } from '../../auth/auth';
 import validator from '../../utils/validator';
 import config from '../../config/config';
+import logger from '../../utils/logger';
 
 export const getAll = async () => {
   const users = await User.fetchAll();
@@ -124,7 +125,13 @@ export const facebookLogin = async code => {
 
 export const getRating = async (model, args) => {
   // When toJSON() is called upon an model collection the result is an object that looks like and array but it isn't. It doesn't have length property but we can call every function as for array. We can get the length of an 'array' by getting a number of object keys
-  const obj = (await model.where({ ...args }).fetchAll()).toJSON();
+  const objDb = await model.where({ ...args }).fetchAll();
+  if (!objDb) {
+    logger.error('getRating: No entries found');
+    return null;
+  }
+
+  const obj = objDb.toJSON();
   const totSum = obj.reduce((a, currValue) => a + currValue.rating, 0);
   const totalRating = totSum / Object.keys(obj).length;
 
@@ -151,8 +158,14 @@ export const rateFood = async (foodId, userId, value) => {
 };
 
 export const getUserFoodRating = async (userId, foodId) => {
-  const food = (await UserFoods.where({ userId, foodId }).fetch()).toJSON();
-  return food.rating;
+  const food = await UserFoods.where({ userId, foodId }).fetch();
+
+  if (!food) {
+    logger.error('getUserRecipeRating: No recipe found');
+    return null;
+  }
+
+  return food.toJSON().rating;
 };
 
 export const rateRecipe = async (recipeId, userId, value) => {
@@ -172,4 +185,15 @@ export const rateRecipe = async (recipeId, userId, value) => {
   }
 
   return await getRating(UserRecipes, { recipeId });
+};
+
+export const getUserRecipeRating = async (userId, recipeId) => {
+  const recipe = await UserRecipes.where({ userId, recipeId }).fetch();
+
+  if (!recipe) {
+    logger.error('getUserRecipeRating: No recipe found');
+    return null;
+  }
+
+  return recipe.toJSON().rating;
 };
