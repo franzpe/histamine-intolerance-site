@@ -119,10 +119,10 @@ function useRecipeForm(initialFormState) {
   function reducer(state, action) {
     switch (action.type) {
       case recipeFormActions.SET_FIELD: {
-        return {
+        return withValidationErrors(action.payload.field, {
           ...state,
           [action.payload.field]: action.payload.value
-        };
+        });
       }
       case recipeFormActions.ADD_INGREDIENT: {
         const ingredients = state.ingredients.slice();
@@ -155,8 +155,28 @@ function useRecipeForm(initialFormState) {
     }
   }
 
+  function withValidationErrors(field, nextState) {
+    const errors = validate(field, nextState);
+    return { ...nextState, errors, isValid: Object.keys(errors).length === 0 };
+  }
+
   return [state, dispatch];
 }
+
+function validate(field, state) {
+  delete state.errors[field];
+  let errors = state.errors;
+
+  if (field === 'description') {
+    const descriptionError = state.description.length > 50 && 'Presiahli ste maximálny počet znakov 50'
+    if (descriptionError) {
+      errors = { ...errors, description: descriptionError };
+    }
+  }
+
+  return errors;
+}
+
 
 const styles = theme => ({
   card: {
@@ -329,7 +349,9 @@ function AddEditRecipe({
     ingredients: [...getIgredients(recipe && recipe.foods), { id: 0, quantity: 0, unit: '' }],
     picture: null,
     description: recipe ? recipe.description : '',
-    isSaving: false
+    isSaving: false,
+    isValid: false,
+    errors: {}
   });
 
   const foods = useQuery(FOODS_QUERY).data.foods;
@@ -553,6 +575,8 @@ function AddEditRecipe({
                 }}
                 fullWidth={true}
                 value={form.description}
+                error={!!form.errors.description}
+                helperText={form.errors && form.errors.description}
                 onChange={e =>
                   dispatch({
                     type: recipeFormActions.SET_FIELD,
@@ -618,6 +642,10 @@ function AddEditRecipe({
   }
 
   function handleSubmit(e) {
+    if(!form.isValid){
+      return;
+    }
+    
     if (checkForDupliciteIngredients()) {
       showErrorToast('Recept nemôže obsahovať duplicitné ingrediencie');
       return;
