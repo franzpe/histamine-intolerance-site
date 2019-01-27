@@ -168,7 +168,8 @@ function validate(field, state) {
   let errors = state.errors;
 
   if (field === 'description') {
-    const descriptionError = state.description.length > 50 && 'Presiahli ste maximálny počet znakov 50'
+    const descriptionError =
+      state.description.length > 50 && 'Presiahli ste maximálny počet znakov 50';
     if (descriptionError) {
       errors = { ...errors, description: descriptionError };
     }
@@ -176,7 +177,6 @@ function validate(field, state) {
 
   return errors;
 }
-
 
 const styles = theme => ({
   card: {
@@ -642,10 +642,10 @@ function AddEditRecipe({
   }
 
   function handleSubmit(e) {
-    if(!form.isValid){
+    if (!form.isValid) {
       return;
     }
-    
+
     if (checkForDupliciteIngredients()) {
       showErrorToast('Recept nemôže obsahovať duplicitné ingrediencie');
       return;

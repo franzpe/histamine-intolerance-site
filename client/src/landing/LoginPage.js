@@ -18,6 +18,7 @@ import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { landingStyles } from './styles';
 import { showSuccessToast } from '../_utils/toast';
+import { client } from 'index';
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -31,9 +32,11 @@ const LoginPage = ({ classes }) => {
 
   const login = useMutation(LOGIN_MUTATION, {
     variables: { userName: form.userName.value, password: form.password.value },
-    update: (store, { data: { login } }) => {
+    update: async (store, { data: { login } }) => {
       if (login) {
-        store.writeData({ data: { isAuthenticated: true } });
+        await client.resetStore();
+        store.writeData({ data: { isAuthenticated: true, isAuthenticating: false } });
+        history.push(history.location.state ? history.location.state.target.pathname : '/');
       }
     }
   });
@@ -144,7 +147,6 @@ const LoginPage = ({ classes }) => {
             payload: { jwt: res.data.login }
           });
 
-          history.push(history.location.state ? history.location.state.target.pathname : '/');
           showSuccessToast('Prihlásenie úspešné');
         })
         .catch(resErr => {

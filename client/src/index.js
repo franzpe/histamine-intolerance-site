@@ -7,7 +7,7 @@ import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 import * as serviceWorker from './_utils/serviceWorker';
-import client from './_utils/configureClient';
+import configureClient from './_utils/configureClient';
 import history from './_utils/history';
 import routes from './_constants/routesConstants';
 import { verifyUser } from './_utils/verifyUser';
@@ -35,6 +35,7 @@ const FacebookLogin = lazy(() =>
 );
 const App = lazy(() => import(/* webpackChunkName: "App" */ './App'));
 
+export const client = configureClient();
 verifyUser(client);
 
 ReactDOM.render(

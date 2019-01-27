@@ -7,10 +7,10 @@ import { useQuery } from 'react-apollo-hooks';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 function PrivateRoute(props) {
-  const authQuery = useQuery(AUTHENTICATION_QUERY).data;
+  const { isAuthenticated, isAuthenticating } = useQuery(AUTHENTICATION_QUERY).data;
 
-  if (!authQuery.isAuthenticating) {
-    return authQuery.isAuthenticated ? (
+  if (!isAuthenticating) {
+    return isAuthenticated ? (
       <Route {...props} />
     ) : (
       <Redirect to={{ pathname: routes.LOGIN, state: { target: history.location } }} />

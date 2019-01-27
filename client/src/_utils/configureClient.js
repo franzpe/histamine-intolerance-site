@@ -53,4 +53,4 @@ function configureClient() {
   });
 }
 
-export default configureClient();
+export default configureClient;
