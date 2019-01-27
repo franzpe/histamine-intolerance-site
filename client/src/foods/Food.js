@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 import Rating from '_components/Rating';
 import { showSuccessToast, showErrorToast } from '_utils/toast';
+import { RECIPES_QUERY } from 'recipes/RecipesPage';
 
 const styles = theme => ({
   ratingCell: {
@@ -58,7 +59,8 @@ function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes
       variables: {
         foodId: food.id,
         value
-      }
+      },
+      refetchQueries: [{ query: RECIPES_QUERY }]
     }).then(() => {
       Promise.all([foodsQuery.refetch(), myFoodsQuery.refetch()]).then(() => {
         setIsRatingLoading(false);

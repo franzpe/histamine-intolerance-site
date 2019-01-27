@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 import RecipeCard from './RecipeCard';
 
-const RECIPES_QUERY = gql`
+export const RECIPES_QUERY = gql`
   {
     recipes {
       id
