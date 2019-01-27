@@ -1,21 +1,10 @@
 import React from 'react';
-import {
-  withStyles,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  CardMedia
-} from '@material-ui/core';
+import { withStyles, Grid } from '@material-ui/core';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
-import history from '../_utils/history';
-import routes from '../_constants/routesConstants';
-import { recipeThumbnail } from './recipeThumbnail';
-import Rating from '_components/Rating';
+import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
+import RecipeCard from './RecipeCard';
 
 const RECIPES_QUERY = gql`
   {
@@ -23,6 +12,9 @@ const RECIPES_QUERY = gql`
       id
       name
       description
+      foods {
+        myRating
+      }
       totalRating
       picture {
         url
@@ -36,67 +28,17 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center'
     }
-  },
-  recipeGrid: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'column'
-  },
-  cardContent: {
-    flex: 1
-  },
-  cardMedia: {
-    padding: `${theme.spacing.unit * 8}px 0 `
-  },
-  ratingContainer: {
-    display: 'inline-block',
-    position: 'absolute',
-    right: '0px',
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    borderBottomLeftRadius: '25px',
-    padding: '0 4px 2px 10px'
   }
 });
 
 const RecipesPage = ({ classes }) => {
   const recipes = useQuery(RECIPES_QUERY).data.recipes;
+  const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
 
   return (
     <Grid container={true} spacing={40} className={classes.grid}>
-      {recipes.map((recipe, index) => (
-        <Grid key={recipe.id} item={true} sm={6} md={4} lg={3} className={classes.recipeGrid}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.cardMedia}
-              image={recipe.picture ? recipe.picture.url : recipeThumbnail}
-              title="Image title"
-            />
-            <div className={classes.ratingContainer}>
-              <Rating value={recipe.totalRating} valueVariant="h5" percentageVariant="body1" />
-            </div>
-            <CardContent className={classes.cardContent}>
-              <Typography gutterBottom={true} variant="h5" component="h6">
-                {recipe.name}
-              </Typography>
-              <Typography>{recipe.description}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                comolr="primary"
-                onClick={() => history.push(routes.RECIPES + '/' + recipe.id)}
-              >
-                Pozrieť
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
+      {recipes.map(recipe => (
+        <RecipeCard recipe={recipe} isAuthenticated={isAuthenticated} />
       ))}
     </Grid>
   );

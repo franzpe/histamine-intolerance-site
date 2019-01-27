@@ -62,7 +62,7 @@ function ProfileSideBar({ path, classes }) {
         className={classNames(classes.sidebarItem, classes.navLink)}
       >
         <ListIcon className={classes.sidebarItemIcon} />
-        <span className={classes.sidebarItemDescription}>Zoznam potravín</span>
+        <span className={classes.sidebarItemDescription}>Môj zoznam potravín</span>
       </NavLink>
       <NavLink
         to={`${path}/recipes`}

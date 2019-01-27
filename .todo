@@ -60,8 +60,10 @@ TASKS BEFORE RELEASE:
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
 
   RECIPES:
-    ☐ show probability for user that recipe is suitable
-      ☐ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula
+    ✘ show probability for user that recipe is suitable @cancelled(19-01-27 12:31)
+      ✘ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula @cancelled(19-01-27 12:31)
+      ✔ Show unsuitable ingredients count with a message s@done(19-01-27 12:31)
+    ☐ if user is logged in and havent rated a food, show percantage 
     ☐ filtering, pagination
     ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
@@ -77,6 +79,7 @@ TASKS BEFORE RELEASE:
       ✔ style @done(18-12-29 19:39)
       ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
+    ☐ after user rates grocery refetch recipe query
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
@@ -119,12 +122,13 @@ TASKS AFTER RELEASE:
   ☐ Trend - text-overflow: elipsess
   ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
   ☐ contact email transition into text field, needs to remain the same width
+  ☐ pink color refers to unsuitability in recipes, consider using red
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group
   ✔ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost @done(19-01-27 08:56)
     ✔ recept ma rating @done(19-01-27 08:56)
-  ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
+  ✔ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat @done(19-01-27 12:30)
 
 notes:
   MULTIPLE LINES WRAP:
