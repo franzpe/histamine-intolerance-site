@@ -60,6 +60,8 @@ TASKS BEFORE RELEASE:
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
 
   RECIPES:
+    ☐ show probability for user that recipe is suitable
+      ☐ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula
     ☐ filtering, pagination
     ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
@@ -78,18 +80,18 @@ TASKS BEFORE RELEASE:
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
-      ☐ contact email transition into text field, needs to remain the same width
       ✔ translations @done(19-01-08 21:20)
     ✔ food list @done(19-01-08 18:47)
-    ☐ recipes management
+    ✔ recipes management @done(19-01-27 07:45)
       ✔ add / edit recipes layout @done(19-01-25 08:41)
       ✔ mobile layout @done(19-01-25 08:41)
       ✔ upload image @done(19-01-25 08:41)
       ✔ saving / updating @done(19-01-25 08:42)
-      ☐ validation
-        ☐ consider using required on text fields
-        ☐ short description validation 50 chars
-        ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
+      ✔ validation @done(19-01-27 07:45)
+        ✔ consider using required on text fields @done(19-01-27 07:45)
+          ✔ Maybe after launch if users are going to put there empty or funky stuff @done(19-01-27 07:46)
+        ✔ short description validation 50 chars @done(19-01-27 07:45)
+      ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
   
   BACKEND:
     ☐ redirect uri in facebook login 
@@ -105,23 +107,23 @@ TASKS BEFORE RELEASE:
     ✔ get picture @done(19-01-23 15:49)
     
   MISCELLANEOUS:
-    ☐ refetch recipe queries after login
+    ✔ refetch recipe queries after login @done(19-01-27 08:44)
     ✔ migrate from apollo boost @done(18-12-29 14:34)
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-    ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
-    ☐ validations everywhere
      
 TASKS AFTER RELEASE: 
   ☐ consider data loader implementation on server 
   ☐ Trend implementation
   ☐ Trend - text-overflow: elipsess
-
+  ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
+  ☐ contact email transition into text field, needs to remain the same width
 
 FEATURE:
-  ☐ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost
-    ☐ recept ma rating
+  ☐ Share recipe on facebook - maybe directly to the histamin group
+  ✔ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost @done(19-01-27 08:56)
+    ✔ recept ma rating @done(19-01-27 08:56)
   ☐ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat
 
 notes:
