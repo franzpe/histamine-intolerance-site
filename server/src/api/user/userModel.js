@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import db from '../../utils/dbConnection';
 import Role from '../role/roleModel';
