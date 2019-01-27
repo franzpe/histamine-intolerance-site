@@ -14,7 +14,7 @@ const styles = theme => ({
     fontSize: '12px'
   },
   text: {
-    fontWeight: 600
+    fontWeight: 500
   },
   good: {
     color: green[700]
@@ -30,32 +30,42 @@ function IngredientSuitabilityForUser({ classes, rating }) {
     [classes.bad]: rating === 0
   });
   return (
-    <Fragment>
-      -
-      <Tooltip title="Podľa vášho indvidiuálneho hodnotenia" enterDelay={500} leaveDelay={200}>
-        <span className={suitabilityClass}>{rating === 1 ? ' vhodné' : ' nevhodné'}</span>
-      </Tooltip>
-    </Fragment>
+    <Tooltip title="Podľa vášho indvidiuálneho hodnotenia" enterDelay={500} leaveDelay={200}>
+      <span className={suitabilityClass}>{rating === 1 ? ' vhodné' : ' nevhodné'}</span>
+    </Tooltip>
+  );
+}
+
+function IngredientRating({ classes, totalRating }) {
+  return (
+    <Tooltip
+      title="Počet percent vyjadrujúci znášanlivosť potraviny medzi ľudmi"
+      enterDelay={500}
+      leaveDelay={200}
+    >
+      <span>
+        <Rating
+          valueClassName={classes.rating}
+          percentageClassName={classNames(classes.rating, classes.percentageSize)}
+          value={totalRating}
+        />
+      </span>
+    </Tooltip>
   );
 }
 
 function Ingredient({ classes, food, isAuthenticated }) {
   return (
     <Fragment>
-      {`${food.name} - ${food.quantity} ${food.unit.id} `}
+      {`${food.name} - ${food.quantity} ${food.unit.id} - `}
       {isAuthenticated ? (
-        food.myRating !== null && (
+        food.myRating !== null ? (
           <IngredientSuitabilityForUser rating={food.myRating} classes={classes} />
+        ) : (
+          <IngredientRating classes={classes} totalRating={food.totalRating} />
         )
       ) : (
-        <Fragment>
-          -{' '}
-          <Rating
-            valueClassName={classes.rating}
-            percentageClassName={classNames(classes.rating, classes.percentageSize)}
-            value={food.totalRating}
-          />
-        </Fragment>
+        <IngredientRating classes={classes} totalRating={food.totalRating} />
       )}
     </Fragment>
   );

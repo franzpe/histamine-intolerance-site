@@ -63,7 +63,7 @@ TASKS BEFORE RELEASE:
     ✘ show probability for user that recipe is suitable @cancelled(19-01-27 12:31)
       ✘ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula @cancelled(19-01-27 12:31)
       ✔ Show unsuitable ingredients count with a message s@done(19-01-27 12:31)
-    ☐ if user is logged in and havent rated a food, show percantage 
+    ✔ if user is logged in and havent rated a food, show percantage @done(19-01-27 13:23)
     ☐ filtering, pagination
     ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
