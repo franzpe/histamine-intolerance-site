@@ -17,7 +17,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-plugin-dotenv": "^0.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.13.2",
     "bookshelf": "^0.13.3",

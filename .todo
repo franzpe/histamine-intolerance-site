@@ -164,3 +164,4 @@ HEROKU:
   heroku ps - show running dynos
   heroku open - opens the app 
   heroku local web - run the app locally
+  heroku run bash
