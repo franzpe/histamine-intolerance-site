@@ -1,41 +1,32 @@
-import {
-  DB_HOST,
-  DB_USER,
-  DB_PASSWORD,
-  DB_DATABASE,
-  PORT,
-  JWT,
-  FACEBOOK_APP_ID,
-  FACEBOOK_SECRET,
-  SHOW_DB_QUERIES
-} from 'babel-dotenv';
+require('dotenv').config();
 
 const config = {
   dev: 'development',
   test: 'testing',
   prod: 'production',
-  port: PORT || 3001,
+  port: process.env.PORT || 3001,
   // 10 days in seconds
   expireTime: process.env.JWT_EXPIRATION_TIME || 24 * 60 * 60 * 10,
   secrets: {
-    jwt: JWT || 'venom'
+    jwt: process.env.JWT || 'venom'
   },
   db: {
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_DATABASE
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
   },
   fb: {
-    app_id: FACEBOOK_APP_ID,
-    secret: FACEBOOK_SECRET
+    app_id: process.env.FACEBOOK_APP_ID,
+    secret: process.env.FACEBOOK_SECRET
   },
-  showDbQueries: SHOW_DB_QUERIES === 'true'
+  showDbQueries: process.env.SHOW_DB_QUERIES === 'true'
 };
+
+console.log(config);
 
 process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
 config.env = process.env.NODE_ENV;
-
 let envConfig;
 // require could error out if
 // the file don't exist so lets try this statement
