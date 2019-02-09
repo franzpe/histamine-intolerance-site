@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec BLUEBIRD_W_FORGOTTEN_RETURN=0 babel-node index.js",
-    "build": "babel server -d build"
+    "build": "babel server -d build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "nodemonConfig": {
     "ignore": [
