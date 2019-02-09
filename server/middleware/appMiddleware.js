@@ -16,5 +16,5 @@ export default function(app) {
   app.use(override());
   app.use(helmet());
   app.use(compression());
-  app.use(express.static('../client/build'));
+  app.use(express.static('client/build'));
 }
