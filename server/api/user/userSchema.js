@@ -95,8 +95,9 @@ export const MutationFields = {
     args: {
       code: { type: new GraphQLNonNull(GraphQLString) }
     },
-    resolve: async function(parent, { code }) {
-      return await userController.facebookLogin(code);
+    resolve: async function(parent, { code }, { req }) {
+      const clientOrigin = req.get('Origin');
+      return await userController.facebookLogin(code, clientOrigin);
     }
   },
   changePassword: {

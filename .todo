@@ -98,7 +98,7 @@ TASKS BEFORE RELEASE:
       ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
   
   BACKEND:
-    ☐ redirect uri in facebook login 
+    ✔ redirect uri in facebook login @done(19-02-12 20:34)
     ✔ rating formula recipes @done(19-01-25 16:50)
     ✔ users recipes @done(19-01-10 19:48)
     ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
@@ -108,7 +108,7 @@ TASKS BEFORE RELEASE:
     ✔ add picture @done(19-01-23 08:22)
     ✔ update picture @done(19-01-23 15:49)
     ✔ get picture @done(19-01-23 15:49)
-    ☐ routing needs to allow any url not only root
+    ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
     ☐ images upload on heroku solve
 
   MISCELLANEOUS:
@@ -117,7 +117,9 @@ TASKS BEFORE RELEASE:
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-     
+    ☐ website title head
+    ☐ favicon
+    
 TASKS AFTER RELEASE: 
   ☐ Change all db tables to InnoDB engine see example down
   ☐ consider data loader implementation on server 

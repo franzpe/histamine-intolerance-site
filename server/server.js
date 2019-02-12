@@ -23,6 +23,7 @@ app.use(
     schema,
     graphiql: process.env.NODE_ENV === config.dev,
     context: {
+      req: req,
       url: req.protocol + '://' + req.get('host'),
       user: req.user
     }
