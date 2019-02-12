@@ -23,8 +23,6 @@ const config = {
   showDbQueries: process.env.SHOW_DB_QUERIES === 'true'
 };
 
-console.log(config);
-
 process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
 config.env = process.env.NODE_ENV;
 let envConfig;
