@@ -7,6 +7,7 @@ import appMiddleware from './middleware/appMiddleware';
 import schema from './api/rootSchema';
 import * as auth from './auth/auth';
 import config from './config/config';
+import path from 'path';
 
 const app = express();
 // setup the app middlware
@@ -27,6 +28,11 @@ app.use(
     }
   }))
 );
+
+// serve all routes
+app.use('*', (req, res, next) => {
+  return res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 // set up global error handling
 app.use(function(err, req, res, next) {
