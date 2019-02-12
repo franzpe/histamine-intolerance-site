@@ -117,7 +117,8 @@ TASKS BEFORE RELEASE:
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-    ☐ website title head
+    ✔ website title head @done(19-02-12 20:47)
+    ☐ fill the metadata with helmet
     ☐ favicon
     
 TASKS AFTER RELEASE: 

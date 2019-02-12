@@ -38,7 +38,7 @@ const RecipesPage = ({ classes }) => {
   return (
     <Grid container={true} spacing={40} className={classes.grid}>
       {recipes.map(recipe => (
-        <RecipeCard recipe={recipe} isAuthenticated={isAuthenticated} />
+        <RecipeCard key={recipe.id} recipe={recipe} isAuthenticated={isAuthenticated} />
       ))}
     </Grid>
   );
