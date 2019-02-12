@@ -32,8 +32,10 @@ const styles = theme => ({
     flex: 1
   },
   cardMedia: {
+    height: '160px',
     position: 'relative',
-    padding: `${theme.spacing.unit * 8}px 0 `
+    padding: `${theme.spacing.unit * 8}px 0 `,
+    cursor: 'pointer'
   },
   ratingContainer: {
     display: 'inline-block',
@@ -78,6 +80,7 @@ function RecipeCard({ classes, recipe, isAuthenticated }) {
           className={classes.cardMedia}
           image={recipe.picture ? recipe.picture.url : recipeThumbnail}
           title="Image title"
+          onClick={() => history.push(routes.RECIPES + '/' + recipe.id)}
         >
           {isAuthenticated && (
             <Typography
