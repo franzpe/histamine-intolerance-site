@@ -83,14 +83,14 @@ export const getUserFoods = async userId => {
   return foods;
 };
 
-export const facebookLogin = async code => {
+export const facebookLogin = async (code, clientOrigin) => {
   const fb = new Facebook();
 
   return new Promise((resolve, reject) => {
     fb.api(
       `/oauth/access_token?client_id=${config.fb.app_id}&client_secret=${
         config.fb.secret
-      }&code=${code}&redirect_uri=http://localhost:3000/facebook-callback&scope=email`,
+      }&code=${code}&redirect_uri=${clientOrigin}/facebook-callback&scope=email`,
       response => {
         const { access_token } = response;
 

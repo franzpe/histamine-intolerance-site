@@ -12,6 +12,10 @@ import FacebookLoginBtn from '_components/buttons/FacebookLoginBtn';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 
 const styles = theme => ({
+  toolbarMain: {
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
+    padding: `${theme.spacing.unit * 2}px 0`
+  },
   appBar: {
     position: 'relative'
   },
@@ -23,15 +27,14 @@ const styles = theme => ({
   toolbarTitle: {
     cursor: 'pointer',
     display: 'inline-block',
-    width: 'auto'
+    width: 'auto',
+    fontWeight: 300,
+    fontSize: '48px'
   },
   section: {
     marginRight: theme.spacing.unit * 5,
     textDecoration: 'none',
     color: 'inherit'
-  },
-  toolbarMain: {
-    borderBottom: `1px solid ${theme.palette.grey[300]}`
   },
   activeSection: {
     color: theme.palette.secondary.main
@@ -40,8 +43,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   facebook: {
+    height: '39px',
+    width: '39px',
     marginRight: theme.spacing.unit,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    verticalAlign: 'middle'
   }
 });
 
@@ -63,6 +69,23 @@ function Header({ classes }) {
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
+        {!isAuthenticated ? (
+          <div style={{ visibility: 'hidden' }}>
+            <FacebookLoginBtn className={classes.facebook} />
+            <Button variant="outlined" size="medium" onClick={handleLogin}>
+              Prihlásiť
+            </Button>
+          </div>
+        ) : (
+          <div style={{ visibility: 'hidden' }}>
+            <Button variant="outlined" size="medium" className={classes.profile}>
+              Profil
+            </Button>
+            <Button variant="contained" size="medium">
+              Odhlásiť
+            </Button>
+          </div>
+        )}
         <div className={classes.toolbarTitleWrapper}>
           <Typography
             component="h2"
@@ -73,13 +96,16 @@ function Header({ classes }) {
             className={classes.toolbarTitle}
             onClick={() => history.push(routes.RECIPES)}
           >
-            HIT
+            <span className={classes.activeSection} style={{ fontWeight: 600 }}>
+              BEZ
+            </span>
+            HISTAMÍNOVO
           </Typography>
         </div>
         {!isAuthenticated ? (
           <Fragment>
             <FacebookLoginBtn className={classes.facebook} />
-            <Button variant="outlined" size="small" onClick={handleLogin}>
+            <Button variant="outlined" size="medium" onClick={handleLogin}>
               Prihlásiť
             </Button>
           </Fragment>
@@ -87,13 +113,13 @@ function Header({ classes }) {
           <Fragment>
             <Button
               variant="outlined"
-              size="small"
+              size="medium"
               className={classes.profile}
               onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
             >
               Profil
             </Button>
-            <Button variant="contained" size="small" color="primary" onClick={handleLogout}>
+            <Button variant="contained" size="medium" color="primary" onClick={handleLogout}>
               Odhlásiť
             </Button>
           </Fragment>

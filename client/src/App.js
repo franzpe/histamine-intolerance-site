@@ -23,6 +23,8 @@ const styles = theme => ({
     fontFamily: 'Roboto'
   },
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
     padding: `${theme.spacing.unit}px 0 ${theme.spacing.unit * 3}px 0`
   }

@@ -23,7 +23,7 @@ const styles = theme => ({
     }
   },
   card: {
-    height: '100%',
+    height: '320px',
     display: 'flex',
     position: 'relative',
     flexDirection: 'column'

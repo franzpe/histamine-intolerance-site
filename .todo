@@ -58,13 +58,16 @@ TASKS BEFORE RELEASE:
     ✔ 51 - 100 - grenn[500 -> more percentage] @done(18-12-29 18:51)
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
-
+  ☐ Medium screens and down put navigation to hamburger with sections as well
+  
   RECIPES:
     ✘ show probability for user that recipe is suitable @cancelled(19-01-27 12:31)
       ✘ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula @cancelled(19-01-27 12:31)
       ✔ Show unsuitable ingredients count with a message s@done(19-01-27 12:31)
     ✔ if user is logged in and havent rated a food, show percantage @done(19-01-27 13:23)
-    ☐ filtering, pagination
+    ☐ pagination
+      https://material-ui.com/demos/tables/
+        Custom Table Pagination Action type - |< < 4 > >|
     ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
     ✔ upload picture @done(19-01-23 15:50)
@@ -73,7 +76,7 @@ TASKS BEFORE RELEASE:
     ✔ click on image opens its details @done(19-02-12 18:52)
 
   GROCERIES: 
-    ✔ design @done(18-12-29 18:25)
+    ✔ design @done(19-02-13 14:42)
     ✔ rate grocery @done(18-12-29 18:24)
     ✔ OPTIMIZE RATING BEHAVIOUR @done(18-12-27 22:58)
     ✔ fast action to show your grocery list @done(19-01-25 09:02)
@@ -81,6 +84,7 @@ TASKS BEFORE RELEASE:
       ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
+    
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
@@ -98,7 +102,7 @@ TASKS BEFORE RELEASE:
       ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
   
   BACKEND:
-    ☐ redirect uri in facebook login 
+    ✔ redirect uri in facebook login @done(19-02-12 20:34)
     ✔ rating formula recipes @done(19-01-25 16:50)
     ✔ users recipes @done(19-01-10 19:48)
     ✔ rated grocery adds to your profile list @done(18-12-29 19:15)
@@ -108,8 +112,9 @@ TASKS BEFORE RELEASE:
     ✔ add picture @done(19-01-23 08:22)
     ✔ update picture @done(19-01-23 15:49)
     ✔ get picture @done(19-01-23 15:49)
-    ☐ routing needs to allow any url not only root
-    ☐ images upload on heroku solve
+    ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
+    ☐ If using heroku hosting, propably not gonna be the case
+      ☐ images upload on heroku solve
 
   MISCELLANEOUS:
     ✔ refetch recipe queries after login @done(19-01-27 08:44)
@@ -117,7 +122,14 @@ TASKS BEFORE RELEASE:
     ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
       ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-     
+    ✔ website title head @done(19-02-12 20:47)
+    ☐ fill the metadata with helmet
+    ☐ favicon
+    ☐ try rosti.cz hosting
+      ✔ nahodena appka na ich hostingu @done(19-02-13 15:30)
+      ✔ nahodena databaza @done(19-02-13 15:46)
+      ☐ testovanie
+    
 TASKS AFTER RELEASE: 
   ☐ Change all db tables to InnoDB engine see example down
   ☐ consider data loader implementation on server 
@@ -126,6 +138,8 @@ TASKS AFTER RELEASE:
   ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
   ☐ contact email transition into text field, needs to remain the same width
   ☐ pink color refers to unsuitability in recipes, consider using red
+  ☐ remove "You are not authenticated!" error
+  ☐ recipes filtering
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group
