@@ -73,7 +73,7 @@ TASKS BEFORE RELEASE:
     ✔ click on image opens its details @done(19-02-12 18:52)
 
   GROCERIES: 
-    ✔ design @done(18-12-29 18:25)
+    ✔ design @done(19-02-13 14:42)
     ✔ rate grocery @done(18-12-29 18:24)
     ✔ OPTIMIZE RATING BEHAVIOUR @done(18-12-27 22:58)
     ✔ fast action to show your grocery list @done(19-01-25 09:02)
@@ -81,6 +81,7 @@ TASKS BEFORE RELEASE:
       ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
+    
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
@@ -109,7 +110,8 @@ TASKS BEFORE RELEASE:
     ✔ update picture @done(19-01-23 15:49)
     ✔ get picture @done(19-01-23 15:49)
     ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
-    ☐ images upload on heroku solve
+    ☐ If using heroku hosting, propably not gonna be the case
+      ☐ images upload on heroku solve
 
   MISCELLANEOUS:
     ✔ refetch recipe queries after login @done(19-01-27 08:44)
@@ -120,6 +122,10 @@ TASKS BEFORE RELEASE:
     ✔ website title head @done(19-02-12 20:47)
     ☐ fill the metadata with helmet
     ☐ favicon
+    ☐ try rosti.cz hosting
+      ✔ nahodena appka na ich hostingu @done(19-02-13 15:30)
+      ✔ nahodena databaza @done(19-02-13 15:46)
+      ☐ testovanie
     
 TASKS AFTER RELEASE: 
   ☐ Change all db tables to InnoDB engine see example down
@@ -129,6 +135,7 @@ TASKS AFTER RELEASE:
   ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
   ☐ contact email transition into text field, needs to remain the same width
   ☐ pink color refers to unsuitability in recipes, consider using red
+  ☐ remove "You are not authenticated!" error
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group
