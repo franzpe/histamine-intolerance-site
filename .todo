@@ -58,13 +58,16 @@ TASKS BEFORE RELEASE:
     ✔ 51 - 100 - grenn[500 -> more percentage] @done(18-12-29 18:51)
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
-
+  ☐ Medium screens and down put navigation to hamburger with sections as well
+  
   RECIPES:
     ✘ show probability for user that recipe is suitable @cancelled(19-01-27 12:31)
       ✘ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula @cancelled(19-01-27 12:31)
       ✔ Show unsuitable ingredients count with a message s@done(19-01-27 12:31)
     ✔ if user is logged in and havent rated a food, show percantage @done(19-01-27 13:23)
-    ☐ filtering, pagination
+    ☐ pagination
+      https://material-ui.com/demos/tables/
+        Custom Table Pagination Action type - |< < 4 > >|
     ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
     ✔ upload picture @done(19-01-23 15:50)
@@ -136,6 +139,7 @@ TASKS AFTER RELEASE:
   ☐ contact email transition into text field, needs to remain the same width
   ☐ pink color refers to unsuitability in recipes, consider using red
   ☐ remove "You are not authenticated!" error
+  ☐ recipes filtering
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group

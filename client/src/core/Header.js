@@ -23,7 +23,8 @@ const styles = theme => ({
   toolbarTitle: {
     cursor: 'pointer',
     display: 'inline-block',
-    width: 'auto'
+    width: 'auto',
+    fontWeight: 300
   },
   section: {
     marginRight: theme.spacing.unit * 5,
@@ -41,7 +42,8 @@ const styles = theme => ({
   },
   facebook: {
     marginRight: theme.spacing.unit,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    verticalAlign: 'middle'
   }
 });
 
@@ -63,6 +65,23 @@ function Header({ classes }) {
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
+        {!isAuthenticated ? (
+          <div style={{ visibility: 'hidden' }}>
+            <FacebookLoginBtn className={classes.facebook} />
+            <Button variant="outlined" size="small" onClick={handleLogin}>
+              Prihlásiť
+            </Button>
+          </div>
+        ) : (
+          <div style={{ visibility: 'hidden' }}>
+            <Button variant="outlined" size="small" className={classes.profile}>
+              Profil
+            </Button>
+            <Button variant="contained" size="small">
+              Odhlásiť
+            </Button>
+          </div>
+        )}
         <div className={classes.toolbarTitleWrapper}>
           <Typography
             component="h2"
@@ -73,18 +92,21 @@ function Header({ classes }) {
             className={classes.toolbarTitle}
             onClick={() => history.push(routes.RECIPES)}
           >
-            HIT
+            <span className={classes.activeSection} style={{ fontWeight: 600 }}>
+              BEZ
+            </span>
+            HISTAMÍNOVO
           </Typography>
         </div>
         {!isAuthenticated ? (
-          <Fragment>
+          <div>
             <FacebookLoginBtn className={classes.facebook} />
             <Button variant="outlined" size="small" onClick={handleLogin}>
               Prihlásiť
             </Button>
-          </Fragment>
+          </div>
         ) : (
-          <Fragment>
+          <div>
             <Button
               variant="outlined"
               size="small"
@@ -96,7 +118,7 @@ function Header({ classes }) {
             <Button variant="contained" size="small" color="primary" onClick={handleLogout}>
               Odhlásiť
             </Button>
-          </Fragment>
+          </div>
         )}
       </Toolbar>
       <Toolbar variant="dense">
