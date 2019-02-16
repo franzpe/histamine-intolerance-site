@@ -141,7 +141,7 @@ TASKS AFTER RELEASE:
   ☐ pink color refers to unsuitability in recipes, consider using red
   ☐ remove "You are not authenticated!" error
   ☐ recipes filtering
-  ☐ pimp favicon
+  ✔ pimp favicon @done(19-02-15 20:38)
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group
