@@ -5,6 +5,7 @@ import cors from 'cors';
 import override from 'method-override';
 import helmet from 'helmet';
 import compression from 'compression';
+import config from '../config/config';
 
 // setup global middleware here
 export default function(app) {
@@ -16,5 +17,10 @@ export default function(app) {
   app.use(override());
   app.use(helmet());
   app.use(compression());
-  app.use(express.static('client/build'));
+
+  if (process.env.NODE_ENV === config.dev) {
+    app.use(express.static('client/build'));
+  } else {
+    app.use(express.static('client'));
+  }
 }

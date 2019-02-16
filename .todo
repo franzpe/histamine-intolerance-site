@@ -184,3 +184,6 @@ HEROKU:
   heroku open - opens the app 
   heroku local web - run the app locally
   heroku run bash
+
+ROSTI:
+  bezhistaminovo-3353.rostiapp.cz

@@ -32,7 +32,8 @@ app.use(
 
 // serve all routes
 app.use('*', (req, res, next) => {
-  return res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  const siteurl = process.env.NODE_ENV === config.dev ? '../client/build' : '../client';
+  return res.sendFile(path.resolve(__dirname, siteurl, 'index.html'));
 });
 
 // set up global error handling
