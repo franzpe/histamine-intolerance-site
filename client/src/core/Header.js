@@ -3,6 +3,10 @@ import { withStyles, Toolbar, Typography, Button } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import classNames from 'classnames';
+import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
+import ListIcon from '@material-ui/icons/List';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 
 import history from '../_utils/history';
 import routes, { profileRoutes } from '../_constants/routesConstants';
@@ -10,11 +14,15 @@ import { showErrorToast } from '../_utils/toast';
 import jwt from '../_utils/jwt';
 import FacebookLoginBtn from '_components/buttons/FacebookLoginBtn';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
+import SideNav from '_components/SideNav';
 
 const styles = theme => ({
   toolbarMain: {
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
-    padding: `${theme.spacing.unit * 2}px 0`
+    padding: `${theme.spacing.unit * 2}px 0`,
+    [theme.breakpoints.down('xs')]: {
+      padding: `${theme.spacing.unit + 2}px 0`
+    }
   },
   appBar: {
     position: 'relative'
@@ -29,7 +37,10 @@ const styles = theme => ({
     display: 'inline-block',
     width: 'auto',
     fontWeight: 300,
-    fontSize: '48px'
+    fontSize: '48px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '30px'
+    }
   },
   section: {
     marginRight: theme.spacing.unit * 5,
@@ -48,12 +59,27 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     cursor: 'pointer',
     verticalAlign: 'middle'
+  },
+  menuWrapper: {
+    paddingRight: theme.spacing.unit * 3,
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'inline-block'
+    }
+  },
+  counterWeight: {
+    visibility: 'hidden'
+  },
+  sectionNav: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
   }
 });
 
-const sections = [
-  { to: routes.RECIPES, label: 'Recepty' },
-  { to: routes.FOODS, label: 'Zoznam potravín' }
+export const sections = [
+  { to: routes.RECIPES, label: 'Recepty', icon: <ReceiptIcon /> },
+  { to: routes.FOODS, label: 'Zoznam potravín', icon: <ListIcon /> }
 ];
 
 const LOGOUT_MUTATION = gql`
@@ -62,6 +88,47 @@ const LOGOUT_MUTATION = gql`
   }
 `;
 
+function HeaderMenu({ classes, isAuthenticated, onLoginClick, onLogoutClick, counterWeight }) {
+  return (
+    <Fragment>
+      {!isAuthenticated ? (
+        <div
+          className={classNames(classes.menuWrapper, { [classes.counterWeight]: counterWeight })}
+        >
+          <FacebookLoginBtn
+            render={({ onClick }) => (
+              <FacebookSvg
+                className={classes.facebook}
+                onClick={onClick}
+                alt="Prihlasenie cez Facebook"
+              />
+            )}
+          />
+          <Button variant="outlined" size="medium" onClick={onLoginClick}>
+            Prihlásiť
+          </Button>
+        </div>
+      ) : (
+        <div
+          className={classNames(classes.menuWrapper, { [classes.counterWeight]: counterWeight })}
+        >
+          <Button
+            variant="outlined"
+            size="medium"
+            className={classes.profile}
+            onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
+          >
+            Profil
+          </Button>
+          <Button variant="contained" size="medium" color="primary" onClick={onLogoutClick}>
+            Odhlásiť
+          </Button>
+        </div>
+      )}
+    </Fragment>
+  );
+}
+
 function Header({ classes }) {
   const { isAuthenticated } = useQuery(AUTHENTICATION_QUERY).data;
   const logout = useMutation(LOGOUT_MUTATION);
@@ -69,23 +136,8 @@ function Header({ classes }) {
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
-        {!isAuthenticated ? (
-          <div style={{ visibility: 'hidden' }}>
-            <FacebookLoginBtn className={classes.facebook} />
-            <Button variant="outlined" size="medium" onClick={handleLogin}>
-              Prihlásiť
-            </Button>
-          </div>
-        ) : (
-          <div style={{ visibility: 'hidden' }}>
-            <Button variant="outlined" size="medium" className={classes.profile}>
-              Profil
-            </Button>
-            <Button variant="contained" size="medium">
-              Odhlásiť
-            </Button>
-          </div>
-        )}
+        <SideNav />
+        <HeaderMenu classes={classes} counterWeight={true} />
         <div className={classes.toolbarTitleWrapper}>
           <Typography
             component="h2"
@@ -102,30 +154,14 @@ function Header({ classes }) {
             HISTAMÍNOVO
           </Typography>
         </div>
-        {!isAuthenticated ? (
-          <Fragment>
-            <FacebookLoginBtn className={classes.facebook} />
-            <Button variant="outlined" size="medium" onClick={handleLogin}>
-              Prihlásiť
-            </Button>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <Button
-              variant="outlined"
-              size="medium"
-              className={classes.profile}
-              onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
-            >
-              Profil
-            </Button>
-            <Button variant="contained" size="medium" color="primary" onClick={handleLogout}>
-              Odhlásiť
-            </Button>
-          </Fragment>
-        )}
+        <HeaderMenu
+          classes={classes}
+          onLoginClick={handleLogin}
+          onLogoutClick={handleLogout}
+          isAuthenticated={isAuthenticated}
+        />
       </Toolbar>
-      <Toolbar variant="dense">
+      <Toolbar variant="dense" className={classes.sectionNav}>
         {sections.map((section, index) => (
           <NavLink
             key={index}
