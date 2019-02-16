@@ -1,13 +1,16 @@
 const fs = require('fs-extra');
 
-const clientdir = 'build/client';
-if (!fs.existsSync(clientdir)) {
-  fs.mkdirSync(clientdir);
+const clientOutputdir = 'build/client';
+const clientDir = 'client/build';
+
+if (!fs.existsSync(clientOutputdir)) {
+  fs.mkdirSync(clientOutputdir);
 }
 
 try {
-  fs.copySync('client/build', 'build/client', { dereference: true });
-  console.log(`Client copied to ${clientdir} directory`);
+  fs.copySync(clientDir, clientOutputdir, { dereference: true });
+  console.log(`Client copied successfully to ${clientOutputdir} directory`);
+  fs.removeSync(clientDir);
 } catch (err) {
   console.log(err);
 }
