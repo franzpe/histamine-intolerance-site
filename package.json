@@ -6,8 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec BLUEBIRD_W_FORGOTTEN_RETURN=0 babel-node index.js",
-    "index-build": "babel index.js -d build1",
-    "build": "babel index.js server -d build",
+    "build-server": "babel index.js -d build && babel server -d build/server",
+    "postbuild-server": "node scripts/postBuildServer.js",
+    "build-client": "cd client && npm run build",
+    "postbuild-client": "node scripts/postBuildClient.js",
+    "build": "run-s build-server build-client",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "nodemonConfig": {
@@ -33,16 +36,18 @@
     "express-graphql": "^0.7.1",
     "express-jwt": "^3.0.1",
     "fb": "^2.0.0",
+    "fs-extra": "^7.0.1",
     "graphql": "^14.0.2",
     "graphql-upload": "^8.0.4",
     "helmet": "^3.15.0",
     "jsonwebtoken": "^5.0.4",
-    "knex": "^0.13.0",
+    "knex": "^0.16.3",
     "lodash.toarray": "^4.4.0",
     "method-override": "^2.3.4",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.4",
+    "npm-run-all": "^4.1.5",
     "shortid": "^2.2.14"
   }
 }
