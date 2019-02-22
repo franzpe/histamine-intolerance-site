@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles, TableRow, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -7,11 +7,12 @@ import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 
 import Rating from '_components/Rating';
-import { showSuccessToast } from '_utils/toast';
+import { showSuccessToast, showErrorToast } from '_utils/toast';
 import history from '_utils/history';
 import Action from '_components/Action';
 import { USER_RECIPES_QUERY } from './UserRecipesTable';
 import routes from '_constants/routesConstants';
+import ConfirmationDialog from '_components/ConfirmationDialog';
 
 const styles = theme => ({
   iconRightMargin: {
@@ -40,6 +41,8 @@ function UserRecipeTableRow({ classes, recipe }) {
     refetchQueries: [{ query: USER_RECIPES_QUERY }]
   });
 
+  const [openDialog, setOpenDialog] = useState(false);
+
   return (
     <TableRow>
       <TableCell>{recipe.name}</TableCell>
@@ -51,11 +54,17 @@ function UserRecipeTableRow({ classes, recipe }) {
           <Action aria-label="Edit" className={classes.iconRightMargin} onClick={handleEdit}>
             <EditIcon fontSize="small" />
           </Action>
-          <Action aria-label="Delete" onClick={handleDelete}>
+          <Action aria-label="Delete" onClick={() => setOpenDialog(true)}>
             <DeleteIcon fontSize="small" />
           </Action>
         </div>
       </TableCell>
+      <ConfirmationDialog
+        open={openDialog}
+        title="Odstrániť"
+        contentText={`Naozaj chcete odstrániť recept - ${recipe.name}`}
+        onClose={handleDelete}
+      />
     </TableRow>
   );
 
@@ -63,12 +72,19 @@ function UserRecipeTableRow({ classes, recipe }) {
     history.push(routes.EDIT_RECIPE + '/' + recipe.id);
   }
 
-  function handleDelete(e) {
-    removeRecipe()
-      .then(() => {
-        showSuccessToast('Recipe has been removed');
-      })
-      .catch(err => console.log(err));
+  function handleDelete(result, e) {
+    setOpenDialog(false);
+
+    if (result) {
+      removeRecipe()
+        .then(() => {
+          showSuccessToast('Recipe has been removed');
+        })
+        .catch(err => {
+          showErrorToast('Recept sa nepodarilo vymazať');
+          console.log(err);
+        });
+    }
   }
 }
 
