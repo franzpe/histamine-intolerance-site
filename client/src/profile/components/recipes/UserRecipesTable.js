@@ -16,12 +16,12 @@ const columns = [
   },
   {
     id: 'rating',
-    numeric: true,
+    numeric: false,
     label: 'Rating'
   },
   {
     id: 'actions',
-    numeric: true,
+    numeric: false,
     label: 'Akcie'
   }
 ];

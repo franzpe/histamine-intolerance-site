@@ -25,6 +25,7 @@ import Action from '_components/Action';
 import { showErrorToast, showSuccessToast } from '_utils/toast';
 import { USER_RECIPES_QUERY } from './UserRecipesTable';
 import DropzoneField from '_components/DropzoneField';
+import BackBtn from '_components/buttons/BackBtn';
 
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
 const acceptedFileTypesArray = acceptedFileTypes.split(',').map(item => item.trim());
@@ -217,8 +218,8 @@ const styles = theme => ({
   },
   foods: {
     width: '100%',
-    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px 0 ${theme.spacing.unit *
-      3}px`,
+    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit *
+      2}px`,
     [theme.breakpoints.down('xs')]: {
       padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit *
         2}px`
@@ -258,8 +259,7 @@ const styles = theme => ({
     textAlign: 'center'
   },
   back: {
-    marginRight: theme.spacing.unit,
-    padding: `0 ${theme.spacing.unit * 5}px`
+    marginRight: theme.spacing.unit
   },
   circle: {
     display: 'flex',
@@ -610,15 +610,9 @@ function AddEditRecipe({
         </form>
       </Card>
       <div className={classes.btnWrapper}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={handleBack}
-          className={classes.back}
-        >
+        <BackBtn onClick={handleBack} className={classes.back}>
           späť
-        </Button>
+        </BackBtn>
         <SaveBtn disabled={form.isSaving} onClick={handleSubmit} />
       </div>
     </Fragment>
