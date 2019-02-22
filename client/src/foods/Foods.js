@@ -1,12 +1,12 @@
 import React, { useState, memo } from 'react';
 import { withStyles, Table, TableBody } from '@material-ui/core';
-
-import Food from './Food';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
+
+import Food from './Food';
 import EnhancedTableHead from '../_components/tables/EnhancedTableHead';
 import { stableSort, getSorting } from '_utils/sort';
-import PropTypes from 'prop-types';
 
 const styles = theme => ({});
 
