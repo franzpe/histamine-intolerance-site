@@ -10,8 +10,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5
+    color: theme.palette.text.secondary
   },
   display: {
     display: 'inline-block',

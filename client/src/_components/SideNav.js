@@ -12,6 +12,7 @@ import FacebookLoginBtn from './buttons/FacebookLoginBtn';
 import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 import { sections } from 'core/Header';
 import history from '_utils/history';
+import routes from '_constants/routesConstants';
 
 const styles = theme => ({
   list: {
@@ -84,7 +85,7 @@ function SideNav({ classes }) {
           <ListItemIcon>
             <LockIcon />
           </ListItemIcon>
-          <ListItemText primary="Prihlásenie" />
+          <ListItemText primary="Prihlásenie" onClick={handleLogin} />
         </ListItem>
       </List>
     </div>
@@ -107,6 +108,10 @@ function SideNav({ classes }) {
       </Drawer>
     </div>
   );
+
+  function handleLogin(e) {
+    history.push({ pathname: routes.LOGIN, state: { target: history.location } });
+  }
 }
 
 export default withStyles(styles)(SideNav);
