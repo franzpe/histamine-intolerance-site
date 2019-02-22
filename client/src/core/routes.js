@@ -31,7 +31,7 @@ class Routes extends Component {
           <Route exact={true} path={routes.RECIPE_DETAILS} component={RecipeDetail} />
           <PrivateRoute
             exact={true}
-            path={routes.EDIT_RECIPE}
+            path={routes.EDIT_RECIPE_WITH_ID}
             component={() => <AddEditRecipe isNew={false} />}
           />
         </Switch>

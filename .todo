@@ -59,8 +59,8 @@ TASKS BEFORE RELEASE:
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
   ✔ Medium screens and down put navigation to hamburger with sections as well @done(19-02-16 21:39)
-  ☐ Bottom right corner with fab button to contact me
-    ☐ use circular reveal to open the form
+  ✔ Bottom right corner with fab button to contact me @done(19-02-22 22:04)
+    ✔ use circular reveal to open the form @done(19-02-22 22:04)
   ✔ Login sidebar @done(19-02-22 21:49)
 
   RECIPES:

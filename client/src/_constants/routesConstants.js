@@ -1,11 +1,12 @@
-const LOGIN = '/login';
-const REGISTER = '/register';
-const RECIPES = '/recipes';
-const RECIPE_DETAILS = '/recipes/:id';
+const LOGIN = '/prihlasenie';
+const REGISTER = '/registracia';
+const RECIPES = '/recepty';
+const RECIPE_DETAILS = '/recepty/:id';
 const FOODS = '/potraviny';
-const PROFILE = '/profile';
-const ADD_RECIPE = '/recipes/add';
-const EDIT_RECIPE = '/recipes/edit/:id';
+const PROFILE = '/profil';
+const ADD_RECIPE = '/recepty/pridanie';
+const EDIT_RECIPE = '/recepty/editacia';
+const EDIT_RECIPE_WITH_ID = '/recepty/editacia/:id';
 
 const routes = {
   LOGIN,
@@ -15,11 +16,12 @@ const routes = {
   RECIPE_DETAILS,
   PROFILE,
   ADD_RECIPE,
-  EDIT_RECIPE
+  EDIT_RECIPE,
+  EDIT_RECIPE_WITH_ID
 };
 export default routes;
 
-const PERSONAL_INFORMATION = '/personal-information';
-const FOOD_LIST = '/food-list';
+const PERSONAL_INFORMATION = '/osobne-udaje';
+const FOOD_LIST = '/moj-zoznam-potravin';
 
 export const profileRoutes = { PERSONAL_INFORMATION, FOOD_LIST, RECIPES };
