@@ -6,6 +6,7 @@ import ListIcon from '@material-ui/icons/List';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import { profileRoutes } from '_constants/routesConstants';
 
 const styles = theme => ({
   sidebar: {
@@ -49,7 +50,7 @@ function ProfileSideBar({ path, classes }) {
   return (
     <div className={classes.sidebar}>
       <NavLink
-        to={`${path}/personal-information`}
+        to={`${path}${profileRoutes.PERSONAL_INFORMATION}`}
         activeClassName={classes.activeNavLink}
         className={classNames(classes.sidebarItem, classes.navLink)}
       >
@@ -57,7 +58,7 @@ function ProfileSideBar({ path, classes }) {
         <span className={classes.sidebarItemDescription}>Osobné informácie</span>
       </NavLink>
       <NavLink
-        to={`${path}/food-list`}
+        to={`${path}${profileRoutes.FOOD_LIST}`}
         activeClassName={classes.activeNavLink}
         className={classNames(classes.sidebarItem, classes.navLink)}
       >
@@ -65,7 +66,7 @@ function ProfileSideBar({ path, classes }) {
         <span className={classes.sidebarItemDescription}>Môj zoznam potravín</span>
       </NavLink>
       <NavLink
-        to={`${path}/recipes`}
+        to={`${path}${profileRoutes.RECIPES}`}
         activeClassName={classes.activeNavLink}
         className={classNames(classes.sidebarItem, classes.navLink)}
       >

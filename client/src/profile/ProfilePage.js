@@ -6,6 +6,7 @@ import PersonalInformation from './components/personalInformation/PersonalInform
 import UserFoods from './components/foods/UserFoods';
 import ProfileSideBar from './components/ProfileSideBar';
 import UserRecipes from './components/recipes/UserRecipes';
+import { profileRoutes } from '_constants/routesConstants';
 
 const styles = theme => ({
   paper: {
@@ -32,8 +33,8 @@ function ProfilePage({ classes, match: { path } }) {
       <div className={classes.content}>
         <Suspense fallback={<div />}>
           <Switch>
-            <Route path={path + '/food-list'} exact={true} component={UserFoods} />
-            <Route path={path + '/recipes'} exact={true} component={UserRecipes} />
+            <Route path={path + profileRoutes.FOOD_LIST} exact={true} component={UserFoods} />
+            <Route path={path + profileRoutes.RECIPES} exact={true} component={UserRecipes} />
             <Route path={path} component={PersonalInformation} />
           </Switch>
         </Suspense>
