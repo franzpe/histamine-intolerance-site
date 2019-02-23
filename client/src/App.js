@@ -33,8 +33,7 @@ const styles = theme => ({
   }
 });
 
-@withStyles(styles)
-export default class App extends Component {
+class App extends Component {
   render() {
     const { classes } = this.props;
 
@@ -49,3 +48,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withStyles(styles)(App);

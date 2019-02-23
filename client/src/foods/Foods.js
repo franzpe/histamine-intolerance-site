@@ -93,9 +93,9 @@ function Foods({ foods, foodsQuery, isRatingAllowed }) {
 }
 
 Foods.propTypes = {
-  foods: PropTypes.object.isRequired,
+  foods: PropTypes.array.isRequired,
   isRatingAllowed: PropTypes.bool.isRequired,
-  foodsQuery: PropTypes.func
+  foodsQuery: PropTypes.object
 };
 
 export default withStyles(styles)(memo(Foods));

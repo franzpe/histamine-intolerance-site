@@ -1,14 +1,6 @@
 import React, { memo, Fragment, useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
-import {
-  withStyles,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardMedia
-} from '@material-ui/core';
+import { withStyles, Grid, Card, CardContent, Typography, CardMedia } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import { recipeThumbnail } from './recipeThumbnail';

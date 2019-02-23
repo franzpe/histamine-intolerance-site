@@ -108,7 +108,7 @@ function RecipeCard({ classes, recipe, isAuthenticated }) {
           )}
         </CardMedia>
         <div className={classes.ratingContainer}>
-          <Rating value={recipe.totalRating} valueVariant="h5" percentageVariant="body1" />
+          <Rating value={recipe.totalRating || 0} valueVariant="h5" percentageVariant="body1" />
         </div>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom={true} variant="h5" component="h6">
