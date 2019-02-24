@@ -90,7 +90,7 @@ function UserRecipesTable() {
         title="Odstrániť"
         contentText={(() => {
           const recipe = userRecipes.data.me.recipes.find(r => r.id === selectedRecipeId);
-          return `Naozaj chcete odstrániť recept - ${recipe && recipe.name}`;
+          return `Naozaj chcete odstrániť recept ${recipe && '- ' + recipe.name}`;
         })()}
         onClose={handleClose}
       />

@@ -8,6 +8,7 @@ import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 import ListIcon from '@material-ui/icons/List';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import InfoIcon from '@material-ui/icons/Info';
+import LockIcon from '@material-ui/icons/Lock';
 
 import history from '../_utils/history';
 import routes, { profileRoutes } from '../_constants/routesConstants';
@@ -81,7 +82,8 @@ const styles = theme => ({
 export const sections = [
   { to: routes.RECIPES, label: 'Recepty', icon: <ReceiptIcon /> },
   { to: routes.FOODS, label: 'Zoznam potravín', icon: <ListIcon /> },
-  { to: routes.ABOUT_US, label: 'O nás', icon: <InfoIcon /> }
+  { to: routes.ABOUT_US, label: 'O nás', icon: <InfoIcon /> },
+  { to: routes.ADMIN, label: 'Admin', icon: <LockIcon />, permissionRole: 'ADM' }
 ];
 
 const LOGOUT_MUTATION = gql`
@@ -132,13 +134,16 @@ function HeaderMenu({ classes, isAuthenticated, onLoginClick, onLogoutClick, cou
 }
 
 function Header({ classes }) {
-  const { isAuthenticated } = useQuery(AUTHENTICATION_QUERY).data;
+  const {
+    isAuthenticated,
+    user: { role }
+  } = useQuery(AUTHENTICATION_QUERY).data;
   const logout = useMutation(LOGOUT_MUTATION);
 
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
-        <SideNav />
+        <SideNav userRole={role} />
         <HeaderMenu classes={classes} counterWeight={true} />
         <div className={classes.toolbarTitleWrapper}>
           <Typography
@@ -164,16 +169,19 @@ function Header({ classes }) {
         />
       </Toolbar>
       <Toolbar variant="dense" className={classes.sectionNav}>
-        {sections.map((section, index) => (
-          <NavLink
-            key={index}
-            to={section.to}
-            className={classes.section}
-            activeClassName={classes.activeSection}
-          >
-            {section.label}
-          </NavLink>
-        ))}
+        {sections.map((section, index) => {
+          return !section.permissionRole ||
+            (section.permissionRole && section.permissionRole === role) ? (
+            <NavLink
+              key={index}
+              to={section.to}
+              className={classes.section}
+              activeClassName={classes.activeSection}
+            >
+              {section.label}
+            </NavLink>
+          ) : null;
+        })}
       </Toolbar>
     </Fragment>
   );

@@ -1,6 +1,7 @@
 const user = {
-  __typename: 'User',
-  userName: ''
+  __typename: 'UserClient',
+  userName: '',
+  role: ''
 };
 
 export default user;

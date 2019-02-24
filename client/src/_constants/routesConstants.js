@@ -8,6 +8,7 @@ const ADD_RECIPE = '/recepty/pridanie';
 const EDIT_RECIPE = '/recepty/editacia';
 const EDIT_RECIPE_WITH_ID = '/recepty/editacia/:id';
 const ABOUT_US = '/o-nas';
+const ADMIN = '/admin';
 
 const routes = {
   LOGIN,
@@ -19,7 +20,8 @@ const routes = {
   ADD_RECIPE,
   EDIT_RECIPE,
   EDIT_RECIPE_WITH_ID,
-  ABOUT_US
+  ABOUT_US,
+  ADMIN
 };
 
 export default routes;

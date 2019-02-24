@@ -50,7 +50,7 @@ const styles = theme => ({
   }
 });
 
-function SideNav({ classes }) {
+function SideNav({ classes, userRole }) {
   const [state, setState] = React.useState({
     left: false
   });
@@ -62,12 +62,15 @@ function SideNav({ classes }) {
   const sideList = (
     <div className={classes.list}>
       <List className={classes.showOnlyOnMobile}>
-        {sections.map((section, index) => (
-          <ListItem key={section.label} button={true} onClick={() => history.push(section.to)}>
-            <ListItemIcon>{section.icon}</ListItemIcon>
-            <ListItemText primary={section.label} />
-          </ListItem>
-        ))}
+        {sections.map((section, index) => {
+          return !section.permissionRole ||
+            (section.permissionRole && section.permissionRole === userRole) ? (
+            <ListItem key={section.label} button={true} onClick={() => history.push(section.to)}>
+              <ListItemIcon>{section.icon}</ListItemIcon>
+              <ListItemText primary={section.label} />
+            </ListItem>
+          ) : null;
+        })}
       </List>
       <Divider className={classes.showOnlyOnMobile} />
       <List>
