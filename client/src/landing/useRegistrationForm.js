@@ -43,6 +43,7 @@ export function useRegistrationForm(initialFormState = initialState) {
         return {
           ...prevState,
           isRegistering: false,
+          isRegistered: false,
           errors: { registration: action.payload.error }
         };
       }

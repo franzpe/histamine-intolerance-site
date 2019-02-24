@@ -36,7 +36,9 @@ const RegisterPage = ({ classes }) => {
           variant="subtitle2"
           className={form.isRegistered ? classes.success : classes.error}
         >
-          {form.isRegistered ? 'Registration successful. Please log in.' : form.errors.registration}
+          {form.isRegistered
+            ? 'Registrácia úspešná. Prosím prihláste sa.'
+            : form.errors.registration}
         </Typography>
         <form className={classes.form}>
           <TextField
@@ -129,9 +131,9 @@ const RegisterPage = ({ classes }) => {
 
     dispatch({ type: registrationFormActions.REGISTER_REQUEST });
     if (form.isValid) {
-      dispatch({ type: registrationFormActions.REGISTER_SUCCESS });
       signup()
         .then(() => {
+          dispatch({ type: registrationFormActions.REGISTER_SUCCESS });
           setTimeout(() => history.push(routes.LOGIN), 1500);
         })
         .catch(resErr =>
