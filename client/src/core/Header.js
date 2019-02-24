@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 import ListIcon from '@material-ui/icons/List';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import InfoIcon from '@material-ui/icons/Info';
 
 import history from '../_utils/history';
 import routes, { profileRoutes } from '../_constants/routesConstants';
@@ -54,8 +55,8 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   facebook: {
-    height: '39px',
-    width: '39px',
+    height: '34.5px',
+    width: '34.5px',
     marginRight: theme.spacing.unit,
     cursor: 'pointer',
     verticalAlign: 'middle'
@@ -79,7 +80,8 @@ const styles = theme => ({
 
 export const sections = [
   { to: routes.RECIPES, label: 'Recepty', icon: <ReceiptIcon /> },
-  { to: routes.FOODS, label: 'Zoznam potravín', icon: <ListIcon /> }
+  { to: routes.FOODS, label: 'Zoznam potravín', icon: <ListIcon /> },
+  { to: routes.ABOUT_US, label: 'O nás', icon: <InfoIcon /> }
 ];
 
 const LOGOUT_MUTATION = gql`

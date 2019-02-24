@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const Footer = ({ classes }) => {
-  return <div className={classes.footer}>© 2019 František Poboček</div>;
+  return <div className={classes.footer}>© 2019 - František Poboček</div>;
 };
 
 export default withStyles(styles)(Footer);
