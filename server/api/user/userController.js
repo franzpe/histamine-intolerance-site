@@ -55,9 +55,9 @@ export const changePassword = async ({ oldPassword, newPassword }, user) => {
 export const post = async userArgs => {
   let user;
   try {
-    user = await new User({ ...userArgs, ...{ role: 'USR' } }).save();
+    user = await new User({ ...userArgs, role: 'USR', creationDate: new Date() }).save();
   } catch (err) {
-    throw new Error('User s takoutou emailovou adresou uz existuje');
+    throw new Error('Používateľ s takoutou emailovou adresou uz existuje');
   }
 
   let token;

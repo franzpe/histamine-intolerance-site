@@ -26,6 +26,12 @@ export const UserType = new GraphQLObjectType({
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
     email: { type: GraphQLString },
+    creationDate: {
+      type: GraphQLString,
+      resolve(parent, args) {
+        return parent.creationDate && parent.creationDate.toString();
+      }
+    },
     role: {
       type: RoleType,
       resolve(parent, args) {
