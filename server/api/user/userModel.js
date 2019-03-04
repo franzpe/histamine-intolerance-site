@@ -7,8 +7,7 @@ import Role from '../role/roleModel';
 // id - int
 // userName - String
 // password - String
-// firstName - String
-// lastName - String
+// nick - String
 // email - String
 // role - int FK Role
 // creationDate - Date
