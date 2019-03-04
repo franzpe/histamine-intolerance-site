@@ -11,7 +11,7 @@ import Role from '../role/roleModel';
 // lastName - String
 // email - String
 // role - int FK Role
-// createionDate - Date
+// creationDate - Date
 class User extends db.Model {
   constructor(args) {
     super(args);
