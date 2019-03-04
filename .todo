@@ -102,7 +102,8 @@ TASKS BEFORE RELEASE:
           ✔ Maybe after launch if users are going to put there empty or funky stuff @done(19-01-27 07:46)
         ✔ short description validation 50 chars @done(19-01-27 07:45)
       ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
-  
+    ☐ remove firstname and lastname from profile and add nick
+
   BACKEND:
     ✔ redirect uri in facebook login @done(19-02-12 20:34)
     ✔ rating formula recipes @done(19-01-25 16:50)
@@ -117,7 +118,8 @@ TASKS BEFORE RELEASE:
     ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
     ✘ If using heroku hosting, propably not gonna be the case @cancelled(19-02-16 19:22)
       ✘ images upload on heroku solve @cancelled(19-02-16 19:22)
-
+    ☐ remove firstname and lastname and add nick column in db
+    
   MISCELLANEOUS:
     ✔ refetch recipe queries after login @done(19-01-27 08:44)
     ✔ migrate from apollo boost @done(18-12-29 14:34)
