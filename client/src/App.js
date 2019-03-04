@@ -26,12 +26,14 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    padding: `${theme.spacing.unit}px 0 ${theme.spacing.unit * 3}px 0`
+    padding: `${theme.spacing.unit}px 0 ${theme.spacing.unit * 3}px 0`,
+    [theme.breakpoints.down('xs')]: {
+      padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 3}px 0`
+    }
   }
 });
 
-@withStyles(styles)
-export default class App extends Component {
+class App extends Component {
   render() {
     const { classes } = this.props;
 
@@ -46,3 +48,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withStyles(styles)(App);

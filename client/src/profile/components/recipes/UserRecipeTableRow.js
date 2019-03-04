@@ -3,14 +3,11 @@ import { withStyles, TableRow, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
 
 import Rating from '_components/Rating';
-import { showSuccessToast } from '_utils/toast';
 import history from '_utils/history';
 import Action from '_components/Action';
-import { USER_RECIPES_QUERY } from './UserRecipesTable';
+import routes from '_constants/routesConstants';
 
 const styles = theme => ({
   iconRightMargin: {
@@ -27,30 +24,19 @@ const styles = theme => ({
   }
 });
 
-const REMOVE_RECIPE_MUTATION = gql`
-  mutation deleteRecipe($id: Int!) {
-    deleteRecipe(id: $id)
-  }
-`;
-
-function UserRecipeTableRow({ classes, recipe }) {
-  const removeRecipe = useMutation(REMOVE_RECIPE_MUTATION, {
-    variables: { id: recipe.id },
-    refetchQueries: [{ query: USER_RECIPES_QUERY }]
-  });
-
+function UserRecipeTableRow({ classes, recipe, onDeleteRecipe }) {
   return (
     <TableRow>
       <TableCell>{recipe.name}</TableCell>
       <TableCell>
-        <Rating value={recipe.rating} valueVariant="h6" percentageVariant="body2" />
+        <Rating value={recipe.rating || 0} valueVariant="h6" percentageVariant="body2" />
       </TableCell>
       <TableCell className={classes.actionsTableCell}>
         <div className={classes.actions}>
           <Action aria-label="Edit" className={classes.iconRightMargin} onClick={handleEdit}>
             <EditIcon fontSize="small" />
           </Action>
-          <Action aria-label="Delete" onClick={handleDelete}>
+          <Action aria-label="Delete" onClick={() => onDeleteRecipe(recipe.id)}>
             <DeleteIcon fontSize="small" />
           </Action>
         </div>
@@ -59,15 +45,7 @@ function UserRecipeTableRow({ classes, recipe }) {
   );
 
   function handleEdit(e) {
-    history.push('/recipes/edit/' + recipe.id);
-  }
-
-  function handleDelete(e) {
-    removeRecipe()
-      .then(() => {
-        showSuccessToast('Recipe has been removed');
-      })
-      .catch(err => console.log(err));
+    history.push(routes.EDIT_RECIPE + '/' + recipe.id);
   }
 }
 

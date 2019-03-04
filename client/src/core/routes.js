@@ -13,6 +13,8 @@ const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ 'profile/Pro
 const AddEditRecipe = lazy(() =>
   import(/* webpackChunkName: "AddEditRecipe" */ 'profile/components/recipes/AddEditRecipe')
 );
+const AboutUs = lazy(() => import(/* webpackChunkName: "AboutUs" */ 'aboutUs/AboutUsPage'));
+const Admin = lazy(() => import(/* webpackChunkName: "AboutUs" */ 'admin/AdminPage'));
 
 class Routes extends Component {
   render() {
@@ -23,6 +25,8 @@ class Routes extends Component {
           <PrivateRoute path={routes.PROFILE} component={Profile} />
           <Route exact={true} path={routes.FOODS} component={Foods} />
           <Route exact={true} path={routes.RECIPES} component={Recipes} />
+          <Route exact={true} path={routes.ABOUT_US} component={AboutUs} />
+          <PrivateRoute path={routes.ADMIN} component={Admin} admin={true} />
           <PrivateRoute
             exact={true}
             path={routes.ADD_RECIPE}
@@ -31,7 +35,7 @@ class Routes extends Component {
           <Route exact={true} path={routes.RECIPE_DETAILS} component={RecipeDetail} />
           <PrivateRoute
             exact={true}
-            path={routes.EDIT_RECIPE}
+            path={routes.EDIT_RECIPE_WITH_ID}
             component={() => <AddEditRecipe isNew={false} />}
           />
         </Switch>

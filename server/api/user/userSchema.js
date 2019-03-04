@@ -23,9 +23,14 @@ export const UserType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     userName: { type: GraphQLString },
     password: { type: GraphQLString },
-    firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
+    nick: { type: GraphQLString },
     email: { type: GraphQLString },
+    creationDate: {
+      type: GraphQLString,
+      resolve(parent, args) {
+        return parent.creationDate && parent.creationDate.toString();
+      }
+    },
     role: {
       type: RoleType,
       resolve(parent, args) {
@@ -113,8 +118,7 @@ export const MutationFields = {
   updateUser: {
     type: UserType,
     args: {
-      firstName: { type: GraphQLString },
-      lastName: { type: GraphQLString },
+      nick: { type: GraphQLString },
       email: { type: GraphQLString }
     },
     resolve: authenticated((parent, args, { user }) => {

@@ -19,6 +19,7 @@ import routes from '../_constants/routesConstants';
 import { landingStyles } from './styles';
 import { showSuccessToast } from '../_utils/toast';
 import { client } from 'index';
+import { ME_QUERY } from '_utils/verifyUser';
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -35,7 +36,17 @@ const LoginPage = ({ classes }) => {
     update: async (store, { data: { login } }) => {
       if (login) {
         await client.resetStore();
-        store.writeData({ data: { isAuthenticated: true, isAuthenticating: false } });
+        const {
+          data: { me }
+        } = await client.query({ query: ME_QUERY });
+
+        store.writeData({
+          data: {
+            isAuthenticated: true,
+            isAuthenticating: false,
+            user: { __typename: 'UserClient', userName: me.userName, role: me.role.id }
+          }
+        });
         history.push(history.location.state ? history.location.state.target.pathname : '/');
       }
     }

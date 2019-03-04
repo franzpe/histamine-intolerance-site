@@ -36,7 +36,7 @@ function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes
         {!isRatingLoading ? (
           (food.totalRating || food.totalRating === 0) && (
             <Rating
-              value={food.totalRating}
+              value={food.totalRating || 0}
               valueVariant="h6"
               percentageVariant="body2"
               isRatingAllowed={isAuthenticated && isRatingAllowed}

@@ -39,7 +39,7 @@ export const update = async (args, user) => {
   if (!validator.isEmail(args.email)) {
     throw new Error('Wrong email format');
   }
-  const updatedUser = await new User({ ...user, ...args }).save();
+  const updatedUser = await new User({ id: user.id, ...args }).save({}, { method: 'update' });
   return updatedUser.toJson();
 };
 
@@ -55,9 +55,9 @@ export const changePassword = async ({ oldPassword, newPassword }, user) => {
 export const post = async userArgs => {
   let user;
   try {
-    user = await new User({ ...userArgs, ...{ role: 'USR' } }).save();
+    user = await new User({ ...userArgs, role: 'USR', creationDate: new Date() }).save();
   } catch (err) {
-    throw new Error('User s takoutou emailovou adresou uz existuje');
+    throw new Error('Používateľ s takoutou emailovou adresou uz existuje');
   }
 
   let token;
@@ -94,30 +94,26 @@ export const facebookLogin = async (code, clientOrigin) => {
       response => {
         const { access_token } = response;
 
-        fb.api(
-          `/me?fields=id,email,first_name,last_name&access_token=${access_token}`,
-          async response => {
-            const { id } = response;
-            const user = await User.where({ userName: id }).fetch();
+        fb.api(`/me?fields=id,email,name&access_token=${access_token}`, async response => {
+          const { id } = response;
+          const user = await User.where({ userName: id }).fetch();
 
-            if (!user) {
-              const { email, first_name, last_name } = response;
-              const userArgs = {
-                userName: id,
-                email: email || `${first_name}${last_name}@facebook.com`,
-                firstName: first_name,
-                lastName: last_name,
-                password: 'ThisIsGonnaBeRandomStuff'
-              };
+          if (!user) {
+            const { email, name } = response;
+            const userArgs = {
+              userName: id,
+              email: email || `${name}@facebook.com`,
+              nick: name,
+              password: 'ThisIsGonnaBeRandomStuff'
+            };
 
-              const token = await post(userArgs);
-              resolve(token);
-            } else {
-              const token = signToken(user.toJSON().id);
-              resolve(token);
-            }
+            const token = await post(userArgs);
+            resolve(token);
+          } else {
+            const token = signToken(user.toJSON().id);
+            resolve(token);
           }
-        );
+        });
       }
     );
   });

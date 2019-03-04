@@ -58,14 +58,17 @@ TASKS BEFORE RELEASE:
     ✔ 51 - 100 - grenn[500 -> more percentage] @done(18-12-29 18:51)
   ✔ Facebook login @done(18-12-20 19:23)
     ✔ https://medium.com/techsource-pro/facebook-login-with-react-and-graphql-a128243dc841 @done(18-12-20 19:23)
-  ☐ Medium screens and down put navigation to hamburger with sections as well
-  
+  ✔ Medium screens and down put navigation to hamburger with sections as well @done(19-02-16 21:39)
+  ✘ Bottom right corner with fab button to contact me @cancelled(19-02-23 00:36)
+    ✘ use circular reveal to open the form @cancelled(19-02-23 00:36)
+  ✔ Login sidebar @done(19-02-22 21:49)
+
   RECIPES:
     ✘ show probability for user that recipe is suitable @cancelled(19-01-27 12:31)
       ✘ formula: sum user ratings of all recipe ingredients / ingredients count, if ingredient wasn't rated by the user, we can put there 0.5 rating to formula @cancelled(19-01-27 12:31)
       ✔ Show unsuitable ingredients count with a message s@done(19-01-27 12:31)
     ✔ if user is logged in and havent rated a food, show percantage @done(19-01-27 13:23)
-    ☐ pagination
+    ✔ pagination @done(19-02-13 23:39)
       https://material-ui.com/demos/tables/
         Custom Table Pagination Action type - |< < 4 > >|
     ☐ fast action add recipe 
@@ -73,7 +76,7 @@ TASKS BEFORE RELEASE:
     ✔ upload picture @done(19-01-23 15:50)
       https://www.youtube.com/watch?v=22S5P_d55dM
       ✔ fit the picture to card media @done(19-01-23 15:50)
-    ✔ click on image opens its details @done(19-02-12 18:52)
+    ✔ click on image opens its details @done(19-02-12 18:52) 
 
   GROCERIES: 
     ✔ design @done(19-02-13 14:42)
@@ -84,7 +87,6 @@ TASKS BEFORE RELEASE:
       ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
-    
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
@@ -100,7 +102,8 @@ TASKS BEFORE RELEASE:
           ✔ Maybe after launch if users are going to put there empty or funky stuff @done(19-01-27 07:46)
         ✔ short description validation 50 chars @done(19-01-27 07:45)
       ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
-  
+    ☐ remove firstname and lastname from profile and add nick
+
   BACKEND:
     ✔ redirect uri in facebook login @done(19-02-12 20:34)
     ✔ rating formula recipes @done(19-01-25 16:50)
@@ -113,9 +116,10 @@ TASKS BEFORE RELEASE:
     ✔ update picture @done(19-01-23 15:49)
     ✔ get picture @done(19-01-23 15:49)
     ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
-    ☐ If using heroku hosting, propably not gonna be the case
-      ☐ images upload on heroku solve
-
+    ✘ If using heroku hosting, propably not gonna be the case @cancelled(19-02-16 19:22)
+      ✘ images upload on heroku solve @cancelled(19-02-16 19:22)
+    ☐ remove firstname and lastname and add nick column in db
+    
   MISCELLANEOUS:
     ✔ refetch recipe queries after login @done(19-01-27 08:44)
     ✔ migrate from apollo boost @done(18-12-29 14:34)
@@ -124,13 +128,15 @@ TASKS BEFORE RELEASE:
     ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
     ✔ website title head @done(19-02-12 20:47)
     ☐ fill the metadata with helmet
-    ☐ favicon
-    ☐ try rosti.cz hosting
+    ✔ favicon @done(19-02-15 20:25)
+    ✔ try rosti.cz hosting @done(19-02-16 23:53)
       ✔ nahodena appka na ich hostingu @done(19-02-13 15:30)
       ✔ nahodena databaza @done(19-02-13 15:46)
-      ☐ testovanie
+      ✔ testovanie @done(19-02-16 23:53)
+      ✔ facebook enviroment variables @done(19-02-18 23:42)
     
 TASKS AFTER RELEASE: 
+  ☐ build pipeline
   ☐ Change all db tables to InnoDB engine see example down
   ☐ consider data loader implementation on server 
   ☐ Trend implementation
@@ -140,6 +146,8 @@ TASKS AFTER RELEASE:
   ☐ pink color refers to unsuitability in recipes, consider using red
   ☐ remove "You are not authenticated!" error
   ☐ recipes filtering
+  ✔ pimp favicon @done(19-02-15 20:38)
+  ☐ seo optimalization
 
 FEATURE:
   ☐ Share recipe on facebook - maybe directly to the histamin group
@@ -182,3 +190,6 @@ HEROKU:
   heroku open - opens the app 
   heroku local web - run the app locally
   heroku run bash
+
+ROSTI:
+  bezhistaminovo-3353.rostiapp.cz

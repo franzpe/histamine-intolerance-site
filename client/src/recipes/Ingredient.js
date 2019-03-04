@@ -47,7 +47,7 @@ function IngredientRating({ classes, totalRating }) {
         <Rating
           valueClassName={classes.rating}
           percentageClassName={classNames(classes.rating, classes.percentageSize)}
-          value={totalRating}
+          value={totalRating || 0}
         />
       </span>
     </Tooltip>

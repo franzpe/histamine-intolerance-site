@@ -1,14 +1,6 @@
 import React, { memo, Fragment, useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
-import {
-  withStyles,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardMedia
-} from '@material-ui/core';
+import { withStyles, Grid, Card, CardContent, Typography, CardMedia } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import { recipeThumbnail } from './recipeThumbnail';
@@ -18,6 +10,7 @@ import { RECIPE_QUERY } from 'profile/components/recipes/AddEditRecipe';
 import Ingredient from './Ingredient';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 import { showSuccessToast, showErrorToast } from '_utils/toast';
+import BackBtn from '_components/buttons/BackBtn';
 
 const RATE_RECIPE_MUTATION = gql`
   mutation rateRecipe($recipeId: Int!, $value: Int!) {
@@ -41,18 +34,14 @@ const styles = theme => ({
   foods: {
     padding: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`,
     [theme.breakpoints.down('sm')]: {
-      padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px ${
-        theme.spacing.unit
-      }px ${theme.spacing.unit * 3}px`
+      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit *
+        2}px`
     }
   },
   backWrapper: {
     marginTop: theme.spacing.unit * 3,
     width: '100%',
     textAlign: 'center'
-  },
-  back: {
-    padding: `0 ${theme.spacing.unit * 5}px`
   },
   upRatingButton: {
     top: '6px',
@@ -148,14 +137,7 @@ function RecipeDetail({ classes, match }) {
         </CardContent>
       </Card>
       <div className={classes.backWrapper}>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => history.push('/')}
-          className={classes.back}
-        >
-          Späť
-        </Button>
+        <BackBtn onClick={() => history.push('/')}>Späť</BackBtn>
       </div>
     </Fragment>
   );
