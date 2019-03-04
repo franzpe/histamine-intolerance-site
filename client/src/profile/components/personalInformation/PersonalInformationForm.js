@@ -83,18 +83,16 @@ const USER_INFORMATION_QUERY = gql`
   {
     me {
       email
-      firstName
-      lastName
+      nick
     }
   }
 `;
 
 const UPDATE_USER_MUTATION = gql`
-  mutation updateUser($contactEmail: String, $firstName: String, $lastName: String) {
-    updateUser(email: $contactEmail, firstName: $firstName, lastName: $lastName) {
+  mutation updateUser($contactEmail: String, $nick: String) {
+    updateUser(email: $contactEmail, nick: $nick) {
       email
-      firstName
-      lastName
+      nick
     }
   }
 `;
@@ -105,8 +103,7 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
     isContactEmailEditable: false,
     isSaving: false,
     contactEmail: userInformation.me.email,
-    firstName: userInformation.me.firstName || '',
-    lastName: userInformation.me.lastName || ''
+    nick: userInformation.me.nick || ''
   });
   const updateMutation = useMutation(UPDATE_USER_MUTATION);
 
@@ -162,28 +159,15 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
         <Grid container={true}>
           <Grid item={true} xs={12} sm={12} md={6} className={classes.rGridPadding}>
             <TextField
-              name="firstName"
-              label="Meno"
+              name="nick"
+              label="Nick"
               fullWidth={true}
-              value={informationForm.firstName}
+              value={informationForm.nick}
               onChange={handleInputChange}
               InputLabelProps={{
                 shrink: true
               }}
               className={classes.textFieldMargin}
-              placeholder="Píš sem"
-            />
-          </Grid>
-          <Grid item={true} xs={12} sm={12} md={6} className={classes.lGridPadding}>
-            <TextField
-              name="lastName"
-              label="Priezvisko"
-              fullWidth={true}
-              value={informationForm.lastName}
-              onChange={handleInputChange}
-              InputLabelProps={{
-                shrink: true
-              }}
               placeholder="Píš sem"
             />
           </Grid>

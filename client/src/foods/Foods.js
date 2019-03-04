@@ -30,13 +30,13 @@ const columns = [
   },
   {
     id: 'histamineLevel',
-    numeric: true,
+    numeric: false,
     label: 'Úroveň histamínu',
     styles: () => ({ column: { minWidth: '210px' } })
   },
   {
     id: 'totalRating',
-    numeric: true,
+    numeric: false,
     label: 'Znášanlivosť (% ľudí)',
     styles: () => ({ column: { minWidth: '150px' } })
   },
