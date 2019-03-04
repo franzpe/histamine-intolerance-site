@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec BLUEBIRD_W_FORGOTTEN_RETURN=0 babel-node index.js",
+    "prebuild-server": "node scripts/preBuildServer.js",
     "build-server": "babel index.js -d build && babel server -d build/server",
     "postbuild-server": "node scripts/postBuildServer.js",
     "build-client": "cd client && npm run build",
