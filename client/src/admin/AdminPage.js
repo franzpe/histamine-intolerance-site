@@ -55,7 +55,7 @@ const ADD_FOOD = gql`
 const initialSelectedFoodState = {
   id: 0,
   name: '',
-  histamineLevel: 1,
+  histamineLevel: 0,
   description: ''
 };
 
@@ -187,6 +187,7 @@ function AdminPage({ classes }) {
       addFood()
         .then(res => {
           showSuccessToast('Potravina bola pridana');
+          setSelectedFood(initialSelectedFoodState);
         })
         .catch(err => showErrorToast('Nastala chyba! Potravina nebola pridana'));
     } else {

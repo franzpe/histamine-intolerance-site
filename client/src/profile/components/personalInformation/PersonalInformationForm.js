@@ -184,7 +184,10 @@ function PersonalInformationForm({ classes, toggleChangePasswordForm }) {
   function handleSubmit(e) {
     e.preventDefault();
     setInformationForm({ ...informationForm, isSaving: true });
-    updateMutation({ variables: informationForm })
+    updateMutation({
+      variables: informationForm,
+      refetchQueries: [{ query: USER_INFORMATION_QUERY }]
+    })
       .then(() => {
         showSuccessToast('Your data has been saved');
         setInformationForm({ ...informationForm, isSaving: false });

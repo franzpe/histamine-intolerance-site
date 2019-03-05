@@ -71,7 +71,6 @@ TASKS BEFORE RELEASE:
     ✔ pagination @done(19-02-13 23:39)
       https://material-ui.com/demos/tables/
         Custom Table Pagination Action type - |< < 4 > >|
-    ☐ fast action add recipe 
     ✔ after recipe update, the user recipes list is updated but, when u go back to details update is not saved @done(19-01-23 15:50)
     ✔ upload picture @done(19-01-23 15:50)
       https://www.youtube.com/watch?v=22S5P_d55dM
@@ -102,8 +101,9 @@ TASKS BEFORE RELEASE:
           ✔ Maybe after launch if users are going to put there empty or funky stuff @done(19-01-27 07:46)
         ✔ short description validation 50 chars @done(19-01-27 07:45)
       ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
-    ☐ remove firstname and lastname from profile and add nick
-
+    ✔ remove firstname and lastname from profile and add nick @done(19-03-04 22:38)
+    ✔ when nick is updated and redirected somewhere else it disappears from frontend, in db is updated and after refresh it's shown @done(19-03-05 13:10)
+    
   BACKEND:
     ✔ redirect uri in facebook login @done(19-02-12 20:34)
     ✔ rating formula recipes @done(19-01-25 16:50)
@@ -118,78 +118,79 @@ TASKS BEFORE RELEASE:
     ✔ routing needs to allow any url not only root @done(19-02-12 20:15)
     ✘ If using heroku hosting, propably not gonna be the case @cancelled(19-02-16 19:22)
       ✘ images upload on heroku solve @cancelled(19-02-16 19:22)
-    ☐ remove firstname and lastname and add nick column in db
-    
-  MISCELLANEOUS:
-    ✔ refetch recipe queries after login @done(19-01-27 08:44)
-    ✔ migrate from apollo boost @done(18-12-29 14:34)
-    ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
-      ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
-    ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
-    ✔ website title head @done(19-02-12 20:47)
-    ☐ fill the metadata with helmet
-    ✔ favicon @done(19-02-15 20:25)
-    ✔ try rosti.cz hosting @done(19-02-16 23:53)
-      ✔ nahodena appka na ich hostingu @done(19-02-13 15:30)
-      ✔ nahodena databaza @done(19-02-13 15:46)
-      ✔ testovanie @done(19-02-16 23:53)
-      ✔ facebook enviroment variables @done(19-02-18 23:42)
-    
-TASKS AFTER RELEASE: 
-  ☐ build pipeline
-  ☐ Change all db tables to InnoDB engine see example down
-  ☐ consider data loader implementation on server 
-  ☐ Trend implementation
-  ☐ Trend - text-overflow: elipsess
-  ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
-  ☐ contact email transition into text field, needs to remain the same width
-  ☐ pink color refers to unsuitability in recipes, consider using red
-  ☐ remove "You are not authenticated!" error
-  ☐ recipes filtering
-  ✔ pimp favicon @done(19-02-15 20:38)
-  ☐ seo optimalization
+    ✔ remove firstname and lastname and add nick column in db @done(19-03-04 22:38)
+    ✔ Delete recipe doesnt delete records from userrecipe @done(19-03-05 13:33)
 
-FEATURE:
-  ☐ Share recipe on facebook - maybe directly to the histamin group
-  ✔ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost @done(19-01-27 08:56)
-    ✔ recept ma rating @done(19-01-27 08:56)
-  ✔ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat @done(19-01-27 12:30)
+    MISCELLANEOUS:
+      ✔ refetch recipe queries after login @done(19-01-27 08:44)
+      ✔ migrate from apollo boost @done(18-12-29 14:34)
+      ✔ reset auth header after the client logs in for apollo client @done(18-12-29 14:35)
+        ✔ fixed by migrating from apollo boost and using auth middleware @done(18-12-29 14:35)
+      ✔ reroute after login to previous page the user was on not the root route @done(19-01-08 16:04)
+      ✔ website title head @done(19-02-12 20:47)
+      ✔ fill the metadata with helmet @done(19-03-05 13:52)
+      ✔ favicon @done(19-02-15 20:25)
+      ✔ try rosti.cz hosting @done(19-02-16 23:53)
+        ✔ nahodena appka na ich hostingu @done(19-02-13 15:30)
+        ✔ nahodena databaza @done(19-02-13 15:46)
+        ✔ testovanie @done(19-02-16 23:53)
+        ✔ facebook enviroment variables @done(19-02-18 23:42)
+      
+  TASKS AFTER RELEASE: 
+    ☐ build pipeline
+    ☐ Change all db tables to InnoDB engine see example down
+    ☐ consider data loader implementation on server 
+    ☐ Trend implementation
+    ☐ Trend - text-overflow: elipsess
+    ☐ Refactoring components where passing queries which doesnt needs to be passed - use Refetch queries on mutation
+    ☐ contact email transition into text field, needs to remain the same width
+    ☐ pink color refers to unsuitability in recipes, consider using red
+    ☐ remove "You are not authenticated!" error
+    ☐ recipes filtering
+    ✔ pimp favicon @done(19-02-15 20:38)
+    ☐ seo optimalization
+    ☐ fast action add recipe 
 
-notes:
-  MULTIPLE LINES WRAP:
-  https://stackoverflow.com/questions/7993067/text-overflow-ellipsis-not-working
-  GRAPHQL GENERATOR:
-    https://github.com/dotansimha/graphql-code-generator
-
-  ENGINE=InnoDB pouzivat v Mysql
-  example:
-    CREATE TABLE NameSubject (
-      Autonumber INT NOT NULL AUTO_INCREMENT,
-      NameorSubject nvarchar(255),
-      PRIMARY KEY (Autonumber)
-    ) ENGINE=InnoDB;
-
-data loader :
-  https://github.com/gajus/gajus.com-blog/blob/master/posts/using-dataloader-to-batch-requests/index.md
-
-
-GIT: 
-  git checkout -b [name_of_your_new_branch] - creates a new branch
-  git checkout [name_of_your_branch] - switch branches
-  git branch - show branches and active one
-  git merge [name_of_branch] - merge branch to active one
-  git push heroku master - deploy master branch to heroku
-  git subtree push --prefix [folder] heroku master - deploy to heroku certain folder
-  git fetch --all --prune - updates all branges
-  git pull origin master - grab all content 
-
-HEROKU:
-  heroku login
-  heroku git:remote -a bezhistaminovo - add a remote
-  heroku ps - show running dynos
-  heroku open - opens the app 
-  heroku local web - run the app locally
-  heroku run bash
-
-ROSTI:
-  bezhistaminovo-3353.rostiapp.cz
+  FEATURE:
+    ☐ Share recipe on facebook - maybe directly to the histamin group
+    ✔ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost @done(19-01-27 08:56)
+      ✔ recept ma rating @done(19-01-27 08:56)
+    ✔ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat @done(19-01-27 12:30)
+  
+  notes:
+    MULTIPLE LINES WRAP:
+    https://stackoverflow.com/questions/7993067/text-overflow-ellipsis-not-working
+    GRAPHQL GENERATOR:
+      https://github.com/dotansimha/graphql-code-generator
+  
+    ENGINE=InnoDB pouzivat v Mysql
+    example:
+      CREATE TABLE NameSubject (
+        Autonumber INT NOT NULL AUTO_INCREMENT,
+        NameorSubject nvarchar(255),
+        PRIMARY KEY (Autonumber)
+      ) ENGINE=InnoDB;
+  
+  data loader :
+    https://github.com/gajus/gajus.com-blog/blob/master/posts/using-dataloader-to-batch-requests/index.md
+  
+  
+  GIT: 
+    git checkout -b [name_of_your_new_branch] - creates a new branch
+    git checkout [name_of_your_branch] - switch branches
+    git branch - show branches and active one
+    git merge [name_of_branch] - merge branch to active one
+    git push heroku master - deploy master branch to heroku
+    git subtree push --prefix [folder] heroku master - deploy to heroku certain folder
+    git fetch --all --prune - updates all branges
+    git pull origin master - grab all content 
+  
+  HEROKU:
+    heroku login
+    heroku git:remote -a bezhistaminovo - add a remote
+    heroku ps - show running dynos
+    heroku open - opens the app 
+    heroku local web - run the app locally
+    heroku run bash
+  
+  

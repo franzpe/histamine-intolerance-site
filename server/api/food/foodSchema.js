@@ -22,7 +22,7 @@ const FoodTypeFields = {
   histamineLevel: {
     type: HistamineLevelType,
     resolve(parent) {
-      return parent.histamineLevel && histamineLevelController.getOne(parent.histamineLevel);
+      return histamineLevelController.getOne(parent.histamineLevel);
     }
   },
   totalRating: {

@@ -34,7 +34,7 @@ export const USER_RECIPES_QUERY = gql`
       recipes {
         id
         name
-        rating
+        totalRating
       }
     }
   }

@@ -29,7 +29,7 @@ function UserRecipeTableRow({ classes, recipe, onDeleteRecipe }) {
     <TableRow>
       <TableCell>{recipe.name}</TableCell>
       <TableCell>
-        <Rating value={recipe.rating || 0} valueVariant="h6" percentageVariant="body2" />
+        <Rating value={recipe.totalRating || 0} valueVariant="h6" percentageVariant="body2" />
       </TableCell>
       <TableCell className={classes.actionsTableCell}>
         <div className={classes.actions}>
