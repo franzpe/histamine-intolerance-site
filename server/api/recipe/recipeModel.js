@@ -1,6 +1,7 @@
 import db from '../../utils/dbConnection';
 import Picture from '../picture/pictureModel';
 import RecipeFoods from './recipeFoodsModel';
+import UserRecipes from '../user/userRecipesModel';
 
 import bookshelfInstance from '../../utils/dbConnection';
 
@@ -32,17 +33,26 @@ class Recipe extends db.Model {
 
   async destroy() {
     await bookshelfInstance.transaction(async t => {
+      const recipeId = this.get('id');
+
       if (this.get('pictureId')) {
         await this.picture()
           .where({ id: this.get('pictureId') })
           .destroy({ transacting: t, required: false });
       }
 
-      const foods = await RecipeFoods.where({ recipeId: this.get('id') }).fetchAll();
+      const foods = await RecipeFoods.where({ recipeId }).fetchAll();
       const foodsCount = Object.keys(foods.toJSON()).length;
 
       if (foodsCount > 0) {
-        await RecipeFoods.where({ recipeId: this.get('id') }).destroy();
+        await RecipeFoods.where({ recipeId }).destroy();
+      }
+
+      const userRecipes = await UserRecipes.where({ recipeId }).fetchAll();
+      const userRecipesCount = Object.keys(userRecipes.toJSON()).length;
+
+      if (userRecipesCount > 0) {
+        await UserRecipes.where({ recipeId }).destroy();
       }
 
       await bookshelfInstance.Model.prototype.destroy.apply(this, { transaction: t });
