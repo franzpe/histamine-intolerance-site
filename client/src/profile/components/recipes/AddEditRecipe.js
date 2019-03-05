@@ -26,6 +26,7 @@ import { showErrorToast, showSuccessToast } from '_utils/toast';
 import { USER_RECIPES_QUERY } from './UserRecipesTable';
 import DropzoneField from '_components/DropzoneField';
 import BackBtn from '_components/buttons/BackBtn';
+import { RECIPES_QUERY } from 'recipes/RecipesPage';
 
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
 const acceptedFileTypesArray = acceptedFileTypes.split(',').map(item => item.trim());
@@ -365,7 +366,7 @@ function AddEditRecipe({
       picture: form.picture,
       description: form.description
     },
-    refetchQueries: [{ query: USER_RECIPES_QUERY }]
+    refetchQueries: [{ query: USER_RECIPES_QUERY }, { query: RECIPES_QUERY }]
   });
 
   if (!isNew) {
@@ -380,7 +381,8 @@ function AddEditRecipe({
       },
       refetchQueries: [
         { query: USER_RECIPES_QUERY },
-        { query: RECIPE_QUERY, variables: { id: recipe.id } }
+        { query: RECIPE_QUERY, variables: { id: recipe.id } },
+        { query: RECIPES_QUERY }
       ]
     });
   }
