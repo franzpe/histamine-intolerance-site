@@ -30,7 +30,7 @@ function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes
     <TableRow>
       <TableCell>{food.name}</TableCell>
       <TableCell>
-        {food.histamineLevel.value - 1} - {food.histamineLevel.name}
+        {food.histamineLevel.value} - {food.histamineLevel.name}
       </TableCell>
       <TableCell className={classes.ratingCell}>
         {!isRatingLoading ? (

@@ -1156,7 +1156,7 @@ TASKS BEFORE RELEASE:
           ✔ short description validation 50 chars @done(19-01-27 07:45)
         ✔ FE validation of ingrediences primary key @done(19-01-25 08:54)
       ✔ remove firstname and lastname from profile and add nick @done(19-03-04 22:38)
-      ☐ when nick is updated and redirected somewhere else it disappears from frontend, in db is updated and after refresh it's shown
+      ✔ when nick is updated and redirected somewhere else it disappears from frontend, in db is updated and after refresh it's shown @done(19-03-05 12:33)
       
     BACKEND:
       ✔ redirect uri in facebook login @done(19-02-12 20:34)
@@ -1173,6 +1173,7 @@ TASKS BEFORE RELEASE:
       ✘ If using heroku hosting, propably not gonna be the case @cancelled(19-02-16 19:22)
         ✘ images upload on heroku solve @cancelled(19-02-16 19:22)
       ✔ remove firstname and lastname and add nick column in db @done(19-03-04 22:38)
+      ☐ when deleting recipe, records needs to be deleted from UserRecipes as well
       
     MISCELLANEOUS:
       ✔ refetch recipe queries after login @done(19-01-27 08:44)
