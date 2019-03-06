@@ -79,7 +79,6 @@ function Rating({
     [classes.ratingMedium]: value >= 0.49 && value <= 0.51,
     [classes.ratingHigh]: value > 0.51
   });
-
   return (
     <Fragment>
       {isRatingAllowed && (
@@ -92,20 +91,24 @@ function Rating({
           <UpIcon className={upRatingButtonClasses} onClick={() => onRateClick(1)} />
         </Tooltip>
       )}
-      <Typography
-        variant={valueVariant}
-        component="span"
-        className={classNames(ratingClasses, valueClassName)}
-      >
-        {Math.round(value * 10000) / 100}
-      </Typography>
-      <Typography
-        variant={percentageVariant}
-        component="span"
-        className={classNames(ratingClasses, percentageClassName)}
-      >
-        %
-      </Typography>
+      {typeof value !== 'object' && (
+        <Fragment>
+          <Typography
+            variant={valueVariant}
+            component="span"
+            className={classNames(ratingClasses, valueClassName)}
+          >
+            {Math.round(value * 10000) / 100}
+          </Typography>
+          <Typography
+            variant={percentageVariant}
+            component="span"
+            className={classNames(ratingClasses, percentageClassName)}
+          >
+            %
+          </Typography>
+        </Fragment>
+      )}
       {isRatingAllowed && (
         <Tooltip
           enterDelay={500}
@@ -121,7 +124,7 @@ function Rating({
 }
 
 Rating.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
   class: PropTypes.string,
   isRatingAllowed: PropTypes.bool,
   showTooltips: PropTypes.bool,
