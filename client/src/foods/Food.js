@@ -34,17 +34,15 @@ function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes
       </TableCell>
       <TableCell className={classes.ratingCell}>
         {!isRatingLoading ? (
-          (food.totalRating || food.totalRating === 0) && (
-            <Rating
-              value={food.totalRating || 0}
-              valueVariant="h6"
-              percentageVariant="body2"
-              isRatingAllowed={isAuthenticated && isRatingAllowed}
-              onRateClick={handleRateClick}
-              upRatingButtonUnavailable={!myFoodsQuery.loading && myFood && myFood.myRating === 1}
-              downRatingButtonUnavailable={!myFoodsQuery.loading && myFood && myFood.myRating === 0}
-            />
-          )
+          <Rating
+            value={food.totalRating}
+            valueVariant="h6"
+            percentageVariant="body2"
+            isRatingAllowed={isAuthenticated && isRatingAllowed}
+            onRateClick={handleRateClick}
+            upRatingButtonUnavailable={!myFoodsQuery.loading && myFood && myFood.myRating === 1}
+            downRatingButtonUnavailable={!myFoodsQuery.loading && myFood && myFood.myRating === 0}
+          />
         ) : (
           <CircularProgress size={24} thickness={6} color="primary" />
         )}

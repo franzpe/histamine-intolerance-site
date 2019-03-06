@@ -86,6 +86,7 @@ TASKS BEFORE RELEASE:
       ✔ add concrete route @done(19-01-25 09:02)
     ☐ fill the list from swiss list
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
+    ✔ when food has no rating, rating buttons are not shown @done(19-03-06 17:13)
 
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
@@ -137,6 +138,7 @@ TASKS BEFORE RELEASE:
         ✔ facebook enviroment variables @done(19-02-18 23:42)
       
   TASKS AFTER RELEASE: 
+    ☐ recipe rating in cards put to stars to the bottom of the cards
     ☐ build pipeline
     ☐ Change all db tables to InnoDB engine see example down
     ☐ consider data loader implementation on server 
