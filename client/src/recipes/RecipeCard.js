@@ -7,14 +7,15 @@ import {
   Typography,
   CardActions,
   Button,
-  CardMedia
+  CardMedia,
+  Tooltip
 } from '@material-ui/core';
 import classNames from 'classnames';
 
 import history from '../_utils/history';
 import routes from '../_constants/routesConstants';
 import { recipeThumbnail } from './recipeThumbnail';
-import Rating from '_components/Rating';
+import StarRating from '_components/StarRating';
 
 const styles = theme => ({
   recipeGrid: {
@@ -37,14 +38,6 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0 `,
     cursor: 'pointer'
   },
-  ratingContainer: {
-    display: 'inline-block',
-    position: 'absolute',
-    right: '0px',
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    borderBottomLeftRadius: '25px',
-    padding: '0 4px 2px 10px'
-  },
   greenBackground: {
     backgroundColor: 'rgb(56,142,60,0.8)'
   },
@@ -53,6 +46,9 @@ const styles = theme => ({
   },
   redBackground: {
     backgroundColor: 'rgb(245,0,87,0.8)'
+  },
+  cardFooter: {
+    justifyContent: 'space-between'
   }
 });
 
@@ -107,16 +103,13 @@ function RecipeCard({ classes, recipe, isAuthenticated }) {
             </Typography>
           )}
         </CardMedia>
-        <div className={classes.ratingContainer}>
-          <Rating value={recipe.totalRating || 0} valueVariant="h5" percentageVariant="body1" />
-        </div>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom={true} variant="h5" component="h6">
             {recipe.name}
           </Typography>
           <Typography gutterBottom={true}>{recipe.description}</Typography>
         </CardContent>
-        <CardActions>
+        <CardActions className={classes.cardFooter}>
           <Button
             size="small"
             comolr="primary"
@@ -124,6 +117,15 @@ function RecipeCard({ classes, recipe, isAuthenticated }) {
           >
             Pozrieť
           </Button>
+          <Tooltip
+            enterDelay={500}
+            leaveDelay={200}
+            title={Math.round(recipe.totalRating * 10000) / 100 + '%'}
+          >
+            <div style={{ float: 'right' }}>
+              <StarRating value={recipe.totalRating} />
+            </div>
+          </Tooltip>
         </CardActions>
       </Card>
     </Grid>
