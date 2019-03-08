@@ -6,6 +6,7 @@ import { UnitType } from '../unit/unitSchema';
 import * as histamineLevelController from '../histamineLevel/histamineLevelController';
 import * as foodController from './foodController';
 import * as userController from '../user/userController';
+import { PaginationWithSortArgs } from '../common/SchemaTypes';
 
 const {
   GraphQLObjectType,
@@ -79,6 +80,13 @@ export const QueryFields = {
     type: new GraphQLList(FoodType),
     resolve() {
       return foodController.getAll();
+    }
+  },
+  someFoods: {
+    type: new GraphQLList(FoodType),
+    args: PaginationWithSortArgs,
+    resolve(_, { first, after, orderBy, order }) {
+      return foodController.getSome(first, after, orderBy, order);
     }
   }
 };

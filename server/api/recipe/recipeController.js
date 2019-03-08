@@ -23,6 +23,11 @@ export const getAll = async () => {
   return recipes.toJSON();
 };
 
+export const getSome = async (first, after) => {
+  const recipes = await Recipe.query(qb => qb.limit(first).offset(after * first)).fetchAll();
+  return recipes.toJSON();
+};
+
 export const getUserRecipes = async userId => {
   const recipes = await Recipe.where({ creatorId: userId }).fetchAll();
   return recipes.toJSON();
