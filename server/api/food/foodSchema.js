@@ -80,6 +80,16 @@ export const QueryFields = {
     resolve() {
       return foodController.getAll();
     }
+  },
+  someFoods: {
+    type: new GraphQLList(FoodType),
+    args: {
+      first: { type: GraphQLInt },
+      after: { type: GraphQLInt }
+    },
+    resolve(_, { first, after }) {
+      return foodController.getSome(first, after);
+    }
   }
 };
 

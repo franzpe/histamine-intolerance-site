@@ -18,6 +18,11 @@ export const getAll = async () => {
   return foods.toJSON();
 };
 
+export const getSome = async (first, after) => {
+  const foods = await Food.query(qb => qb.limit(first).offset(after * first)).fetchAll();
+  return foods.toJSON();
+};
+
 export const add = async foodProps => {
   const food = await new Food(foodProps).save();
   return food.toJSON();
