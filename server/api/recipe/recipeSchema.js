@@ -8,6 +8,7 @@ import { UserType } from '../user/userSchema';
 import { FoodExtendedType } from '../food/foodSchema';
 import { authenticated } from '../../auth/auth';
 import { PictureType } from '../picture/pictureSchema';
+import { PaginationArgs } from '../common/SchemaTypes';
 
 const {
   GraphQLObjectType,
@@ -84,6 +85,13 @@ export const QueryFields = {
     type: new GraphQLList(RecipeType),
     resolve() {
       return recipeController.getAll();
+    }
+  },
+  someRecipes: {
+    type: new GraphQLList(RecipeType),
+    args: PaginationArgs,
+    resolve(_, { first, after }) {
+      return recipeController.getSome(first, after);
     }
   }
 };
