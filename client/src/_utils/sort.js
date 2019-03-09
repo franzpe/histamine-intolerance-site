@@ -32,5 +32,6 @@ export function stableSort(array, cmp) {
 
     return a[1] - b[1];
   });
+
   return stabilizedThis.map(el => el[0]);
 }

@@ -64,7 +64,7 @@ function AboutPage({ classes }) {
           </Typography>
         </div>
         <Typography component="div" variant="body1" align="justify" gutterBottom={true}>
-          <SemiBold>Zoznam potravín</SemiBold> je presnou kópiou&nbsp;
+          <SemiBold>Zoznam potravín</SemiBold> vychádza zo&nbsp;
           <a
             href="https://www.mastzellaktivierung.info/en/downloads.html#lm_sk"
             target="_blank"

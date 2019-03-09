@@ -5,7 +5,7 @@ import { Button, withStyles, Tooltip } from '@material-ui/core';
 import GoodMoodIcon from '@material-ui/icons/Mood';
 import BadMoodIcon from '@material-ui/icons/MoodBad';
 
-import Foods from 'foods/Foods';
+import Foods from 'foods/FoodsTable';
 
 const styles = theme => ({
   btnContainer: {

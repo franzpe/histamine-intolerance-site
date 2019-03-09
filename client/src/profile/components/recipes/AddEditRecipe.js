@@ -15,7 +15,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import classNames from 'classnames';
 
-import { FOODS_QUERY } from 'foods/FoodsPage';
+import { FOODS_QUERY } from 'foods/Foods';
 import SaveBtn from '_components/buttons/SaveBtn';
 import SelectField from '_components/SelectField';
 import Rating from '_components/Rating';
