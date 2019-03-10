@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
@@ -30,6 +31,13 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 3}px 0`
     }
+  },
+  fallback: {
+    width: '100%',
+    height: '600px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
@@ -41,7 +49,15 @@ class App extends Component {
       <div className={classes.app}>
         <Header />
         <div className={classes.content}>
-          <Routes />
+          <Suspense
+            fallback={
+              <div className={classes.fallback}>
+                <CircularProgress size={56} thickness={3} color="primary" />
+              </div>
+            }
+          >
+            <Routes />
+          </Suspense>
         </div>
         <Footer />
       </div>

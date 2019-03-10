@@ -128,7 +128,11 @@ function useRecipeForm(initialFormState) {
       }
       case recipeFormActions.ADD_INGREDIENT: {
         const ingredients = state.ingredients.slice();
-        ingredients[ingredients.length - 1] = { id: 1, quantity: 10, unit: 'kg' };
+        ingredients[ingredients.length - 1] = {
+          id: action.payload.food.id,
+          quantity: 10,
+          unit: 'kg'
+        };
 
         return {
           ...state,
@@ -633,7 +637,8 @@ function AddEditRecipe({
 
   function handleAddIngredient() {
     dispatch({
-      type: recipeFormActions.ADD_INGREDIENT
+      type: recipeFormActions.ADD_INGREDIENT,
+      payload: { food: foods[0] }
     });
   }
 
