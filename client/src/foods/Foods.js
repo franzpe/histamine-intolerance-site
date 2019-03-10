@@ -1,101 +1,57 @@
-import React, { useState, memo } from 'react';
-import { withStyles, Table, TableBody } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 
-import Food from './Food';
-import EnhancedTableHead from '../_components/tables/EnhancedTableHead';
-import { stableSort, getSorting } from '_utils/sort';
+import FoodsTable from './FoodsTable';
 
-const styles = theme => ({});
-
-const USER_FOODS_QUERY = gql`
+export const FOODS_QUERY = gql`
   {
-    me {
-      foods {
-        id
-        myRating
+    foods {
+      id
+      name
+      histamineLevel {
+        value
+        name
       }
+      totalRating
+      description
     }
   }
 `;
 
-const columns = [
-  {
-    id: 'name',
-    numeric: false,
-    label: 'Názov',
-    styles: () => ({ column: { width: '450px', minWidth: '235px' } })
-  },
-  {
-    id: 'histamineLevel',
-    numeric: false,
-    label: 'Úroveň histamínu',
-    styles: () => ({ column: { minWidth: '210px' } })
-  },
-  {
-    id: 'totalRating',
-    numeric: false,
-    label: 'Znášanlivosť (% ľudí)',
-    styles: () => ({ column: { minWidth: '150px' } })
-  },
-  {
-    id: 'description',
-    numeric: false,
-    label: 'Poznámky',
-    styles: () => ({ column: { minWidth: '210px' } })
-  }
-];
+const Foods = props => {
+  const foodsQuery = useQuery(FOODS_QUERY);
+  const [after, setAfter] = useState(1);
 
-function Foods({ foods, foodsQuery, isRatingAllowed }) {
-  const userFoodsQuery = useQuery(USER_FOODS_QUERY);
-  const [orderState, setOrderState] = useState({
-    order: 'asc',
-    orderBy: 'name'
+  useEffect(() => {
+    const listener = () => {
+      if (window.scrollY > document.body.offsetHeight - window.outerHeight - 300) {
+        setAfter(after + 1);
+      } else if (after > Math.ceil(foodsQuery.data.foods / 20) + 2) {
+        window.removeEventListener('scroll', listener, false);
+      }
+    };
+
+    window.addEventListener('scroll', listener, false);
+
+    return () => {
+      window.removeEventListener('scroll', listener, false);
+    };
   });
 
   return (
-    <Table>
-      <EnhancedTableHead
-        columns={columns}
-        orderBy={orderState.orderBy}
-        order={orderState.order}
-        onRequestSort={handleSortRequest}
-      />
-      <TableBody>
-        {stableSort(foods, getSorting(orderState.order, orderState.orderBy)).map((food, index) => (
-          <Food
-            food={food}
-            key={index}
-            foodsQuery={foodsQuery}
-            myFoodsQuery={userFoodsQuery}
-            isRatingAllowed={isRatingAllowed}
-            myFood={
-              userFoodsQuery.data.me && userFoodsQuery.data.me.foods.find(f => f.id === food.id)
-            }
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <FoodsTable
+      isRatingAllowed={true}
+      foods={foodsQuery.data.foods
+        .sort(function(a, b) {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        })
+        .slice(0, 20 * after)}
+      foodsQuery={foodsQuery}
+    />
   );
-
-  function handleSortRequest(property, event) {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (orderState.orderBy === property && orderState.order === 'desc') {
-      order = 'asc';
-    }
-
-    setOrderState({ order, orderBy });
-  }
-}
-
-Foods.propTypes = {
-  foods: PropTypes.array.isRequired,
-  isRatingAllowed: PropTypes.bool.isRequired,
-  foodsQuery: PropTypes.object
 };
 
-export default withStyles(styles)(memo(Foods));
+export default Foods;

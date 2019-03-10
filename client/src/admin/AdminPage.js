@@ -10,7 +10,7 @@ import {
   TableCell,
   TextField
 } from '@material-ui/core';
-import { FOODS_QUERY } from 'foods/FoodsPage';
+import { FOODS_QUERY } from 'foods/Foods';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';

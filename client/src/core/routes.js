@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Component, Suspense, lazy, Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import routes from '_constants/routesConstants';
@@ -19,7 +19,7 @@ const Admin = lazy(() => import(/* webpackChunkName: "AboutUs" */ 'admin/AdminPa
 class Routes extends Component {
   render() {
     return (
-      <Suspense fallback={<div />}>
+      <Fragment>
         <Switch>
           <Route exact={true} path="/" component={Recipes} />
           <PrivateRoute path={routes.PROFILE} component={Profile} />
@@ -39,7 +39,7 @@ class Routes extends Component {
             component={() => <AddEditRecipe isNew={false} />}
           />
         </Switch>
-      </Suspense>
+      </Fragment>
     );
   }
 }

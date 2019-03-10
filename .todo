@@ -87,7 +87,8 @@ TASKS BEFORE RELEASE:
     ☐ fill the list from swiss list
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
     ✔ when food has no rating, rating buttons are not shown @done(19-03-06 17:13)
-
+    ✔ implement infinite scroll @done(19-03-09 20:37)
+    
   PROFILE:
     ✔ basic information @done(19-01-05 21:42)
       ✔ translations @done(19-01-08 21:20)
@@ -121,6 +122,7 @@ TASKS BEFORE RELEASE:
       ✘ images upload on heroku solve @cancelled(19-02-16 19:22)
     ✔ remove firstname and lastname and add nick column in db @done(19-03-04 22:38)
     ✔ Delete recipe doesnt delete records from userrecipe @done(19-03-05 13:33)
+    ✔ Pagination and sorting for foods and recipes @done(19-03-08 22:14)
 
     MISCELLANEOUS:
       ✔ refetch recipe queries after login @done(19-01-27 08:44)
@@ -138,7 +140,8 @@ TASKS BEFORE RELEASE:
         ✔ facebook enviroment variables @done(19-02-18 23:42)
       
   TASKS AFTER RELEASE: 
-    ☐ recipe rating in cards put to stars to the bottom of the cards
+    ✔ recipe rating in cards put to stars to the bottom of the cards @done(19-03-06 20:44)
+    ☐ implement true serverside pagination for recipes, not loading it all
     ☐ build pipeline
     ☐ Change all db tables to InnoDB engine see example down
     ☐ consider data loader implementation on server 

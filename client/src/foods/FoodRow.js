@@ -21,7 +21,7 @@ const RATE_FOOD_MUTATION = gql`
   }
 `;
 
-function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes }) {
+function FoodRow({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes }) {
   const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
   const rateFood = useMutation(RATE_FOOD_MUTATION);
   const [isRatingLoading, setIsRatingLoading] = useState(false);
@@ -72,8 +72,8 @@ function Food({ food, foodsQuery, myFood, isRatingAllowed, myFoodsQuery, classes
   }
 }
 
-Food.propTypes = {
+FoodRow.propTypes = {
   food: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Food);
+export default withStyles(styles)(FoodRow);

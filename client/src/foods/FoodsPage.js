@@ -1,8 +1,7 @@
-import React from 'react';
-import { withStyles, Paper, Button, Tooltip } from '@material-ui/core';
+import React, { PureComponent, Suspense } from 'react';
+import { withStyles, Paper, Button, Tooltip, CircularProgress } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/ViewList';
-import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
 import Foods from './Foods';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
@@ -21,52 +20,62 @@ const styles = theme => ({
   },
   listButton: {
     margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`
+  },
+  fallback: {
+    width: '100%',
+    height: '600px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
-export const FOODS_QUERY = gql`
-  {
-    foods {
-      id
-      name
-      histamineLevel {
-        value
-        name
-      }
-      totalRating
-      description
-    }
-  }
-`;
+class FoodsPage extends PureComponent {
+  render() {
+    const { classes } = this.props;
 
-function FoodsPage({ classes }) {
-  const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
-  const foodsQuery = useQuery(FOODS_QUERY);
+    return (
+      <Paper className={classes.container}>
+        <Query query={AUTHENTICATION_QUERY}>
+          {({ loading, error, data }) => {
+            if (loading) return null;
+            if (error) return null;
 
-  return (
-    <Paper className={classes.container}>
-      {isAuthenticated && (
-        <Tooltip
-          title="Zobrazí zoznam potravín, ktoré ste hodnotili, pričom je rozdelený do vhodných a nevhodných potravín"
-          enterDelay={500}
-          leaveDelay={200}
-        >
-          <Button
-            variant="text"
-            size="small"
-            className={classes.listButton}
-            onClick={() => history.push(routes.PROFILE + profileRoutes.FOOD_LIST)}
+            return (
+              data.isAuthenticated && (
+                <Tooltip
+                  title="Zobrazí zoznam potravín, ktoré ste hodnotili, pričom je rozdelený do vhodných a nevhodných potravín"
+                  enterDelay={500}
+                  leaveDelay={200}
+                >
+                  <Button
+                    variant="text"
+                    size="small"
+                    className={classes.listButton}
+                    onClick={() => history.push(routes.PROFILE + profileRoutes.FOOD_LIST)}
+                  >
+                    <ListIcon className={classes.listIcon} />
+                    Zobraz tvoj zoznam potravín
+                  </Button>
+                </Tooltip>
+              )
+            );
+          }}
+        </Query>
+        <div className={classes.tableWrapper}>
+          <Suspense
+            fallback={
+              <div className={classes.fallback}>
+                <CircularProgress size={56} thickness={3} color="primary" />
+              </div>
+            }
           >
-            <ListIcon className={classes.listIcon} />
-            Zobraz tvoj zoznam potravín
-          </Button>
-        </Tooltip>
-      )}
-      <div className={classes.tableWrapper}>
-        <Foods isRatingAllowed={true} foods={foodsQuery.data.foods} foodsQuery={foodsQuery} />
-      </div>
-    </Paper>
-  );
+            <Foods />
+          </Suspense>
+        </div>
+      </Paper>
+    );
+  }
 }
 
 export default withStyles(styles)(FoodsPage);
