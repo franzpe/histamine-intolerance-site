@@ -7,6 +7,7 @@ import Foods from './Foods';
 import { AUTHENTICATION_QUERY } from '_queries/client/userQueries';
 import history from '_utils/history';
 import routes, { profileRoutes } from '_constants/routesConstants';
+import SuspenseWithCenteredCircularFallback from '_components/SuspenseWithCenteredCircularFallback';
 
 const styles = theme => ({
   tableWrapper: {
@@ -20,13 +21,6 @@ const styles = theme => ({
   },
   listButton: {
     margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`
-  },
-  fallback: {
-    width: '100%',
-    height: '600px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
 
@@ -63,15 +57,9 @@ class FoodsPage extends PureComponent {
           }}
         </Query>
         <div className={classes.tableWrapper}>
-          <Suspense
-            fallback={
-              <div className={classes.fallback}>
-                <CircularProgress size={56} thickness={3} color="primary" />
-              </div>
-            }
-          >
+          <SuspenseWithCenteredCircularFallback>
             <Foods />
-          </Suspense>
+          </SuspenseWithCenteredCircularFallback>
         </div>
       </Paper>
     );
