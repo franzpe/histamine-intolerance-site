@@ -112,7 +112,8 @@ export const recipeFormActions = {
   SET_FIELD: 'SET_FIELD',
   SET_INGREDIENT: 'SET_INGREDIENT',
   ADD_INGREDIENT: 'ADD_INGREDIENT',
-  DELETE_INGREDIENT: 'DELETE_INGREDIENT'
+  DELETE_INGREDIENT: 'DELETE_INGREDIENT',
+  VALIDATE: 'VALIDATE'
 };
 
 function useRecipeForm(initialFormState) {
@@ -156,32 +157,71 @@ function useRecipeForm(initialFormState) {
           ingredients: state.ingredients.filter((_, i) => i !== action.payload.index)
         };
       }
+      case recipeFormActions.VALIDATE: {
+        return {
+          ...state,
+          errors: action.payload.errors
+        };
+      }
       default:
         return state;
     }
   }
 
   function withValidationErrors(field, nextState) {
-    const errors = validate(field, nextState);
+    const errors = validateField(field, nextState);
     return { ...nextState, errors, isValid: Object.keys(errors).length === 0 };
   }
 
-  return [state, dispatch];
-}
+  function validateField(field, state) {
+    delete state.errors[field];
+    let errors = state.errors;
 
-function validate(field, state) {
-  delete state.errors[field];
-  let errors = state.errors;
-
-  if (field === 'description') {
-    const descriptionError =
-      state.description.length > 50 && 'Presiahli ste maximálny počet znakov 50';
-    if (descriptionError) {
-      errors = { ...errors, description: descriptionError };
+    if (field === 'description') {
+      const descriptionError =
+        state.description.length > 50 && 'Presiahli ste maximálny počet znakov 50';
+      if (descriptionError) {
+        errors = { ...errors, description: descriptionError };
+      }
     }
+
+    if (field === 'name') {
+      const nameError = !state.name && 'Zadajte názov receptu';
+      if (nameError) {
+        errors = { ...errors, name: nameError };
+      }
+    }
+
+    if (field === 'process') {
+      const processError = !state.process && 'Popíšte postup receptu';
+      if (processError) {
+        errors = { ...errors, process: processError };
+      }
+    }
+
+    return errors;
   }
 
-  return errors;
+  // Validates all fields in form and returns true/false whether form is valid. Also dispatch validate action to change error state to hydrate textfields with proper error
+  function validate() {
+    let errors = {};
+
+    ['description', 'name', 'process'].forEach(field => {
+      const fieldError = validateField(field, state)[field];
+      if (fieldError) {
+        errors = { ...errors, [field]: fieldError };
+      }
+    });
+
+    dispatch({
+      type: recipeFormActions.VALIDATE,
+      payload: { errors }
+    });
+
+    return Object.keys(errors).length === 0;
+  }
+
+  return [state, dispatch, validate];
 }
 
 const styles = theme => ({
@@ -348,7 +388,7 @@ function AddEditRecipe({
     recipe = useQuery(RECIPE_QUERY, { variables: { id: Number(id) } }).data.recipe;
   }
 
-  const [form, dispatch] = useRecipeForm({
+  const [form, dispatch, validate] = useRecipeForm({
     name: recipe ? recipe.name : '',
     process: recipe ? recipe.process : '',
     ingredients: [...getIgredients(recipe && recipe.foods), { id: 0, quantity: 0, unit: '' }],
@@ -410,6 +450,8 @@ function AddEditRecipe({
                 })
               }
               margin="normal"
+              error={!!form.errors.name}
+              helperText={form.errors && form.errors.name}
               className={classes.recipeName}
               inputProps={{ className: classes.recipeNameInput }}
             />
@@ -605,6 +647,8 @@ function AddEditRecipe({
               }}
               fullWidth={true}
               value={form.process}
+              error={!!form.errors.process}
+              helperText={form.errors && form.errors.process}
               onChange={e =>
                 dispatch({
                   type: recipeFormActions.SET_FIELD,
@@ -643,7 +687,7 @@ function AddEditRecipe({
   }
 
   function handleSubmit(e) {
-    if (!form.isValid) {
+    if (!validate()) {
       return;
     }
 
