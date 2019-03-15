@@ -401,6 +401,11 @@ function AddEditRecipe({
 
   const foods = useQuery(FOODS_QUERY).data.foods;
   const units = useQuery(UNITS_QUERY).data.units;
+  const unitsOptions = units.map(unit => ({
+    value: unit.id,
+    label: unit.id,
+    clearableValue: false
+  }));
 
   const addRecipe = useMutation(ADD_RECIPE_MUTATION, {
     variables: {
@@ -554,9 +559,13 @@ function AddEditRecipe({
                       </Grid>
                       <Grid item={true} xs={2} sm={2} md={2}>
                         <TextField
-                          type="number"
+                          type="text"
                           placeholder="Množstvo"
-                          value={form.ingredients[index].quantity}
+                          value={
+                            form.ingredients[index].quantity === 0
+                              ? ''
+                              : form.ingredients[index].quantity
+                          }
                           onChange={e =>
                             dispatch({
                               type: recipeFormActions.SET_INGREDIENT,
@@ -565,29 +574,27 @@ function AddEditRecipe({
                           }
                         />
                       </Grid>
-                      <Grid item={true} xs={2} sm={2} md={2}>
-                        <SelectField
-                          isMulti={false}
-                          placeholder="jednotka"
-                          className={classes.lPadding}
-                          cleareable={false}
-                          value={form.ingredients[index].unit}
-                          options={units.map(unit => ({
-                            value: unit.id,
-                            label: unit.id,
-                            clearableValue: false
-                          }))}
-                          clearRenderer={() => <Fragment />}
-                          onChange={option => {
-                            if (option) {
-                              dispatch({
-                                type: recipeFormActions.SET_INGREDIENT,
-                                payload: { index, field: 'unit', value: option.value }
-                              });
-                            }
-                          }}
-                        />
-                      </Grid>
+                      {form.ingredients[index].quantity !== 0 && (
+                        <Grid item={true} xs={2} sm={2} md={2}>
+                          <SelectField
+                            isMulti={false}
+                            placeholder="jednotka"
+                            className={classes.lPadding}
+                            cleareable={false}
+                            value={form.ingredients[index].unit}
+                            options={unitsOptions}
+                            clearRenderer={() => <Fragment />}
+                            onChange={option => {
+                              if (option) {
+                                dispatch({
+                                  type: recipeFormActions.SET_INGREDIENT,
+                                  payload: { index, field: 'unit', value: option.value }
+                                });
+                              }
+                            }}
+                          />
+                        </Grid>
+                      )}
                       <Grid item={true} container={true} xs={1} sm={1} md={1} justify="center">
                         <Action
                           aria-label="Delete"

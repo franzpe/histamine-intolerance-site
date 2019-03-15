@@ -1,5 +1,5 @@
-import React, { PureComponent, Suspense } from 'react';
-import { withStyles, Paper, Button, Tooltip, CircularProgress } from '@material-ui/core';
+import React, { PureComponent } from 'react';
+import { withStyles, Paper, Button, Tooltip } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/ViewList';
 import { Query } from 'react-apollo';
 

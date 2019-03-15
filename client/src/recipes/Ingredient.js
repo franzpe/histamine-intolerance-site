@@ -57,7 +57,7 @@ function IngredientRating({ classes, totalRating }) {
 function Ingredient({ classes, food, isAuthenticated }) {
   return (
     <Fragment>
-      {`${food.name} - ${food.quantity} ${food.unit.id} - `}
+      {`${food.name} - ${food.quantity !== 0 ? food.quantity + ' ' + food.unit.id + ' - ' : ''}`}
       {isAuthenticated ? (
         food.myRating !== null ? (
           <IngredientSuitabilityForUser rating={food.myRating} classes={classes} />

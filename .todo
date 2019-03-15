@@ -138,8 +138,16 @@ TASKS BEFORE RELEASE:
         ✔ nahodena databaza @done(19-02-13 15:46)
         ✔ testovanie @done(19-02-16 23:53)
         ✔ facebook enviroment variables @done(19-02-18 23:42)
-      
+
+  NATALKA CHANGES:
+    ✔ add / edit recipe @done(19-03-15 20:08)
+      ✔ allow ingredients without measurement @done(19-03-15 20:08)
+      ✔ allow delet zero from measurement @done(19-03-15 20:08)
+    ☐ admin
+      ☐ adding add new food to first line
+
   TASKS AFTER RELEASE: 
+    ☐ migracia development databazy
     ✔ recipe rating in cards put to stars to the bottom of the cards @done(19-03-06 20:44)
     ☐ implement true serverside pagination for recipes, not loading it all
     ☐ build pipeline
