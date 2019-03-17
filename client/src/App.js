@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import ReactGA from 'react-ga';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './core/Header';
 import SuspenseWithCenteredCircularFallback from '_components/SuspenseWithCenteredCircularFallback';
+import history from '_utils/history';
 
 const styles = theme => ({
   app: {
@@ -35,6 +37,19 @@ const styles = theme => ({
 });
 
 class App extends Component {
+  componentDidMount = () => {
+    this.setupGoogleAnalytics();
+  };
+
+  setupGoogleAnalytics = () => {
+    ReactGA.initialize('UA-136396880-1');
+    ReactGA.pageview(history.location.pathname + history.location.search);
+
+    history.listen((location, action) => {
+      ReactGA.pageview(history.location.pathname + history.location.search);
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
