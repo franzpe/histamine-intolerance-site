@@ -424,7 +424,13 @@ function AddEditRecipe({
         id: recipe.id,
         name: form.name,
         process: form.process,
-        ingredients: form.ingredients.filter(i => i.id !== 0),
+        ingredients: form.ingredients
+          .filter(i => i.id !== 0)
+          .map(i => ({
+            ...i,
+            quantity:
+              typeof i.quantity === 'string' ? Number(i.quantity.replace(',', '.')) : i.quantity
+          })),
         picture: form.picture,
         description: form.description
       },
@@ -569,7 +575,7 @@ function AddEditRecipe({
                           onChange={e =>
                             dispatch({
                               type: recipeFormActions.SET_INGREDIENT,
-                              payload: { index, field: 'quantity', value: Number(e.target.value) }
+                              payload: { index, field: 'quantity', value: e.target.value }
                             })
                           }
                         />
