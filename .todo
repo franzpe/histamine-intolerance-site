@@ -84,7 +84,7 @@ TASKS BEFORE RELEASE:
     ✔ fast action to show your grocery list @done(19-01-25 09:02)
       ✔ style @done(18-12-29 19:39)
       ✔ add concrete route @done(19-01-25 09:02)
-    ☐ fill the list from swiss list
+    ✔ fill the list from swiss list @done(19-03-18 07:16)
     ✔ after user rates grocery refetch recipe query @done(19-01-27 13:34)
     ✔ when food has no rating, rating buttons are not shown @done(19-03-06 17:13)
     ✔ implement infinite scroll @done(19-03-09 20:37)
@@ -144,8 +144,7 @@ TASKS BEFORE RELEASE:
     ✔ add / edit recipe @done(19-03-15 20:08)
       ✔ allow ingredients without measurement @done(19-03-15 20:08)
       ✔ allow delet zero from measurement @done(19-03-15 20:08)
-    ☐ admin
-      ☐ adding add new food to first line
+
 
   TASKS AFTER RELEASE: 
     ☐ migracia development databazy
@@ -164,9 +163,12 @@ TASKS BEFORE RELEASE:
     ✔ pimp favicon @done(19-02-15 20:38)
     ☐ seo optimalization
     ☐ fast action add recipe 
-
+    ☐ admin
+      ☐ adding add new food to first line
+    ☐ SSR rendering to be able to render helmet on server - mainly for og:image tag for facebook image when share, because fb crawler doesnt execute javascript 
+    
   FEATURE:
-    ☐ Share recipe on facebook - maybe directly to the histamin group
+    ✔ Share recipe on facebook - maybe directly to the histamin group @done(19-03-18 09:45)
     ✔ recept sa sklada z potravin kde bude ukazana aj ich znasanlivost @done(19-01-27 08:56)
       ✔ recept ma rating @done(19-01-27 08:56)
     ✔ pre recept bude vypocitana pravdepodobnost, ze to userovi bude pasovat @done(19-01-27 12:30)

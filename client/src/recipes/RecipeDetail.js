@@ -2,6 +2,7 @@ import React, { memo, Fragment, useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { withStyles, Grid, Card, CardContent, Typography, CardMedia } from '@material-ui/core';
 import gql from 'graphql-tag';
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
 
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
@@ -52,6 +53,11 @@ const styles = theme => ({
     top: '4px',
     right: '-24px',
     fontSize: '30px'
+  },
+  shareBtn: {
+    display: 'inline-block',
+    marginRight: theme.spacing.unit,
+    cursor: 'pointer'
   }
 });
 
@@ -76,6 +82,7 @@ function RecipeDetail({ classes, match }) {
   if (error) {
     return null;
   }
+
   return (
     <Fragment>
       <Card>
@@ -134,6 +141,26 @@ function RecipeDetail({ classes, match }) {
           >
             {recipe.process}
           </Typography>
+          <div style={{ marginTop: 20 }}>
+            <Typography variant="subtitle1" component="span" style={{ fontWeight: 500 }}>
+              Zdieľaj na
+            </Typography>
+            <FacebookShareButton
+              url={window.location.origin + window.location.pathname}
+              hashtag={`#${recipe.name.replace(' ', '')}`}
+              className={classes.shareBtn}
+            >
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={window.location.origin + window.location.pathname}
+              title={recipe.name}
+              hashtags={['bezhistaminovo']}
+              className={classes.shareBtn}
+            >
+              <TwitterIcon size={40} round={true} />
+            </TwitterShareButton>
+          </div>
         </CardContent>
       </Card>
       <div className={classes.backWrapper}>
