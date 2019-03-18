@@ -19,15 +19,19 @@ app.use(
   '/graphql',
   auth.checkUser,
   graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
-  graphqlHTTP(req => ({
-    schema,
-    graphiql: process.env.NODE_ENV === config.dev,
-    context: {
-      req: req,
-      url: req.protocol + '://' + req.get('host'),
-      user: req.user
-    }
-  }))
+  graphqlHTTP(req => {
+    return {
+      schema,
+      graphiql: process.env.NODE_ENV === config.dev,
+      context: {
+        req: req,
+        url:
+          // req.protocol returns http in productiun even if its using https but maybe not proper licence
+          (process.env.NODE_ENV === config.prod ? 'https' : 'http') + '://' + req.get('host'),
+        user: req.user
+      }
+    };
+  })
 );
 
 // serve all routes
