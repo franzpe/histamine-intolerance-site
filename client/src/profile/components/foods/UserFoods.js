@@ -6,6 +6,7 @@ import GoodMoodIcon from '@material-ui/icons/Mood';
 import BadMoodIcon from '@material-ui/icons/MoodBad';
 
 import Foods from 'foods/FoodsTable';
+import { getSorting, stableSort } from '_utils/sort';
 
 const styles = theme => ({
   btnContainer: {
@@ -52,6 +53,10 @@ const USER_FOODS_QUERY = gql`
 function UserFoods({ classes }) {
   const userFoods = useQuery(USER_FOODS_QUERY).data.me.foods;
   const [ratingFilter, setRatingFilter] = useState(1);
+  const [orderState, setOrderState] = useState({
+    order: 'asc',
+    orderBy: 'name'
+  });
 
   return (
     <Fragment>
@@ -81,10 +86,28 @@ function UserFoods({ classes }) {
         </Tooltip>
       </div>
       <div className={classes.foodsContainer}>
-        <Foods isRatingAllowed={false} foods={userFoods.filter(f => f.myRating === ratingFilter)} />
+        <Foods
+          isRatingAllowed={false}
+          foods={stableSort(userFoods, getSorting(orderState.order, orderState.orderBy)).filter(
+            f => f.myRating === ratingFilter
+          )}
+          order={orderState}
+          onRequestSort={handleSortRequest}
+        />
       </div>
     </Fragment>
   );
+
+  function handleSortRequest(property, event) {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (orderState.orderBy === property && orderState.order === 'desc') {
+      order = 'asc';
+    }
+
+    setOrderState({ order, orderBy });
+  }
 }
 
 export default withStyles(styles)(UserFoods);
