@@ -34,6 +34,12 @@ app.use(
   })
 );
 
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
 // serve all routes
 app.use('*', (req, res, next) => {
   const siteurl = process.env.NODE_ENV === config.dev ? '../client/build' : '../client';

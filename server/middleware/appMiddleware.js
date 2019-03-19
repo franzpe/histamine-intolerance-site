@@ -9,6 +9,7 @@ import config from '../config/config';
 
 // setup global middleware here
 export default function(app) {
+  app.use(compression());
   app.set('json spaces', 2);
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,7 +17,6 @@ export default function(app) {
   app.use(cors());
   app.use(override());
   app.use(helmet());
-  app.use(compression());
 
   if (process.env.NODE_ENV === config.dev) {
     app.use(express.static('client/build'));
