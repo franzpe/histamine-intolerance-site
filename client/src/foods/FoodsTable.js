@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import { withStyles, Table, TableBody } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
@@ -6,7 +6,6 @@ import { useQuery } from 'react-apollo-hooks';
 
 import FoodRow from './FoodRow';
 import EnhancedTableHead from '../_components/tables/EnhancedTableHead';
-import { stableSort, getSorting } from '_utils/sort';
 
 const styles = theme => ({});
 
@@ -48,23 +47,25 @@ const columns = [
   }
 ];
 
-function FoodsTable({ foods, foodsQuery, isRatingAllowed }) {
+function FoodsTable({
+  foods,
+  foodsQuery,
+  isRatingAllowed,
+  order: { orderBy, order },
+  onRequestSort
+}) {
   const userFoodsQuery = useQuery(USER_FOODS_QUERY);
-  const [orderState, setOrderState] = useState({
-    order: 'asc',
-    orderBy: 'name'
-  });
 
   return (
     <Table>
       <EnhancedTableHead
         columns={columns}
-        orderBy={orderState.orderBy}
-        order={orderState.order}
-        onRequestSort={handleSortRequest}
+        orderBy={orderBy}
+        order={order}
+        onRequestSort={onRequestSort}
       />
       <TableBody>
-        {stableSort(foods, getSorting(orderState.order, orderState.orderBy)).map((food, index) => (
+        {foods.map((food, index) => (
           <FoodRow
             food={food}
             key={index}
@@ -79,17 +80,6 @@ function FoodsTable({ foods, foodsQuery, isRatingAllowed }) {
       </TableBody>
     </Table>
   );
-
-  function handleSortRequest(property, event) {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (orderState.orderBy === property && orderState.order === 'desc') {
-      order = 'asc';
-    }
-
-    setOrderState({ order, orderBy });
-  }
 }
 
 FoodsTable.propTypes = {

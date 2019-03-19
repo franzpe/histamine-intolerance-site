@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import FoodsTable from './FoodsTable';
+import { stableSort, getSorting } from '_utils/sort';
 
 export const FOODS_QUERY = gql`
   {
@@ -22,6 +23,10 @@ export const FOODS_QUERY = gql`
 const Foods = props => {
   const foodsQuery = useQuery(FOODS_QUERY);
   const [after, setAfter] = useState(1);
+  const [orderState, setOrderState] = useState({
+    order: 'asc',
+    orderBy: 'name'
+  });
 
   useEffect(() => {
     const listener = () => {
@@ -42,16 +47,26 @@ const Foods = props => {
   return (
     <FoodsTable
       isRatingAllowed={true}
-      foods={foodsQuery.data.foods
-        .sort(function(a, b) {
-          if (a.name < b.name) return -1;
-          if (a.name > b.name) return 1;
-          return 0;
-        })
-        .slice(0, 20 * after)}
+      foods={stableSort(
+        foodsQuery.data.foods,
+        getSorting(orderState.order, orderState.orderBy)
+      ).slice(0, 20 * after)}
       foodsQuery={foodsQuery}
+      order={orderState}
+      onRequestSort={handleSortRequest}
     />
   );
+
+  function handleSortRequest(property, event) {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (orderState.orderBy === property && orderState.order === 'desc') {
+      order = 'asc';
+    }
+
+    setOrderState({ order, orderBy });
+  }
 };
 
 export default Foods;
