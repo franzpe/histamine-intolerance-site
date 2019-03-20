@@ -107,7 +107,12 @@ function AboutPage({ classes }) {
         Ing. František Poboček (Web developer)
       </Typography>
       <Typography component="span" variant="body1">
-        <a href="https://frantisekpobocek.com" className={classes.link}>
+        <a
+          href="https://frantisekpobocek.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes.link}
+        >
           <WebIcon className={classes.emailIcon} /> - frantisekpobocek.com
         </a>
       </Typography>
