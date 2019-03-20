@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, Paper, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
+import WebIcon from '@material-ui/icons/Web';
 import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 import SemiBold from '_components/typography/SemiBold';
 
@@ -104,6 +105,11 @@ function AboutPage({ classes }) {
       </Typography>
       <Typography component="span" variant="body1">
         Ing. František Poboček (Web developer)
+      </Typography>
+      <Typography component="span" variant="body1">
+        <a href="https://frantisekpobocek.com" className={classes.link}>
+          <WebIcon className={classes.emailIcon} /> - frantisekpobocek.com
+        </a>
       </Typography>
       <Typography component="span" variant="body1">
         <a href="mailto:pobocekfrantisek@gmail.com" className={classes.link}>

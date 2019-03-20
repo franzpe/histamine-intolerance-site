@@ -147,6 +147,7 @@ TASKS BEFORE RELEASE:
 
 
   TASKS AFTER RELEASE: 
+    ☐ lowering picture quality to reduce size
     ☐ migracia development databazy
     ✔ recipe rating in cards put to stars to the bottom of the cards @done(19-03-06 20:44)
     ☐ implement true serverside pagination for recipes, not loading it all
