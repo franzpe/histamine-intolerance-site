@@ -143,7 +143,7 @@ function Header({ classes }) {
   return (
     <Fragment>
       <Toolbar className={classes.toolbarMain}>
-        <SideNav userRole={role} />
+        <SideNav userRole={role} isAuthenticated={isAuthenticated} onLogoutClick={handleLogout} />
         <HeaderMenu classes={classes} counterWeight={true} />
         <div className={classes.toolbarTitleWrapper}>
           <Typography

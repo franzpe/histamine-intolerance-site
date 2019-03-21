@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
@@ -12,7 +12,8 @@ import FacebookLoginBtn from './buttons/FacebookLoginBtn';
 import { ReactComponent as FacebookSvg } from '_assets/facebook_icon.svg';
 import { sections } from 'core/Header';
 import history from '_utils/history';
-import routes from '_constants/routesConstants';
+import routes, { profileRoutes } from '_constants/routesConstants';
+import FaceIcon from '@material-ui/icons/Face';
 
 const styles = theme => ({
   list: {
@@ -50,7 +51,7 @@ const styles = theme => ({
   }
 });
 
-function SideNav({ classes, userRole }) {
+function SideNav({ classes, userRole, isAuthenticated, onLogoutClick }) {
   const [state, setState] = React.useState({
     left: false
   });
@@ -74,22 +75,44 @@ function SideNav({ classes, userRole }) {
       </List>
       <Divider className={classes.showOnlyOnMobile} />
       <List>
-        <FacebookLoginBtn
-          render={({ onClick }) => (
-            <ListItem button={true} onClick={onClick}>
+        {!isAuthenticated ? (
+          <Fragment>
+            <FacebookLoginBtn
+              render={({ onClick }) => (
+                <ListItem button={true} onClick={onClick}>
+                  <ListItemIcon>
+                    <FacebookSvg alt="Prihlasenie cez Facebook" className={classes.facebook} />
+                  </ListItemIcon>
+                  <ListItemText primary="FB prihlásenie" />
+                </ListItem>
+              )}
+            />
+            <ListItem button={true}>
               <ListItemIcon>
-                <FacebookSvg alt="Prihlasenie cez Facebook" className={classes.facebook} />
+                <LockIcon />
               </ListItemIcon>
-              <ListItemText primary="FB prihlásenie" />
+              <ListItemText primary="Prihlásenie" onClick={handleLogin} />
             </ListItem>
-          )}
-        />
-        <ListItem button={true}>
-          <ListItemIcon>
-            <LockIcon />
-          </ListItemIcon>
-          <ListItemText primary="Prihlásenie" onClick={handleLogin} />
-        </ListItem>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <ListItem button={true}>
+              <ListItemIcon>
+                <FaceIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Profil"
+                onClick={() => history.push(routes.PROFILE + profileRoutes.PERSONAL_INFORMATION)}
+              />
+            </ListItem>
+            <ListItem button={true}>
+              <ListItemIcon>
+                <LockIcon />
+              </ListItemIcon>
+              <ListItemText primary="Odhlásenie" onClick={onLogoutClick} />
+            </ListItem>
+          </Fragment>
+        )}
       </List>
     </div>
   );
