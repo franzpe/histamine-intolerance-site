@@ -113,7 +113,7 @@ function AboutPage({ classes }) {
           rel="noopener noreferrer"
           className={classes.link}
         >
-          <WebIcon className={classes.emailIcon} /> - frantisekpobocek.com
+          <WebIcon className={classes.emailIcon} /> - www.frantisekpobocek.com
         </a>
       </Typography>
       <Typography component="span" variant="body1">

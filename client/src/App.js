@@ -46,7 +46,7 @@ class App extends Component {
     ReactGA.pageview(history.location.pathname + history.location.search);
 
     history.listen((location, action) => {
-      ReactGA.pageview(history.location.pathname + history.location.search);
+      ReactGA.pageview(location.pathname + location.search);
     });
   };
 

@@ -30,17 +30,17 @@ const Foods = props => {
 
   useEffect(() => {
     const listener = () => {
-      if (window.scrollY > document.body.offsetHeight - window.outerHeight - 300) {
+      const winHeight = window.outerHeight || window.innerHeight;
+      if (window.scrollY > document.body.offsetHeight - winHeight - 300) {
         setAfter(after + 1);
       } else if (after > Math.ceil(foodsQuery.data.foods / 20) + 2) {
-        window.removeEventListener('scroll', listener, false);
+        document.removeEventListener('scroll', listener, false);
       }
     };
-
-    window.addEventListener('scroll', listener, false);
+    document.addEventListener('scroll', listener, false);
 
     return () => {
-      window.removeEventListener('scroll', listener, false);
+      document.removeEventListener('scroll', listener, false);
     };
   });
 
