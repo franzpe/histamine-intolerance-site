@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { CookiesProvider } from 'react-cookie';
 
 import * as serviceWorker from './_utils/serviceWorker';
 import configureClient from './_utils/configureClient';
@@ -34,6 +35,7 @@ const Register = lazy(() => import(/* webpackChunkName: "Register" */ './landing
 const FacebookLogin = lazy(() =>
   import(/* webpackChunkName: "FacebookLogin" */ './landing/FacebookLogin')
 );
+
 const App = lazy(() => import(/* webpackChunkName: "App" */ './App'));
 
 export const client = configureClient();
@@ -43,20 +45,22 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
       <MuiThemeProvider theme={theme}>
-        <Router history={history}>
-          <Suspense fallback={<div />}>
-            <CssBaseline>
-              <Head />
-              <ToastInit />
-              <Switch>
-                <Route exact={true} path={routes.LOGIN} component={Login} />
-                <Route exact={true} path={routes.REGISTER} component={Register} />
-                <Route exact={true} path="/facebook-callback" component={FacebookLogin} />
-                <Route component={App} />
-              </Switch>
-            </CssBaseline>
-          </Suspense>
-        </Router>
+        <CookiesProvider>
+          <Router history={history}>
+            <Suspense fallback={<div />}>
+              <CssBaseline>
+                <Head />
+                <ToastInit />
+                <Switch>
+                  <Route exact={true} path={routes.LOGIN} component={Login} />
+                  <Route exact={true} path={routes.REGISTER} component={Register} />
+                  <Route exact={true} path="/facebook-callback" component={FacebookLogin} />
+                  <Route component={App} />
+                </Switch>
+              </CssBaseline>
+            </Suspense>
+          </Router>
+        </CookiesProvider>
       </MuiThemeProvider>
     </ApolloHooksProvider>
   </ApolloProvider>,

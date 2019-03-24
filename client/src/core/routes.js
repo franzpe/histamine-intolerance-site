@@ -13,6 +13,7 @@ const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ 'profile/Pro
 const AddEditRecipe = lazy(() =>
   import(/* webpackChunkName: "AddEditRecipe" */ 'profile/components/recipes/AddEditRecipe')
 );
+const Policy = lazy(() => import(/* webpackChunkName: "Policy" */ 'policy/Policy'));
 const AboutUs = lazy(() => import(/* webpackChunkName: "AboutUs" */ 'aboutUs/AboutUsPage'));
 const Admin = lazy(() => import(/* webpackChunkName: "AboutUs" */ 'admin/AdminPage'));
 
@@ -26,6 +27,7 @@ class Routes extends Component {
           <Route exact={true} path={routes.FOODS} component={Foods} />
           <Route exact={true} path={routes.RECIPES} component={Recipes} />
           <Route exact={true} path={routes.ABOUT_US} component={AboutUs} />
+          <Route exact={true} path={routes.POLICY} component={Policy} />
           <PrivateRoute path={routes.ADMIN} component={Admin} admin={true} />
           <PrivateRoute
             exact={true}

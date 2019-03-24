@@ -9,6 +9,7 @@ const EDIT_RECIPE = '/recepty/editacia';
 const EDIT_RECIPE_WITH_ID = '/recepty/editacia/:id';
 const ABOUT_US = '/o-nas';
 const ADMIN = '/admin';
+const POLICY = '/zasady-ochrany-osobnych-udajov';
 
 const routes = {
   LOGIN,
@@ -21,7 +22,8 @@ const routes = {
   EDIT_RECIPE,
   EDIT_RECIPE_WITH_ID,
   ABOUT_US,
-  ADMIN
+  ADMIN,
+  POLICY
 };
 
 export default routes;

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import ReactGA from 'react-ga';
+import CookieConsent from 'react-cookie-consent';
+import { withCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 import Routes from './core/routes';
 import Footer from './core/Footer';
@@ -8,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './core/Header';
 import SuspenseWithCenteredCircularFallback from '_components/SuspenseWithCenteredCircularFallback';
 import history from '_utils/history';
+import routes from '_constants/routesConstants';
 
 const styles = theme => ({
   app: {
@@ -33,12 +37,32 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 3}px 0`
     }
+  },
+  consent: {
+    backgroundColor: 'rgba(53, 53, 53, 0.95) !important',
+    padding: '0 80px',
+    [theme.breakpoints.down('md')]: {
+      padding: '0 8px'
+    }
+  },
+  consentLink: {
+    textDecoration: 'underline',
+    color: 'white'
+  },
+  consentBtn: {
+    fontSize: '100%',
+    fontFamily: 'inherit',
+    lineHeight: 1.15
   }
 });
 
 class App extends Component {
   componentDidMount = () => {
-    this.setupGoogleAnalytics();
+    const { cookies } = this.props;
+
+    if (Boolean(cookies.get('cookies-consent'))) {
+      this.setupGoogleAnalytics();
+    }
   };
 
   setupGoogleAnalytics = () => {
@@ -62,9 +86,24 @@ class App extends Component {
           </SuspenseWithCenteredCircularFallback>
         </div>
         <Footer />
+        <CookieConsent
+          onAccept={this.setupGoogleAnalytics}
+          location="bottom"
+          buttonText="Súhlasím"
+          cookieName="cookies-consent"
+          buttonClasses={classes.consentBtn}
+          containerClasses={classes.consent}
+          expires={150}
+        >
+          Tento web používa súbory cookies. Prehliadaním webu vyjadrujete súhlas s ich používaním a
+          súhlas s uchovávaním osobných údajov. &nbsp;&nbsp;&nbsp;
+          <Link to={routes.POLICY} className={classes.consentLink}>
+            Viac informácií
+          </Link>
+        </CookieConsent>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(withCookies(App));

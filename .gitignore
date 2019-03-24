@@ -4,6 +4,7 @@ client/node_modules
 client/build
 images/*
 build
+images_backup
 
 #files to exclude
 .env
