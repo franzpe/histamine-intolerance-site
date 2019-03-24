@@ -75,9 +75,9 @@ function Rating({
   }
 
   const ratingClasses = classNames(classes.rating, {
-    [classes.ratingLow]: value < 0.49,
-    [classes.ratingMedium]: value >= 0.49 && value <= 0.51,
-    [classes.ratingHigh]: value > 0.51
+    [classes.ratingLow]: value < 0.4,
+    [classes.ratingMedium]: value >= 0.4 && value <= 0.6,
+    [classes.ratingHigh]: value > 0.6
   });
   return (
     <Fragment>
@@ -98,7 +98,7 @@ function Rating({
             component="span"
             className={classNames(ratingClasses, valueClassName)}
           >
-            {Math.round(value * 10000) / 100}
+            {Math.round((value * 10000) / 100)}
           </Typography>
           <Typography
             variant={percentageVariant}
