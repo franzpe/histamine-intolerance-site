@@ -50,13 +50,31 @@ const styles = theme => ({
   },
   addIcon: {
     marginRight: theme.spacing.unit
+  },
+  error: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    alignContent: 'center',
+    fontWeight: 600,
+    fontSize: '22px'
   }
 });
 
 const RecipesPage = ({ classes }) => {
-  const recipes = useQuery(RECIPES_QUERY).data.recipes;
+  const {
+    data: { recipes },
+    error
+  } = useQuery(RECIPES_QUERY);
+
   const isAuthenticated = useQuery(AUTHENTICATION_QUERY).data.isAuthenticated;
   const [page, setPage] = useState(0);
+  console.log(error);
+
+  if (error) {
+    return <div className={classes.error}>Stratili ste internetove pripojenie :(</div>;
+  }
 
   function handleChangePage(e, page) {
     setPage(page);
