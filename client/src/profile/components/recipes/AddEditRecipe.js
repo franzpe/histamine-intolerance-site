@@ -774,7 +774,13 @@ function AddEditRecipe({
   }
 
   function handleBack(e) {
-    history.push(routes.PROFILE + profileRoutes.RECIPES);
+    const backpath = history.location.state && history.location.state.backpath;
+
+    if (backpath) {
+      history.push(backpath);
+    } else {
+      history.push(routes.PROFILE + profileRoutes.RECIPES);
+    }
   }
 }
 

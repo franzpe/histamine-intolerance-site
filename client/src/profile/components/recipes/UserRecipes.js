@@ -17,6 +17,10 @@ const styles = theme => ({
 });
 
 function UserRecipes({ classes }) {
+  function handleAddRecipe(e) {
+    history.push({ pathname: routes.ADD_RECIPE, state: { backpath: history.location.pathname } });
+  }
+
   return (
     <Fragment>
       <div className={classes.btnContainer}>
@@ -31,10 +35,6 @@ function UserRecipes({ classes }) {
       </div>
     </Fragment>
   );
-
-  function handleAddRecipe(e) {
-    history.push(routes.ADD_RECIPE);
-  }
 }
 
 export default withStyles(styles)(UserRecipes);

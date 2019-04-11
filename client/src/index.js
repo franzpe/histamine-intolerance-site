@@ -35,7 +35,6 @@ const Register = lazy(() => import(/* webpackChunkName: "Register" */ './landing
 const FacebookLogin = lazy(() =>
   import(/* webpackChunkName: "FacebookLogin" */ './landing/FacebookLogin')
 );
-
 const App = lazy(() => import(/* webpackChunkName: "App" */ './App'));
 
 export const client = configureClient();
