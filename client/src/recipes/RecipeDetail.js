@@ -3,6 +3,7 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import { withStyles, Grid, Card, CardContent, Typography, CardMedia } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
+import { Helmet } from 'react-helmet';
 
 import { recipeThumbnail } from './recipeThumbnail';
 import history from '../_utils/history';
@@ -85,6 +86,15 @@ function RecipeDetail({ classes, match }) {
 
   return (
     <Fragment>
+      {recipe.picture.url && (
+        <Helmet
+          meta={[
+            { name: 'og:image', content: recipe.picture.url },
+            { name: 'og:url', content: window.location.origin + history.location.pathname },
+            { name: 'og:description', content: recipe.description }
+          ]}
+        />
+      )}
       <Card>
         <div className={classes.header}>
           <Typography variant="h4" component="div">

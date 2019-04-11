@@ -15,7 +15,6 @@ import { verifyUser } from './_utils/verifyUser';
 import ToastInit from '_components/ToastInit';
 
 import './index.scss';
-import Head from '_components/Head';
 
 const theme = createMuiTheme({
   typography: {
@@ -48,7 +47,6 @@ ReactDOM.render(
           <Router history={history}>
             <Suspense fallback={<div />}>
               <CssBaseline>
-                <Head />
                 <ToastInit />
                 <Switch>
                   <Route exact={true} path={routes.LOGIN} component={Login} />
